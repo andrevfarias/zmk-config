@@ -14,18 +14,19 @@
             compatible = "zmk,behavior-tap-dance";
             label = "SHIFT_CAPS";
             #binding-cells = <0>;
-            bindings = <&cw_shift LSHFT 0>, <&kt CAPSLOCK>;
+            bindings = <&kp_sk LSHFT LSHIFT>, <&kt CAPSLOCK>;
 
             tapping-term-ms = <200>;
         };
 
-        cw_shift: cw_shift {
+        kp_sk: kp_sk {
             compatible = "zmk,behavior-hold-tap";
-            label = "CW_SHIFT";
-            bindings = <&kp>, <&caps_word>;
+            label = "KP_SK";
+            bindings = <&kp>, <&sk>;
 
             #binding-cells = <2>;
             tapping-term-ms = <200>;
+            flavor = "balanced";
         };
     };
 
