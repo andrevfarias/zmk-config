@@ -93,10 +93,10 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&trans  &none       &none      &none       &none        &none         &kp INSERT     &kp HOME          &kp PAGE_DOWN     &kp PG_UP         &kp END                  &kp BACKSPACE
-&trans  &none       &none      &none       &none        &none         &kp BACKSPACE  &kp LEFT          &kp DOWN          &kp UP_ARROW      &kp RIGHT                &studio_unlock
-&trans  &kp K_UNDO  &kp K_CUT  &kp K_COPY  &kp K_PASTE  &kp K_REDO    &kp DELETE     &kp LS(LC(LEFT))  &kp LC(LS(DOWN))  &kp LC(UP_ARROW)  &kp LS(LC(RIGHT_ARROW))  &trans
-                               &trans      &trans       &kp SPACE     &kp RET        &trans            &trans
+&trans  &none       &none      &none       &none        &studio_unlock    &kp INSERT     &kp HOME          &kp PAGE_DOWN     &kp PG_UP         &kp END                  &kp BACKSPACE
+&trans  &none       &none      &none       &none        &none             &kp BACKSPACE  &kp LEFT          &kp DOWN          &kp UP_ARROW      &kp RIGHT                &studio_unlock
+&trans  &kp K_UNDO  &kp K_CUT  &kp K_COPY  &kp K_PASTE  &kp K_REDO        &kp DELETE     &kp LS(LC(LEFT))  &kp LC(LS(DOWN))  &kp LC(UP_ARROW)  &kp LS(LC(RIGHT_ARROW))  &trans
+                               &trans      &trans       &kp SPACE         &kp RET        &trans            &trans
             >;
         };
 
