@@ -56,14 +56,77 @@
 
             tapping-term-ms = <250>;
         };
+
+        ht_mo_to: ht_mo_to {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HT_MO_TO";
+            bindings = <&mo>, <&to>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <250>;
+        };
+
+        ht_kp_kt: ht_kp_kt {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HT_KP_KT";
+            bindings = <&kp>, <&kt>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <250>;
+        };
+
+        ht_kp_kp: ht_kp_kp {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HT_KP_KP";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <250>;
+            flavor = "balanced";
+        };
     };
 
     combos {
         compatible = "zmk,combos";
 
-        to_0 {
-            bindings = <&ht_to_to 3 0>;
-            key-positions = <37 40>;
+        cb_to_base_layer {
+            bindings = <&moto 0>;
+            key-positions = <16 15 14>;
+        };
+
+        cb_to_fn_num_layer {
+            bindings = <&moto 1>;
+            key-positions = <15 16>;
+        };
+
+        cb_tab {
+            bindings = <&kp TAB>;
+            key-positions = <19 18>;
+        };
+
+        cb_bksp {
+            bindings = <&kp BACKSPACE>;
+            key-positions = <19 20>;
+        };
+
+        cb_del {
+            bindings = <&kp DEL>;
+            key-positions = <19 20>;
+            layers = <2>;
+        };
+
+        cb_to_adj_layer {
+            bindings = <&moto 3>;
+            key-positions = <13 14 15>;
+        };
+    };
+
+    macros {
+        moto: moto {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&macro_param_1to1 &macro_param_1to2 &ht_mo_to MACRO_PLACEHOLDER MACRO_PLACEHOLDER>;
+            label = "MOTO";
         };
     };
 
@@ -72,38 +135,38 @@
 
         default_layer {
             bindings = <
-                &kp LGUI   &kp Q  &kp W  &kp E    &kp R        &kp T              &kp Y    &kp U    &kp I     &kp O  &kp P  &none
-                &kp LALT   &kp A  &kp S  &kp D    &kp F        &kp G              &kp H    &kp J    &kp K     &kp L  &none  &none
-                &kp LCTRL  &kp Z  &kp X  &kp C    &kp V        &kp L              &kp N    &kp M    &none     &none  &none  &none
-                                      &kp ESC  &shift_caps  &kp SPACE             &kp RET  &mo 2    &none
+&kp LGUI   &kp Q  &kp W  &kp E              &kp R                 &kp T        &kp Y    &kp U    &kp I      &kp O    &kp P      &none
+&kp LALT   &kp A  &kp S  &kp D              &kp F                 &kp G        &kp H    &kp J    &kp K      &kp L    &kp TILDE  &kp SQT
+&kp LCTRL  &kp Z  &kp X  &kp C              &kp V                 &kp L        &kp N    &kp M    &kp COMMA  &kp DOT  &kp SEMI   &kp SLASH
+                         &ht_kp_kp INS ESC  &ht_kp_kt LSHFT CAPS  &kp SPACE    &kp RET  &moto 2  &none
             >;
         };
 
         fn_num_layer {
             bindings = <
-                &kp LGUI   &kp F1  &kp F2   &kp F3   &kp F4       &none            &none    &kp N7  &kp N8  &kp N9  &none  &none
-                &kp LALT   &kp F5  &kp F6   &kp F7   &kp F8       &none            &none    &kp N4  &kp N5  &kp N6  &none  &none
-                &kp LCTRL  &kp F9  &kp F10  &kp F11  &kp F12      &none            &none    &kp N1  &kp N2  &kp N3  &none  &none
-                                         &kp ESC  &shift_caps  &kp SPACE        &kp RET  &mo 2    &kp N0
+&kp LGUI   &kp F1  &kp F2   &kp F3   &kp F4                    &none        &none    &kp N7  &kp N8  &kp N9  &none  &none
+&kp LALT   &kp F5  &kp F6   &kp F7   &kp F8                    &none        &none    &kp N4  &kp N5  &kp N6  &none  &none
+&kp LCTRL  &kp F9  &kp F10  &kp F11  &kp F12                   &none        &none    &kp N1  &kp N2  &kp N3  &none  &none
+                            &kp ESC  &ht_kp_kt RS(LSHFT) CAPS  &kp SPACE    &kp RET  &mo 2   &kp N0
             >;
         };
 
         dev_layer {
             bindings = <
-                &kp LGUI   &none  &none  &none    &none        &none               &none    &kp HOME      &kp LC(LS(DOWN))  &kp LC(LS(UP))  &kp END        &none
-                &kp LALT   &none  &none  &none    &none        &none               &none    &kp LEFT      &kp DOWN          &kp UP          &kp RIGHT      &none
-                &kp LCTRL  &none  &none  &none    &none        &none               &none    &kp LC(LEFT)  &kp LC(LA(DOWN))  &kp LC(LA(UP))  &kp LC(RIGHT)  &none
-                                         &kp ESC  &shift_caps  &kp SPACE           &kp RET  &mo 2         &none
+&kp LGUI   &none  &none  &none    &none                  &none        &none    &kp HOME      &kp LC(LS(DOWN))  &kp LC(LS(UP))  &kp END        &none
+&kp LALT   &none  &none  &none    &none                  &none        &none    &kp LEFT      &kp DOWN          &kp UP          &kp RIGHT      &none
+&kp LCTRL  &none  &none  &none    &none                  &none        &none    &kp LC(LEFT)  &kp LC(LA(DOWN))  &kp LC(LA(UP))  &kp LC(RIGHT)  &none
+                         &kp ESC  &ht_kp_kt LSHIFT CAPS  &kp SPACE    &kp RET  &mo 2         &none
             >;
-        }
+        };
 
         adj_layer {
             bindings = <
-                &none  &none  &none  &none  &none  &none        &none  &none  &none  &none  &none  &studio_unlock
-                &none  &none  &none  &none  &none  &none        &none  &none  &none  &none  &none  &none
-                &none  &none  &none  &none  &none  &none        &none  &none  &none  &none  &none  &none
-                                     &none  &none  &none        &none  &none  &none
+&none  &none  &none  &none  &none  &none    &none  &none  &none  &none  &none  &studio_unlock
+&none  &none  &none  &none  &none  &none    &none  &none  &none  &none  &none  &sys_reset
+&none  &none  &none  &none  &none  &none    &none  &none  &none  &none  &none  &none
+                     &none  &none  &none    &none  &none  &none
             >;
-        }
+        };
     };
 };
