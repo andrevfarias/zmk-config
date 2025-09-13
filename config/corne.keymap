@@ -86,15 +86,6 @@
             flavor = "hold-preferred";
         };
 
-        slash: slash {
-            compatible = "zmk,behavior-mod-morph";
-            label = "SLASH";
-            bindings = <&slash2>, <&kp QUESTION>;
-
-            #binding-cells = <0>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
         mm_xdiv: mm_xdiv {
             compatible = "zmk,behavior-mod-morph";
             label = "MM_XDIV";
