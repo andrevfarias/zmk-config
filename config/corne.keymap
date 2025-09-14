@@ -121,12 +121,12 @@
         compatible = "zmk,combos";
 
         cb_to_base_layer {
-            bindings = <&moto 0>;
+            bindings = <&ht_mo_to 0 0>;
             key-positions = <16 15 14>;
         };
 
         cb_to_fn_num_layer {
-            bindings = <&moto 1>;
+            bindings = <&ht_mo_to 1 1>;
             key-positions = <15 16>;
         };
 
