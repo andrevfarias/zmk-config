@@ -219,10 +219,10 @@
 
         fn_num_layer {
             bindings = <
-&kp LGUI   &kp F1  &kp F2   &kp F3   &kp F4     &none        &mm_xdiv   &kp N7         &kp N8  &kp N9  &none      &none
-&kp LALT   &kp F5  &kp F6   &kp F7   &kp F8     &none        &kp EQUAL  &kp N4         &kp N5  &kp N6  &kp COMMA  &none
-&kp LCTRL  &kp F9  &kp F10  &kp F11  &kp F12    &none        &kp MINUS  &kp N1         &kp N2  &kp N3  &kp DOT    &none
-                            &kp ESC  &kp LSHFT  &kp SPACE    &kp RET    &ht_mo_to 2 2  &kp N0
+&kp LGUI   &kp F1  &kp F2   &kp F3   &kp F4                &none        &mm_xdiv   &kp N7         &kp N8  &kp N9  &none      &none
+&kp LALT   &kp F5  &kp F6   &kp F7   &kp F8                &none        &kp EQUAL  &kp N4         &kp N5  &kp N6  &kp COMMA  &none
+&kp LCTRL  &kp F9  &kp F10  &kp F11  &kp F12               &none        &kp MINUS  &kp N1         &kp N2  &kp N3  &kp DOT    &none
+                            &kp ESC  &ht_kp_kp LSHFT CAPS  &kp SPACE    &kp RET    &ht_mo_to 2 2  &kp N0
             >;
         };
 
