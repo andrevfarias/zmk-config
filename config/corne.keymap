@@ -196,6 +196,13 @@
             bindings = <&kp COLON &kp EQUAL>;
             label = "DELPHI_EQUAL";
         };
+
+        slash: slash {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&none>;
+            label = "SLASH";
+        };
     };
 
     keymap {
@@ -203,19 +210,19 @@
 
         default_layer {
             bindings = <
-&kp LGUI   &kp Q  &kp W  &kp E              &kp R                 &kp T        &kp Y    &kp U    &kp I        &kp O    &kp P                       &kp BSLH
-&kp LALT   &kp A  &kp S  &kp D              &kp F                 &kp G        &kp H    &kp J    &kp K        &kp L    &kp SQT                     &mm_tilde_circ
-&kp LCTRL  &kp Z  &kp X  &kp C              &kp V                 &kp L        &kp N    &kp M    &kp COMMA    &kp DOT  &ht_semi_colonequal 0 SEMI  &kp SLASH
-                         &ht_kp_kp INS ESC  &ht_kp_kp LSHFT CAPS  &kp SPACE    &kp RET  &moto 2  &kp K_CMENU
+&kp LGUI   &kp Q  &kp W  &kp E              &kp R                 &kp T        &kp Y    &kp U  &kp I        &kp O    &kp P                       &kp BSLH
+&kp LALT   &kp A  &kp S  &kp D              &kp F                 &kp G        &kp H    &kp J  &kp K        &kp L    &kp SQT                     &mm_tilde_circ
+&kp LCTRL  &kp Z  &kp X  &kp C              &kp V                 &kp L        &kp N    &kp M  &kp COMMA    &kp DOT  &ht_semi_colonequal 0 SEMI  &kp SLASH
+                         &ht_kp_kp INS ESC  &ht_kp_kp LSHFT CAPS  &kp SPACE    &kp RET  &mo 1  &kp K_CMENU
             >;
         };
 
         fn_num_layer {
             bindings = <
-&kp LGUI   &kp F1  &kp F2   &kp F3   &kp F4                &none        &mm_xdiv   &kp N7         &kp N8  &kp N9  &none      &none
-&kp LALT   &kp F5  &kp F6   &kp F7   &kp F8                &none        &kp EQUAL  &kp N4         &kp N5  &kp N6  &kp COMMA  &none
-&kp LCTRL  &kp F9  &kp F10  &kp F11  &kp F12               &none        &kp MINUS  &kp N1         &kp N2  &kp N3  &kp DOT    &none
-                            &kp ESC  &ht_kp_kp LSHFT CAPS  &kp SPACE    &kp RET    &ht_mo_to 2 2  &kp N0
+&kp LGUI   &kp F1  &kp F2   &kp F3   &kp F4     &none        &mm_xdiv   &kp N7         &kp N8  &kp N9  &none      &none
+&kp LALT   &kp F5  &kp F6   &kp F7   &kp F8     &none        &kp EQUAL  &kp N4         &kp N5  &kp N6  &kp COMMA  &none
+&kp LCTRL  &kp F9  &kp F10  &kp F11  &kp F12    &none        &kp MINUS  &kp N1         &kp N2  &kp N3  &kp DOT    &none
+                            &kp ESC  &kp LSHFT  &kp SPACE    &kp RET    &ht_mo_to 2 2  &kp N0
             >;
         };
 
