@@ -65,6 +65,7 @@
             #binding-cells = <2>;
             tapping-term-ms = <250>;
             flavor = "hold-preferred";
+            hold-while-undecided;
         };
 
         ht_kp_kt: ht_kp_kt {
@@ -74,6 +75,7 @@
 
             #binding-cells = <2>;
             tapping-term-ms = <250>;
+            hold-while-undecided;
         };
 
         ht_kp_kp: ht_kp_kp {
@@ -103,6 +105,15 @@
             #binding-cells = <2>;
             tapping-term-ms = <250>;
             flavor = "tap-preferred";
+        };
+
+        mm_tilde_circ: mm_tilde_circ {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_TILDE_CIRC";
+            bindings = <&kp TILDE>, <&kp LS(NUMBER_6)>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
         };
     };
 
@@ -193,9 +204,9 @@
         default_layer {
             bindings = <
 &kp LGUI   &kp Q  &kp W  &kp E              &kp R                 &kp T        &kp Y    &kp U    &kp I        &kp O    &kp P                       &kp BSLH
-&kp LALT   &kp A  &kp S  &kp D              &kp F                 &kp G        &kp H    &kp J    &kp K        &kp L    &kp SQT                     &kp TILDE
+&kp LALT   &kp A  &kp S  &kp D              &kp F                 &kp G        &kp H    &kp J    &kp K        &kp L    &kp SQT                     &mm_tilde_circ
 &kp LCTRL  &kp Z  &kp X  &kp C              &kp V                 &kp L        &kp N    &kp M    &kp COMMA    &kp DOT  &ht_semi_colonequal 0 SEMI  &kp SLASH
-                         &ht_kp_kp INS ESC  &ht_kp_kt LSHFT CAPS  &kp SPACE    &kp RET  &moto 2  &kp K_CMENU
+                         &ht_kp_kp INS ESC  &ht_kp_kp LSHFT CAPS  &kp SPACE    &kp RET  &moto 2  &kp K_CMENU
             >;
         };
 
