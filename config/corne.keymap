@@ -5,6 +5,7 @@
  */
 
 #include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 
 / {
@@ -148,7 +149,7 @@
 
         cb_to_adj_layer {
             bindings = <&moto 3>;
-            key-positions = <13 14 15>;
+            key-positions = <38 37 36>;
         };
 
         cb_lbrkt {
@@ -197,11 +198,60 @@
             label = "DELPHI_EQUAL";
         };
 
-        slash: slash {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&none>;
+        ht_lshft_kp: slash {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&macro_param_1to2 &ht_kp_kp LSHFT MACRO_PLACEHOLDER>;
             label = "SLASH";
+        };
+
+        ht_rshft_kp: ht_rshft_kp {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&macro_param_1to2 &ht_kp_kp RSHFT MACRO_PLACEHOLDER>;
+            label = "HT_RSHFT_KP";
+        };
+
+        ht_rctrl_kp: ht_rctrl_kp {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&macro_param_1to2 &ht_kp_kp RCTRL MACRO_PLACEHOLDER>;
+            label = "HT_RCTRL_KP";
+        };
+
+        ht_lctrl_kp: ht_lctrl_kp {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&macro_param_1to2 &ht_kp_kp LCTRL MACRO_PLACEHOLDER>;
+            label = "HT_LCTRL_KP";
+        };
+
+        ht_lalt_kp: ht_lalt_kp {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&macro_param_1to2 &ht_kp_kp LALT MACRO_PLACEHOLDER>;
+            label = "HT_LALT_KP";
+        };
+
+        ht_ralt_kp: ht_ralt_kp {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&macro_param_1to2 &ht_kp_kp RALT MACRO_PLACEHOLDER>;
+            label = "HT_RALT_KP";
+        };
+
+        ht_lgui_kp: ht_lgnu_kp {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&macro_param_1to2 &ht_kp_kp LGUI MACRO_PLACEHOLDER>;
+            label = "HT_LGNU_KP";
+        };
+
+        ht_rgui_kp: ht_rgui_kp {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&macro_param_1to2 &ht_kp_kp LGUI MACRO_PLACEHOLDER>;
+            label = "HT_RGUI_KP";
         };
     };
 
@@ -210,19 +260,19 @@
 
         default_layer {
             bindings = <
-&kp LGUI   &kp Q              &kp W               &kp E              &kp R                 &kp T        &kp Y    &kp U             &kp I             &kp O               &kp P                 &kp BACKSLASH
-&kp LALT   &ht_kp_kp LCTRL A  &ht_kp_kp LSHIFT S  &ht_kp_kp LALT D   &ht_kp_kp LGUI F      &kp G        &kp H    &ht_kp_kp RGUI J  &ht_kp_kp RALT K  &ht_kp_kp RSHIFT L  &ht_kp_kp RCTRL SEMI  &kp SQT
-&kp LCTRL  &kp Z              &kp X               &kp C              &kp V                 &kp B        &kp N    &kp M             &kp COMMA         &kp DOT             &kp SLASH             &mm_tilde_circ
-                                                  &ht_kp_kp INS ESC  &ht_kp_kp LSHFT CAPS  &kp SPACE    &kp RET  &ht_mo_to 2 2     &kp K_CMENU
+&kp LGUI   &kp Q           &kp W           &kp E              &kp R                 &kp T        &kp Y    &kp U          &kp I          &kp O           &kp P                   &kp BACKSLASH
+&kp LALT   &ht_lctrl_kp A  &ht_lshft_kp S  &ht_lalt_kp D      &ht_lgui_kp F         &kp G        &kp H    &ht_rgui_kp J  &ht_ralt_kp K  &ht_rshft_kp L  &ht_rctrl_kp SEMICOLON  &kp SQT
+&kp LCTRL  &kp Z           &kp X           &kp C              &kp V                 &kp B        &kp N    &kp M          &kp COMMA      &kp DOT         &kp SLASH               &mm_tilde_circ
+                                           &ht_kp_kp INS ESC  &ht_kp_kp LSHFT CAPS  &kp SPACE    &kp RET  &ht_mo_to 2 2  &kp K_CMENU
             >;
         };
 
         fn_num_layer {
             bindings = <
-&kp LGUI   &kp F1  &kp F2   &kp F3   &kp F4                &none        &mm_xdiv                   &kp N7         &kp N8  &kp N9  &none      &none
-&kp LALT   &kp F5  &kp F6   &kp F7   &kp F8                &none        &ht_colonequal_kp 0 EQUAL  &kp N4         &kp N5  &kp N6  &kp COMMA  &none
-&kp LCTRL  &kp F9  &kp F10  &kp F11  &kp F12               &none        &kp MINUS                  &kp N1         &kp N2  &kp N3  &kp DOT    &none
-                            &kp ESC  &ht_kp_kp LSHFT CAPS  &kp SPACE    &kp RET                    &ht_mo_to 2 2  &kp N0
+&kp LGUI   &kp F1           &kp F2           &kp F3          &kp F4                &none        &mm_xdiv                   &kp N7          &kp N8          &kp N9           &none               &none
+&kp LALT   &ht_lctrl_kp F5  &ht_lshft_kp F6  &ht_lalt_kp F7  &ht_lgui_kp F8        &none        &ht_colonequal_kp 0 EQUAL  &ht_rgui_kp N4  &ht_ralt_kp N5  &ht_rshft_kp N6  &ht_rctrl_kp COMMA  &none
+&kp LCTRL  &kp F9           &kp F10          &kp F11         &kp F12               &none        &kp MINUS                  &kp N1          &kp N2          &kp N3           &kp DOT             &none
+                                             &kp ESC         &ht_kp_kp LSHFT CAPS  &kp SPACE    &kp RET                    &ht_mo_to 2 2   &kp N0
             >;
         };
 
@@ -237,10 +287,10 @@
 
         adj_layer {
             bindings = <
-&none  &none  &none  &none  &none  &none    &none  &none  &none  &none  &none  &studio_unlock
-&none  &none  &none  &none  &none  &none    &none  &none  &none  &none  &none  &sys_reset
-&none  &none  &none  &none  &none  &none    &none  &none  &none  &none  &none  &none
-                     &none  &none  &none    &none  &none  &none
+&none       &none         &none         &none         &none         &none           &none  &none  &none  &none  &none  &studio_unlock
+&none       &none         &none         &none         &none         &none           &none  &none  &none  &none  &none  &sys_reset
+&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &none  &none  &none  &none  &none  &none
+                                        &none         &none         &none           &none  &none  &none
             >;
         };
     };
