@@ -189,7 +189,7 @@
 
         ctrl_shft_tab {
             bindings = <&kp LS(LC(TAB))>;
-            key-positions = <22 21 20>;
+            key-positions = <21 20 19>;
         };
 
         cb_numpad_layer {
