@@ -116,6 +116,15 @@
             #binding-cells = <0>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
+
+        ht_nxtwin_kp: ht_nxtwin_kp {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HT_NXTWIN_KP";
+            bindings = <&next_window>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+        };
     };
 
     combos {
@@ -282,7 +291,7 @@
         };
 
         l_next_window {
-            bindings = <&kp LA(TAB)>;
+            bindings = <&ht_nxtwin_kp 0 LA(TAB)>;
             key-positions = <14 15 16>;
         };
 
@@ -317,7 +326,7 @@
         ht_rshft_kp: ht_rshft_kp {
             compatible = "zmk,behavior-macro-one-param";
             #binding-cells = <1>;
-            bindings = <&macro_param_1to1 &ht_kp_kp MACRO_PLACEHOLDER RSHFT>;
+            bindings = <&macro_param_1to2 &ht_kp_kp RSHIFT MACRO_PLACEHOLDER>;
             label = "HT_RSHFT_KP";
         };
 
@@ -361,6 +370,21 @@
             #binding-cells = <1>;
             bindings = <&macro_param_1to2 &ht_kp_kp LGUI MACRO_PLACEHOLDER>;
             label = "HT_RGUI_KP";
+        };
+
+        next_window: alt_tab {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LA(TAB) &kp LALT>;
+            label = "ALT_TAB";
+        };
+
+        next_window2: next_window2 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LA(TAB)>, <&macro_press>, <&kp LALT>;
+
+            label = "NEXT_WINDOW2";
         };
     };
 
