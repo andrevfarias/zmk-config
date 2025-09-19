@@ -321,10 +321,10 @@
 
         qwerty_layer {
             bindings = <
-&kp LGUI   &kp Q        &kp W  &kp E        &kp R           &kp T        &kp Y    &kp U          &kp I        &kp O    &kp P      &kp BACKSLASH
-&kp LALT   &mt LSHFT A  &kp S  &kp D        &kp F           &kp G        &kp H    &kp J          &kp K        &kp L    &kp SEMI   &kp SQT
-&kp LCTRL  &kp Z        &kp X  &kp C        &kp V           &kp B        &kp N    &kp M          &kp COMMA    &kp DOT  &kp SLASH  &mm_tilde_circ
-                               &mt INS ESC  &mt LSHFT CAPS  &kp SPACE    &kp RET  &ht_mo_to 4 4  &kp K_CMENU
+&kp LGUI   &kp Q  &kp W  &kp E        &kp R      &kp T        &kp Y    &kp U          &kp I        &kp O    &kp P      &kp BACKSLASH
+&kp LALT   &kp A  &kp S  &kp D        &kp F      &kp G        &kp H    &kp J          &kp K        &kp L    &kp SEMI   &kp SQT
+&kp LCTRL  &kp Z  &kp X  &kp C        &kp V      &kp B        &kp N    &kp M          &kp COMMA    &kp DOT  &kp SLASH  &mm_tilde_circ
+                         &mt INS ESC  &kp LSHFT  &kp SPACE    &kp RET  &ht_mo_to 4 4  &kp K_CMENU
             >;
         };
 
