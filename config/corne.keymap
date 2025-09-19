@@ -375,16 +375,8 @@
         next_window: alt_tab {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LA(TAB) &kp LALT>;
+            bindings = <&kp LALT DOWN &kp TAB>;
             label = "ALT_TAB";
-        };
-
-        next_window2: next_window2 {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LA(TAB)>, <&macro_press>, <&kp LALT>;
-
-            label = "NEXT_WINDOW2";
         };
     };
 
