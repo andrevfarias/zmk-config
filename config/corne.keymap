@@ -319,7 +319,7 @@
         ht_lshft_kp: slash {
             compatible = "zmk,behavior-macro-one-param";
             #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &ht_kp_kp LSHFT MACRO_PLACEHOLDER>;
+            bindings = <&macro_param_1to2 &ht_kp_kp HASH MACRO_PLACEHOLDER>;
             label = "SLASH";
         };
 
@@ -375,7 +375,8 @@
         next_window: alt_tab {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LA(TAB)>, <&kp LALT>;
+            bindings = <&kp LA(TAB)>, <&macro_press>, <&kp LALT>;
+
             label = "ALT_TAB";
         };
     };
@@ -385,10 +386,10 @@
 
         qwerty_layer {
             bindings = <
-&kp LGUI   &kp Q           &kp W           &kp E              &kp R                 &kp T        &kp Y    &kp U          &kp I          &kp O           &kp P                   &kp BACKSLASH
-&kp LALT   &ht_lctrl_kp A  &ht_lshft_kp S  &ht_lalt_kp D      &ht_lgui_kp F         &kp G        &kp H    &ht_rgui_kp J  &ht_ralt_kp K  &ht_rshft_kp L  &ht_rctrl_kp SEMICOLON  &kp SQT
-&kp LCTRL  &kp Z           &kp X           &kp C              &kp V                 &kp B        &kp N    &kp M          &kp COMMA      &kp DOT         &kp SLASH               &mm_tilde_circ
-                                           &ht_kp_kp INS ESC  &ht_kp_kp LSHFT CAPS  &kp SPACE    &kp RET  &ht_mo_to 4 4  &kp K_CMENU
+&kp LGUI   &kp Q              &kp W           &kp E              &kp R                 &kp T        &kp Y    &kp U          &kp I          &kp O           &kp P                   &kp BACKSLASH
+&kp LALT   &ht_kp_kp LSHFT A  &ht_lshft_kp S  &ht_lalt_kp D      &ht_lgui_kp F         &kp G        &kp H    &ht_rgui_kp J  &ht_ralt_kp K  &ht_rshft_kp L  &ht_rctrl_kp SEMICOLON  &kp SQT
+&kp LCTRL  &kp Z              &kp X           &kp C              &kp V                 &kp B        &kp N    &kp M          &kp COMMA      &kp DOT         &kp SLASH               &mm_tilde_circ
+                                              &ht_kp_kp INS ESC  &ht_kp_kp LSHFT CAPS  &kp SPACE    &kp RET  &ht_mo_to 4 4  &kp K_CMENU
             >;
         };
 
