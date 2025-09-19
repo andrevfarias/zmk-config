@@ -314,62 +314,6 @@
             bindings = <&kp COLON &kp EQUAL>;
             label = "DELPHI_EQUAL";
         };
-
-        ht_lshft_kp: ht_lshft_kp {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &mt HASH MACRO_PLACEHOLDER>;
-            label = "ht_lshft_kp";
-        };
-
-        ht_rshft_kp: ht_rshft_kp {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &mt RSHIFT MACRO_PLACEHOLDER>;
-            label = "HT_RSHFT_KP";
-        };
-
-        ht_rctrl_kp: ht_rctrl_kp {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &mt RCTRL MACRO_PLACEHOLDER>;
-            label = "HT_RCTRL_KP";
-        };
-
-        ht_lctrl_kp: ht_lctrl_kp {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &mt LCTRL MACRO_PLACEHOLDER>;
-            label = "HT_LCTRL_KP";
-        };
-
-        ht_lalt_kp: ht_lalt_kp {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &mt LALT MACRO_PLACEHOLDER>;
-            label = "HT_LALT_KP";
-        };
-
-        ht_ralt_kp: ht_ralt_kp {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &mt RALT MACRO_PLACEHOLDER>;
-            label = "HT_RALT_KP";
-        };
-
-        ht_lgui_kp: ht_lgnu_kp {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &mt LGUI MACRO_PLACEHOLDER>;
-            label = "HT_LGNU_KP";
-        };
-
-        ht_rgui_kp: ht_rgui_kp {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &mt LGUI MACRO_PLACEHOLDER>;
-            label = "HT_RGUI_KP";
-        };
     };
 
     keymap {
@@ -377,10 +321,10 @@
 
         qwerty_layer {
             bindings = <
-&kp LGUI   &kp Q        &kp W           &kp E          &kp R           &kp T        &kp Y    &kp U          &kp I          &kp O           &kp P                   &kp BACKSLASH
-&kp LALT   &mt LSHFT A  &ht_lshft_kp S  &ht_lalt_kp D  &ht_lgui_kp F   &kp G        &kp H    &ht_rgui_kp J  &ht_ralt_kp K  &ht_rshft_kp L  &ht_rctrl_kp SEMICOLON  &kp SQT
-&kp LCTRL  &kp Z        &kp X           &kp C          &kp V           &kp B        &kp N    &kp M          &kp COMMA      &kp DOT         &kp SLASH               &mm_tilde_circ
-                                        &mt INS ESC    &mt LSHFT CAPS  &kp SPACE    &kp RET  &ht_mo_to 4 4  &kp K_CMENU
+&kp LGUI   &kp Q        &kp W  &kp E        &kp R           &kp T        &kp Y    &kp U          &kp I        &kp O    &kp P      &kp BACKSLASH
+&kp LALT   &mt LSHFT A  &kp S  &kp D        &kp F           &kp G        &kp H    &kp J          &kp K        &kp L    &kp SEMI   &kp SQT
+&kp LCTRL  &kp Z        &kp X  &kp C        &kp V           &kp B        &kp N    &kp M          &kp COMMA    &kp DOT  &kp SLASH  &mm_tilde_circ
+                               &mt INS ESC  &mt LSHFT CAPS  &kp SPACE    &kp RET  &ht_mo_to 4 4  &kp K_CMENU
             >;
         };
 
@@ -395,10 +339,10 @@
 
         fn_num_layer {
             bindings = <
-&kp LGUI   &kp F1           &kp F2           &kp F3          &kp F4                &none        &mm_xdiv                   &kp N7          &kp N8          &kp N9           &none               &none
-&kp LALT   &ht_lctrl_kp F5  &ht_lshft_kp F6  &ht_lalt_kp F7  &ht_lgui_kp F8        &none        &ht_colonequal_kp 0 EQUAL  &ht_rgui_kp N4  &ht_ralt_kp N5  &ht_rshft_kp N6  &ht_rctrl_kp COMMA  &none
-&kp LCTRL  &kp F9           &kp F10          &kp F11         &kp F12               &none        &kp MINUS                  &kp N1          &kp N2          &kp N3           &kp DOT             &none
-                                             &kp ESC         &ht_kp_kp LSHFT CAPS  &kp SPACE    &kp RET                    &ht_mo_to 4 4   &kp N0
+&kp LGUI   &kp F1  &kp F2   &kp F3   &kp F4                &none        &mm_xdiv                   &kp N7         &kp N8  &kp N9  &none    &none
+&kp LALT   &trans  &trans   &trans   &trans                &none        &ht_colonequal_kp 0 EQUAL  &trans         &trans  &trans  &trans   &none
+&kp LCTRL  &kp F9  &kp F10  &kp F11  &kp F12               &none        &kp MINUS                  &kp N1         &kp N2  &kp N3  &kp DOT  &none
+                            &kp ESC  &ht_kp_kp LSHFT CAPS  &kp SPACE    &kp RET                    &ht_mo_to 4 4  &kp N0
             >;
         };
 
