@@ -133,62 +133,62 @@
         /* LAYER NAVIGATION */
 
         l_to_A_layer {
-            bindings = <&moto 5>;
+            bindings = <&ht_mo_to 5 5>;
             key-positions = <1 3>;
         };
 
         r_to_A_layer {
-            bindings = <&moto 5>;
+            bindings = <&ht_mo_to 5 5>;
             key-positions = <8 10>;
         };
 
         l_to_B_layer {
-            bindings = <&moto 0>;
+            bindings = <&ht_mo_to 0 0>;
             key-positions = <2 4>;
         };
 
         r_to_B_layer {
-            bindings = <&moto 0>;
+            bindings = <&ht_mo_to 0 0>;
             key-positions = <7 9>;
         };
 
         l_to_C_layer {
-            bindings = <&moto 3>;
+            bindings = <&ht_mo_to 3 3>;
             key-positions = <13 15>;
         };
 
         r_to_C_layer {
-            bindings = <&moto 3>;
+            bindings = <&ht_mo_to 3 3>;
             key-positions = <20 22>;
         };
 
         l_to_D_layer {
-            bindings = <&moto 2>;
+            bindings = <&ht_mo_to 2 2>;
             key-positions = <14 16>;
         };
 
         r_to_D_layer {
-            bindings = <&moto 2>;
+            bindings = <&ht_mo_to 2 2>;
             key-positions = <19 21>;
         };
 
         l_to_E_layer {
-            bindings = <&moto 5>;
+            bindings = <&ht_mo_to 5 5>;
             key-positions = <25 27>;
         };
 
         r_to_E_layer {
-            bindings = <&moto 5>;
+            bindings = <&ht_mo_to 5 5>;
             key-positions = <34 32>;
         };
 
         l_to_F_layer {
-            bindings = <&tog 6>;
+            bindings = <&ht_mo_to 6 6>;
             key-positions = <28 26>;
         };
 
         r_to_F_layer {
-            bindings = <&tog 6>;
+            bindings = <&ht_mo_to 6 6>;
             key-positions = <31 33>;
         };
 
@@ -316,68 +316,12 @@
             label = "DELPHI_EQUAL";
         };
 
-        ht_lshft_kp: slash {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &ht_kp_kp HASH MACRO_PLACEHOLDER>;
-            label = "SLASH";
-        };
-
-        ht_rshft_kp: ht_rshft_kp {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &ht_kp_kp RSHIFT MACRO_PLACEHOLDER>;
-            label = "HT_RSHFT_KP";
-        };
-
-        ht_rctrl_kp: ht_rctrl_kp {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &ht_kp_kp RCTRL MACRO_PLACEHOLDER>;
-            label = "HT_RCTRL_KP";
-        };
-
-        ht_lctrl_kp: ht_lctrl_kp {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &ht_kp_kp LCTRL MACRO_PLACEHOLDER>;
-            label = "HT_LCTRL_KP";
-        };
-
-        ht_lalt_kp: ht_lalt_kp {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &ht_kp_kp LALT MACRO_PLACEHOLDER>;
-            label = "HT_LALT_KP";
-        };
-
-        ht_ralt_kp: ht_ralt_kp {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &ht_kp_kp RALT MACRO_PLACEHOLDER>;
-            label = "HT_RALT_KP";
-        };
-
-        ht_lgui_kp: ht_lgnu_kp {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &ht_kp_kp LGUI MACRO_PLACEHOLDER>;
-            label = "HT_LGNU_KP";
-        };
-
-        ht_rgui_kp: ht_rgui_kp {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to2 &ht_kp_kp LGUI MACRO_PLACEHOLDER>;
-            label = "HT_RGUI_KP";
-        };
-
-        next_window: alt_tab {
+        next_window: next_window {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LA(TAB)>, <&macro_press>, <&kp LALT>;
 
-            label = "ALT_TAB";
+            label = "NEXT_WINDOW";
         };
     };
 
@@ -386,28 +330,28 @@
 
         qwerty_layer {
             bindings = <
-&kp LGUI   &kp Q              &kp W           &kp E              &kp R                 &kp T        &kp Y    &kp U          &kp I          &kp O           &kp P                   &kp BACKSLASH
-&kp LALT   &ht_kp_kp LSHFT A  &ht_lshft_kp S  &ht_lalt_kp D      &ht_lgui_kp F         &kp G        &kp H    &ht_rgui_kp J  &ht_ralt_kp K  &ht_rshft_kp L  &ht_rctrl_kp SEMICOLON  &kp SQT
-&kp LCTRL  &kp Z              &kp X           &kp C              &kp V                 &kp B        &kp N    &kp M          &kp COMMA      &kp DOT         &kp SLASH               &mm_tilde_circ
-                                              &ht_kp_kp INS ESC  &ht_kp_kp LSHFT CAPS  &kp SPACE    &kp RET  &ht_mo_to 4 4  &kp K_CMENU
+&kp LGUI   &kp Q        &kp W        &kp E              &kp R           &kp T      &kp Y    &kp U          &kp I       &kp O        &kp P                &kp BACKSLASH
+&kp LALT   &mt LCTRL A  &mt LSHFT S  &mt LALT D         &mt LGUI F      &kp G      &kp H    &mt RGUI J     &mt RALT K  &mt RSHFT L  &mt RCTRL SEMICOLON  &kp SQT
+&kp LCTRL  &kp Z        &kp X        &kp C              &kp V           &kp B      &kp N    &kp M          &kp COMMA   &kp DOT      &kp SLASH            &mm_tilde_circ
+                                     &ht_kp_kp INS ESC  &mt LSHFT CAPS  &kp SPACE  &kp RET  &ht_mo_to 4 4  &kp K_CMENU
             >;
         };
 
         colemak_layer {
             bindings = <
-&trans  &kp Q           &kp W           &kp F          &kp P          &kp B     &kp J   &kp L          &kp U          &kp Y           &kp SEMI        &trans
-&trans  &ht_lctrl_kp A  &ht_lshft_kp R  &ht_lalt_kp S  &ht_lgui_kp T  &kp G     &kp M   &ht_rgui_kp N  &ht_ralt_kp E  &ht_rshft_kp I  &ht_rctrl_kp O  &trans
-&trans  &kp Z           &kp X           &kp C          &kp D          &kp V     &kp K   &kp H          &trans         &trans          &trans          &trans
-                                        &trans         &trans         &trans    &trans  &trans         &trans
+&trans  &kp Q        &kp W        &kp F       &kp P       &kp B     &kp J   &kp L       &kp U       &kp Y        &kp SEMI     &trans
+&trans  &mt LCTRL A  &mt LSHFT R  &mt LALT S  &mt LGUI T  &kp G     &kp M   &mt RGUI N  &mt RALT E  &mt RSHFT I  &mt RCTRL O  &trans
+&trans  &kp Z        &kp X        &kp C       &kp D       &kp V     &kp K   &kp H       &trans      &trans       &trans       &trans
+                                  &trans      &trans      &trans    &trans  &trans      &trans
             >;
         };
 
         fn_num_layer {
             bindings = <
-&kp LGUI   &kp F1           &kp F2           &kp F3          &kp F4                &none        &mm_xdiv                   &kp N7          &kp N8          &kp N9           &none               &none
-&kp LALT   &ht_lctrl_kp F5  &ht_lshft_kp F6  &ht_lalt_kp F7  &ht_lgui_kp F8        &none        &ht_colonequal_kp 0 EQUAL  &ht_rgui_kp N4  &ht_ralt_kp N5  &ht_rshft_kp N6  &ht_rctrl_kp COMMA  &none
-&kp LCTRL  &kp F9           &kp F10          &kp F11         &kp F12               &none        &kp MINUS                  &kp N1          &kp N2          &kp N3           &kp DOT             &none
-                                             &kp ESC         &ht_kp_kp LSHFT CAPS  &kp SPACE    &kp RET                    &ht_mo_to 4 4   &kp N0
+&trans   &kp F1        &kp F2        &kp F3       &kp F4       &none     &mm_xdiv                   &kp N7         &kp N8       &kp N9        &none            &none
+&trans   &mt LCTRL F5  &mt LSHFT F6  &mt LALT F7  &mt LGUI F8  &none     &ht_colonequal_kp 0 EQUAL  &mt RGUI N4    &mt RALT N5  &mt RSHFT N6  &mt RCTRL COMMA  &none
+&trans   &kp F9        &kp F10       &kp F11      &kp F12      &none     &kp MINUS                  &kp N1         &kp N2       &kp N3        &kp DOT          &none
+                                     &trans       &trans       &trans    &trans                     &ht_mo_to 4 4  &kp N0
             >;
         };
 
@@ -422,47 +366,29 @@
 
         dev_layer {
             bindings = <
-&kp LGUI   &none  &none  &none    &none                  &none        &none    &kp HOME       &kp LC(LS(DOWN))  &kp LC(LS(UP))  &kp END        &none
-&kp LALT   &none  &none  &none    &none                  &none        &none    &kp LEFT       &kp DOWN          &kp UP          &kp RIGHT      &none
-&kp LCTRL  &none  &none  &none    &none                  &none        &none    &kp LC(LEFT)   &kp LC(LA(DOWN))  &kp LC(LA(UP))  &kp LC(RIGHT)  &none
-                         &kp ESC  &ht_kp_kp LSHIFT CAPS  &kp SPACE    &kp RET  &ht_mo_to 4 4  &none
+&trans   &none  &none  &none    &none   &none   &none   &kp HOME      &kp LC(LS(DOWN))  &kp LC(LS(UP))  &kp END        &none
+&trans   &none  &none  &none    &none   &none   &none   &kp LEFT      &kp DOWN          &kp UP          &kp RIGHT      &none
+&trans   &none  &none  &none    &none   &none   &none   &kp LC(LEFT)  &kp LC(LA(DOWN))  &kp LC(LA(UP))  &kp LC(RIGHT)  &none
+                       &trans   &trans  &trans  &trans  &trans        &none
             >;
         };
 
         adj_layer {
             bindings = <
-&tog 7      &none         &none         &none         &none         &none           &none  &none  &none  &none  &none  &studio_unlock
-&none       &none         &none         &none         &none         &none           &none  &none  &none  &none  &none  &sys_reset
-&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &none  &none  &none  &none  &none  &none
-                                        &none         &none         &none           &none  &none  &none
+&none       &none         &none         &none         &none         &none           &none   &none   &none  &none  &none  &studio_unlock
+&none       &none         &none         &none         &none         &none           &none   &none   &none  &none  &none  &sys_reset
+&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &none   &none   &none  &none  &none  &none
+                                        &trans        &trans        &trans          &trans  &trans  &trans
             >;
         };
 
         numpad {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans    &trans     &kp KP_N7  &kp KP_N8  &kp KP_N9  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans     &kp KP_N4  &kp KP_N5  &kp KP_N6  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &kp KP_N0  &kp KP_N1  &kp KP_N2  &kp KP_N3  &trans  &trans
-                        &trans  &trans  &trans    &trans     &trans     &trans
+&none  &none  &none  &none   &none   &none    &none     &kp KP_N7  &kp KP_N8  &kp KP_N9  &none  &none
+&none  &none  &none  &none   &none   &none    &none     &kp KP_N4  &kp KP_N5  &kp KP_N6  &none  &none
+&none  &none  &none  &none   &none   &none    &none     &kp KP_N1  &kp KP_N2  &kp KP_N3  &none  &none
+                     &trans  &trans  &trans   &trans    &trans     &kp KP_N0
             >;
-        };
-
-        colemak_flag {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-                        &trans  &trans  &trans    &trans  &trans  &trans
-            >;
-        };
-    };
-
-    conditional_layers {
-        compatible = "zmk,conditional-layers";
-
-        colemak {
-            if-layers = <0 7>;
-            then-layer = <1>;
         };
     };
 };
