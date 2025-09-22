@@ -117,15 +117,6 @@
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
 
-        ht_nxtwin_kp: ht_nxtwin_kp {
-            compatible = "zmk,behavior-hold-tap";
-            label = "HT_NXTWIN_KP";
-            bindings = <&next_window>, <&kp>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-        };
-
         hrl: hrl {
             compatible = "zmk,behavior-hold-tap";
             label = "HRL";
@@ -348,8 +339,8 @@
         };
 
         l_next_window {
-            bindings = <&ht_nxtwin_kp 0 LA(TAB)>;
-            key-positions = <14 15 16>;
+            bindings = <&kp LA(TAB)>;
+            key-positions = <14 16 15>;
             require-prior-idle-ms = <150>;
         };
 
@@ -374,28 +365,6 @@
             bindings = <&kp COLON &kp EQUAL>;
             label = "DELPHI_EQUAL";
         };
-
-        next_window: next_window {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&kp LA(TAB)>,
-                <&macro_press>,
-                <&kp LALT>,
-                <&macro_pause_for_release>,
-                <&macro_release>,
-                <&kp LALT>;
-
-            label = "NEXT_WINDOW";
-        };
-
-        moins: insert {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp INS>, <&macro_pause_for_release>, <&kp INS>;
-
-            label = "INSERT";
-        };
     };
 
     keymap {
@@ -403,10 +372,10 @@
 
         qwerty_layer {
             bindings = <
-&gresc     &kp Q         &kp W         &kp E        &kp R           &kp T        &kp Y    &kp U          &kp I        &kp O         &kp P                 &kp BACKSLASH
-&kp LALT   &hrl LCTRL A  &hrl LSHFT S  &hrl LALT D  &hrl LGUI F     &kp G        &kp H    &hrr RGUI J    &hrr RALT K  &hrr RSHFT L  &hrr RCTRL SEMICOLON  &kp SQT
-&kp LCTRL  &kp Z         &kp X         &kp C        &kp V           &kp B        &kp N    &kp M          &kp COMMA    &kp DOT       &kp SLASH             &mm_tilde_circ
-                                       &moins       &mt LSHFT CAPS  &kp SPACE    &kp RET  &ht_mo_to 4 4  &kp K_CMENU
+&gresc     &kp Q         &kp W         &kp E              &kp R           &kp T        &kp Y    &kp U          &kp I        &kp O         &kp P                 &kp BACKSLASH
+&kp LALT   &hrl LCTRL A  &hrl LSHFT S  &hrl LALT D        &hrl LGUI F     &kp G        &kp H    &hrr RGUI J    &hrr RALT K  &hrr RSHFT L  &hrr RCTRL SEMICOLON  &kp SQT
+&kp LCTRL  &kp Z         &kp X         &kp C              &kp V           &kp B        &kp N    &kp M          &kp COMMA    &kp DOT       &kp SLASH             &mm_tilde_circ
+                                       &ht_kp_kp INS ESC  &mt LSHFT CAPS  &kp SPACE    &kp RET  &ht_mo_to 4 4  &kp K_CMENU
             >;
         };
 
