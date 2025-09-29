@@ -415,10 +415,10 @@
 
         dev_layer {
             bindings = <
-&trans  &none  &none  &none   &none   &none     &kp RC(HOME)  &kp HOME  &kp LC(LA(DOWN))  &kp LC(LA(UP))  &kp END    &kp RC(END)
-&trans  &none  &none  &none   &none   &none     &kp LC(LEFT)  &kp LEFT  &kp DOWN          &kp UP          &kp RIGHT  &kp LC(RIGHT)
-&trans  &none  &none  &none   &none   &none     &none         &none     &none             &none           &none      &none
-                      &trans  &trans  &trans    &trans        &trans    &none
+&trans  &none            &none             &none             &none            &none     &kp RC(HOME)  &kp HOME        &kp LC(LA(DOWN))  &kp LC(LA(UP))  &kp END           &kp RC(END)
+&trans  &hrl LCTRL LEFT  &hrl LSHIFT DOWN  &hrl LEFT_ALT UP  &hrl RGUI RIGHT  &none     &kp LC(LEFT)  &hrl RGUI LEFT  &hrl RALT DOWN    &hrl RSHFT UP   &hrl RCTRL RIGHT  &kp LC(RIGHT)
+&trans  &none            &none             &none             &none            &none     &none         &none           &none             &none           &none             &none
+                                           &trans            &trans           &trans    &trans        &trans          &none
             >;
         };
 
