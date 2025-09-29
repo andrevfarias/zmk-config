@@ -200,13 +200,13 @@
         };
 
         l_to_E_layer {
-            bindings = <&ht_mo_to 5 5>;
+            bindings = <&ht_mo_to 1 1>;
             key-positions = <25 27>;
             require-prior-idle-ms = <150>;
         };
 
         r_to_E_layer {
-            bindings = <&ht_mo_to 5 5>;
+            bindings = <&ht_mo_to 1 1>;
             key-positions = <34 32>;
             require-prior-idle-ms = <150>;
         };
