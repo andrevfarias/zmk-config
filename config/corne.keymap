@@ -148,7 +148,8 @@
         mm_grave: mm_grave {
             compatible = "zmk,behavior-mod-morph";
             label = "MM_GRAVE";
-            bindings = <&kp GRAVE>;
+            bindings = <&kp GRAVE>, <&none>;
+
             #binding-cells = <0>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
