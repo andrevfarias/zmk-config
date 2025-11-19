@@ -363,6 +363,16 @@
             require-prior-idle-ms = <150>;
             timeout-ms = <40>;
         };
+
+        caps {
+            bindings = <&kp CAPS>;
+            key-positions = <14 21>;
+        };
+
+        k_app {
+            bindings = <&kp K_APP>;
+            key-positions = <30 31>;
+        };
     };
 
     macros {
@@ -386,10 +396,10 @@
 
         qwerty_layer {
             bindings = <
-&gresc     &kp Q         &kp W         &kp E              &kp R           &kp T        &kp Y    &kp U          &kp I        &kp O         &kp P                 &kp BACKSLASH
-&kp LALT   &hrl LCTRL A  &hrl LSHFT S  &hrl LALT D        &hrl LGUI F     &kp G        &kp H    &hrr RGUI J    &hrr RALT K  &hrr RSHFT L  &hrr RCTRL SEMICOLON  &kp SQT
-&kp LCTRL  &kp Z         &kp X         &kp C              &kp V           &kp B        &kp N    &kp M          &kp COMMA    &kp DOT       &kp SLASH             &mm_tilde_circ
-                                       &ht_kp_kp INS ESC  &mt LSHFT CAPS  &kp SPACE    &kp RET  &ht_mo_to 4 4  &kp K_CMENU
+&gresc              &kp Q         &kp W         &kp E          &kp R          &kp T        &kp Y    &kp U          &kp I          &kp O         &kp P                 &kp BACKSLASH
+&ht_kp_kp INS CAPS  &hrl LCTRL A  &hrl LSHFT S  &hrl LALT D    &hrl LGUI F    &kp G        &kp H    &hrr RGUI J    &hrr RALT K    &hrr RSHFT L  &hrr RCTRL SEMICOLON  &kp SQT
+&kp LCTRL           &kp Z         &kp X         &kp C          &kp V          &kp B        &kp N    &kp M          &kp COMMA      &kp DOT       &kp SLASH             &mm_tilde_circ
+                                                &ht_mo_to 2 2  &ht_mo_to 4 4  &kp SPACE    &kp RET  &ht_mo_to 4 4  &ht_mo_to 2 2
             >;
         };
 
@@ -404,10 +414,10 @@
 
         fn_num_layer {
             bindings = <
-&trans  &kp F1         &kp F2         &kp F3        &kp F4        &kp C_PREV          &none                      &kp N7         &kp N8        &kp N9         &kp KP_DIVIDE     &kp KP_MULTIPLY
-&trans  &hrl LCTRL F5  &hrl LSHFT F6  &hrl LALT F7  &hrl LGUI F8  &kp C_NEXT          &ht_colonequal_kp 0 EQUAL  &hrr RGUI N4   &hrr RALT N5  &hrr RSHFT N6  &hrr RCTRL COMMA  &kp MINUS
-&trans  &kp F9         &kp F10        &kp F11       &kp F12       &kp C_PLAY_PAUSE    &kp MINUS                  &kp N1         &kp N2        &kp N3         &kp DOT           &kp PLUS
-                                      &trans        &trans        &trans              &trans                     &ht_mo_to 4 4  &kp N0
+&trans  &kp F1         &kp F2         &kp F3        &kp F4        &kp C_PREV          &kp MINUS                  &kp N7        &kp N8        &kp N9         &kp KP_DIVIDE     &kp KP_MULTIPLY
+&trans  &hrl LCTRL F5  &hrl LSHFT F6  &hrl LALT F7  &hrl LGUI F8  &kp C_NEXT          &ht_colonequal_kp 0 EQUAL  &hrr RGUI N4  &hrr RALT N5  &hrr RSHFT N6  &hrr RCTRL COMMA  &kp MINUS
+&trans  &kp F9         &kp F10        &kp F11       &kp F12       &kp C_PLAY_PAUSE    &kp N0                     &kp N1        &kp N2        &kp N3         &kp DOT           &kp PLUS
+                                      &trans        &trans        &trans              &trans                     &trans        &trans
             >;
         };
 
@@ -425,7 +435,7 @@
 &trans  &none            &none             &none             &none            &none     &kp RC(HOME)  &kp HOME        &kp LC(LA(DOWN))  &kp LC(LA(UP))  &kp END           &kp RC(END)
 &trans  &hrl LCTRL LEFT  &hrl LSHIFT DOWN  &hrl LEFT_ALT UP  &hrl RGUI RIGHT  &none     &kp LC(LEFT)  &hrl RGUI LEFT  &hrl RALT DOWN    &hrl RSHFT UP   &hrl RCTRL RIGHT  &kp LC(RIGHT)
 &trans  &none            &none             &none             &none            &none     &none         &none           &kp RC(DOWN)      &kp LC(UP)      &none             &none
-                                           &trans            &trans           &trans    &trans        &trans          &none
+                                           &trans            &trans           &trans    &trans        &trans          &trans
             >;
         };
 
@@ -440,10 +450,10 @@
 
         numpad {
             bindings = <
-&none  &none  &none  &none   &none   &none     &none   &kp KP_N7  &kp KP_N8  &kp KP_N9  &none  &none
-&none  &none  &none  &none   &none   &none     &none   &kp KP_N4  &kp KP_N5  &kp KP_N6  &none  &none
-&none  &none  &none  &none   &none   &none     &none   &kp KP_N1  &kp KP_N2  &kp KP_N3  &none  &none
-                     &trans  &trans  &trans    &trans  &trans     &kp KP_N0
+&none  &none  &none  &none   &none   &none     &none            &kp KP_N7  &kp KP_N8  &kp KP_N9  &none  &none
+&none  &none  &none  &none   &none   &none     &none            &kp KP_N4  &kp KP_N5  &kp KP_N6  &none  &none
+&none  &none  &none  &none   &none   &none     &kp KP_NUMBER_0  &kp KP_N1  &kp KP_N2  &kp KP_N3  &none  &none
+                     &trans  &trans  &trans    &trans           &trans     &trans
             >;
         };
     };
