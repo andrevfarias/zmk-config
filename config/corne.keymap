@@ -144,6 +144,14 @@
             hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38>;
             hold-while-undecided;
         };
+
+        mm_grave: mm_grave {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_GRAVE";
+            bindings = <&kp GRAVE>;
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
     };
 
     combos {
@@ -398,7 +406,7 @@
             bindings = <
 &gresc              &kp Q         &kp W         &kp E          &kp R          &kp T        &kp Y    &kp U          &kp I          &kp O         &kp P                 &kp BACKSLASH
 &ht_kp_kp INS CAPS  &hrl LCTRL A  &hrl LSHFT S  &hrl LALT D    &hrl LGUI F    &kp G        &kp H    &hrr RGUI J    &hrr RALT K    &hrr RSHFT L  &hrr RCTRL SEMICOLON  &kp SQT
-&kp LCTRL           &kp Z         &kp X         &kp C          &kp V          &kp B        &kp N    &kp M          &kp COMMA      &kp DOT       &kp SLASH             &mm_tilde_circ
+&mm_grave           &kp Z         &kp X         &kp C          &kp V          &kp B        &kp N    &kp M          &kp COMMA      &kp DOT       &kp SLASH             &mm_tilde_circ
                                                 &ht_mo_to 2 2  &ht_mo_to 4 4  &kp SPACE    &kp RET  &ht_mo_to 4 4  &ht_mo_to 2 2
             >;
         };
