@@ -171,13 +171,13 @@
         };
 
         l_to_B_layer {
-            bindings = <&ht_mo_to 0 0>;
+            bindings = <&ht_mo_to 2 2>;
             key-positions = <2 4>;
             require-prior-idle-ms = <150>;
         };
 
         r_to_B_layer {
-            bindings = <&ht_mo_to 0 0>;
+            bindings = <&ht_mo_to 2 2>;
             key-positions = <7 9>;
             require-prior-idle-ms = <150>;
         };
@@ -195,13 +195,13 @@
         };
 
         l_to_D_layer {
-            bindings = <&ht_mo_to 2 2>;
+            bindings = <&ht_mo_to 0 0>;
             key-positions = <14 16>;
             require-prior-idle-ms = <150>;
         };
 
         r_to_D_layer {
-            bindings = <&ht_mo_to 2 2>;
+            bindings = <&ht_mo_to 0 0>;
             key-positions = <19 21>;
             require-prior-idle-ms = <150>;
         };
