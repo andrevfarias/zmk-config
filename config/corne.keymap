@@ -204,18 +204,6 @@
             require-prior-idle-ms = <150>;
         };
 
-        l_to_F_layer {
-            bindings = <&ht_mo_to 5 5>;
-            key-positions = <28 26>;
-            require-prior-idle-ms = <150>;
-        };
-
-        r_to_F_layer {
-            bindings = <&ht_mo_to 5 5>;
-            key-positions = <31 33>;
-            require-prior-idle-ms = <150>;
-        };
-
         /* RIGHT SYMBOLS */
 
         r_lbrkt {
@@ -389,9 +377,9 @@
 
         qwerty_layer {
             bindings = <
-&gresc              &kp Q         &kp W         &kp E          &kp R        &kp T            &kp Y          &kp U        &kp I          &kp O         &kp P                 &kp BACKSLASH
+&gresc              &kp Q         &kp W         &kp E          &kp R        &kp T            &kp Y          &kp U        &kp I          &kp O         &kp P                 &kp MINUS
 &ht_kp_kp INS CAPS  &hrl LCTRL A  &hrl LSHFT S  &hrl LALT D    &hrl LGUI F  &kp G            &kp H          &hrr RGUI J  &hrr RALT K    &hrr RSHFT L  &hrr RCTRL SEMICOLON  &kp SQT
-&mm_grave           &kp Z         &kp X         &kp C          &kp V        &kp B            &kp N          &kp M        &kp COMMA      &kp DOT       &kp SLASH             &mm_tilde_circ
+&kp BSLH            &kp Z         &kp X         &kp C          &kp V        &kp B            &kp N          &kp M        &kp COMMA      &kp DOT       &kp SLASH             &mm_tilde_circ
                                                 &ht_mo_to 1 1  &kp SPACE    &ht_mo_to 3 3    &ht_mo_to 3 3  &kp ENTER    &ht_mo_to 1 1
             >;
         };
@@ -407,19 +395,19 @@
 
         sym_layer {
             bindings = <
-&kp F1  &kp F1    &kp F2  &kp F3    &kp F4      &kp F5         &kp F6     &kp F7    &kp F8    &kp F9                &kp F10                &kp F11
-&trans  &kp EXCL  &kp AT  &kp HASH  &kp DOLLAR  &kp PERCENT    &kp CARET  &kp AMPS  &kp STAR  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp F12
-&trans  &kp N1    &kp N2  &kp N3    &kp N4      &kp N5         &kp N6     &kp N7    &kp N8    &kp N9                &kp N0                 &trans
-                          &trans    &trans      &trans         &trans     &trans    &trans
+&trans    &kp F1    &kp F2  &kp F3    &kp F4      &kp F5         &kp F6     &kp F7    &kp F8    &kp F9                &kp F10                &kp F11
+&kp LBKT  &kp EXCL  &kp AT  &kp HASH  &kp DOLLAR  &kp PERCENT    &kp CARET  &kp AMPS  &kp STAR  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp F12
+&kp RBKT  &kp N1    &kp N2  &kp N3    &kp N4      &kp N5         &kp N6     &kp N7    &kp N8    &kp N9                &kp N0                 &trans
+                            &trans    &trans      &trans         &trans     &trans    &trans
             >;
         };
 
         dev_layer {
             bindings = <
-&trans  &none            &none             &none             &none            &none     &kp RC(HOME)  &kp HOME        &kp LC(LA(DOWN))  &kp LC(LA(UP))  &kp END           &kp RC(END)
-&trans  &hrl LCTRL LEFT  &hrl LSHIFT DOWN  &hrl LEFT_ALT UP  &hrl RGUI RIGHT  &none     &kp LC(LEFT)  &hrr RGUI LEFT  &hrr RALT DOWN    &hrr RSHFT UP   &hrr RCTRL RIGHT  &kp LC(RIGHT)
-&trans  &none            &none             &none             &none            &none     &none         &none           &kp RC(DOWN)      &kp LC(UP)      &none             &none
-                                           &trans            &trans           &trans    &trans        &trans          &trans
+&kp LC(HOME)  &kp HOME         &kp LS(LC(DOWN))  &kp LC(LS(UP))    &kp END          &none          &kp RC(HOME)  &kp HOME        &kp RC(RS(DOWN))  &kp RS(RC(UP))  &kp END           &none
+&trans        &hrl LCTRL LEFT  &hrl LSHIFT DOWN  &hrl LEFT_ALT UP  &hrl RGUI RIGHT  &none          &none         &hrr RGUI LEFT  &hrr RALT DOWN    &hrr RSHFT UP   &hrr RCTRL RIGHT  &none
+&kp LC(END)   &kp LC(LEFT)     &kp LC(LA(DOWN))  &kp LC(LA(UP))    &kp LC(RIGHT)    &kp LC(END)    &kp RC(END)   &kp RC(LEFT)    &kp RC(RA(DOWN))  &kp RA(RC(UP))  &kp RC(RIGHT)     &kp RC(END)
+                                                 &trans            &trans           &trans         &trans        &trans          &trans
             >;
         };
 
@@ -429,15 +417,6 @@
 &none       &none         &none         &none         &none         &none           &none   &none   &none   &none  &none  &sys_reset
 &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &none   &none   &none   &none  &none  &none
                                         &trans        &trans        &trans          &trans  &trans  &trans
-            >;
-        };
-
-        numpad {
-            bindings = <
-&none  &none  &none  &none   &none   &none     &none            &kp KP_N7  &kp KP_N8  &kp KP_N9  &none  &none
-&none  &none  &none  &none   &none   &none     &none            &kp KP_N4  &kp KP_N5  &kp KP_N6  &none  &none
-&none  &none  &none  &none   &none   &none     &kp KP_NUMBER_0  &kp KP_N1  &kp KP_N2  &kp KP_N3  &none  &none
-                     &trans  &trans  &trans    &trans           &trans     &trans
             >;
         };
     };
