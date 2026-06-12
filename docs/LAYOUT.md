@@ -1,7 +1,40 @@
 # Corne 42 — Layout Delphi + uso geral (ABNT2)
 
 > Branch `layout-redesign` · SO alvo: **Windows em Português (Brasil) ABNT2**
-> Fonte: [`config/corne.keymap`](../config/corne.keymap) · Diagramas: [keymap.svg](keymap.svg) (combos de comando) e [keymap_completo.svg](keymap_completo.svg) (inclui thumb-chords)
+> Fonte: [`config/corne.keymap`](../config/corne.keymap)
+
+## Ferramentas de visualização
+
+### keyboard-layout-editor.com (stickers)
+
+Dois arquivos, um por layout base — são a arte para impressão dos stickers:
+
+| Arquivo | Conteúdo |
+|---------|----------|
+| [`kle_qwerty.json`](kle_qwerty.json) | base QWERTY + as 6 layers nas legendas |
+| [`kle_colemak.json`](kle_colemak.json) | base COLEMAK-DH + as 6 layers nas legendas |
+
+**Importar:** <https://www.keyboard-layout-editor.com/> → ☰ → *Import* → *JSON* (arquivo inteiro).
+**Convenção por tecla:** centro = base · centro-baixo = hold (HRM/polegar) · topo-centro = shift ·
+frente da tecla = CONFIG (nos polegares, a dica "tap = trava") ·
+cantos/laterais: **TL**=NUM **BL**=FN **TR**=NAV **BR**=PROG_SYM **CL**=NORM_SYM (**CR** livre).
+**Regenerar** após mudar o keymap: `python docs/gen_kle.py` (edite as tabelas no topo do script).
+
+### keymap-drawer (diagrama de referência)
+
+| Arquivo | Conteúdo |
+|---------|----------|
+| [`keymap.svg`](keymap.svg) | diagrama completo: 8 layers + combos (sem thumb-chords) |
+| [`keymap.yaml`](keymap.yaml) | fonte do diagrama (edite e redesenhe) |
+| [`keymap_drawer_config.yaml`](keymap_drawer_config.yaml) | legendas ABNT2/Delphi |
+
+**No site** <https://keymap-drawer.streamlit.app/>: cole o [`keymap.yaml`](keymap.yaml) na aba principal
+e o [`keymap_drawer_config.yaml`](keymap_drawer_config.yaml) na aba *Configuration*.
+Os combos aparecem só na layer relevante: gerais/edição/janelas na **QWERTY**, Delphi na **NAV**;
+os thumb-chords de símbolos não são desenhados (espelham as layers PROG_SYM/NORM_SYM).
+**Regenerar** após mudar o keymap: `python docs/gen_drawer.py` (requer `pip install keymap-drawer`).
+
+---
 
 ## Mapa de posições
 
@@ -18,15 +51,17 @@
 |---|-------|--------|------------|
 | 0 | QWERTY | base default | |
 | 1 | COLEMAK-DH | GoTo na CONFIG | toggle *por cima* do QWERTY; só as letras mudam |
-| 2 | NAV | polegar externo (hold/tap) · combo 26+28 / 31+33 | espelhada; setas seguram/repetem |
-| 3 | NUM | polegar interno (hold/tap) · combo 2+4 / 7+9 | numpad espelhado por dedo |
+| 2 | NAV | polegar **interno** (hold/tap) · combo 26+28 / 31+33 | espelhada; setas seguram/repetem |
+| 3 | NUM | polegar **externo** (hold/tap) · combo 2+4 / 7+9 | numpad espelhado por dedo |
 | 4 | FN | combo 27+29 / 30+32 | F-keys nas posições dos números |
 | 5 | CONFIG | combo 0+11 | BT, reset, bootloader, Studio, troca de base |
-| 6 | PROG_SYM | combo 15+17 / 18+20 · thumb-chord externo | símbolos de programação |
-| 7 | NORM_SYM | combo 3+5 / 6+8 · thumb-chord interno | shift-número + AltGr |
+| 6 | PROG_SYM | combo 15+17 / 18+20 · thumb-chord **interno** | símbolos de programação |
+| 7 | NORM_SYM | combo 3+5 / 6+8 · thumb-chord **externo** | shift-número + AltGr |
 
-**Polegares:** `36/41` = NAV, `38/39` = NUM (hold = momentâneo, tap = trava). `37` = Space, `40` = Enter (puros, seguram/repetem).
-**Voltar à base:** combo `14+16` / `19+21` (`base_reset`) — desliga todas as funções e cai na base setada (QWERTY **ou** COLEMAK), de qualquer estado.
+**Polegares:** `38/39` (internos) = **NAV** · `36/41` (externos) = **NUM** (hold = momentâneo, tap = trava).
+`37` = Space, `40` = Enter (puros, seguram/repetem).
+**Voltar à base:** combo `14+16` / `19+21` (`base_reset`) — desliga todas as funções e cai na base setada
+(QWERTY **ou** COLEMAK), de qualquer estado.
 
 ---
 
@@ -38,7 +73,7 @@
  '       Q      W      E      R      T        Y      U      I      O      P      ´` ✝
 Caps/⇧   A/Ctl  S/Sft  D/Alt  F/Gui  G        H      J/Gui  K/Alt  L/Sft  ç/Ctl  ~^ ✝
  \       Z      X      C      V      B        N      M      ,      .      ;:     /?
-                [NAV]  [Spc]  [NUM]           [NUM]  [Ent]  [NAV]
+                [NUM]  [Spc]  [NAV]           [NAV]  [Ent]  [NUM]
 ```
 ✝ = tecla morta (compõe acento com a próxima letra). `X/Y` = tap/hold (home row mods).
 
@@ -160,8 +195,8 @@ Parâmetros: `timeout-ms` 30–50 (quase-simultâneo) · `require-prior-idle-ms`
 
 ### Thumb-chords de símbolos (polegar + tecla, quase-simultâneo)
 
-- **Polegar EXTERNO (36/41) + tecla da mesma metade** → símbolo de **PROG_SYM** naquela posição
-- **Polegar INTERNO (38/39) + tecla da mesma metade** → símbolo de **NORM_SYM** naquela posição
+- **Polegar INTERNO (38/39) + tecla da mesma metade** → símbolo de **PROG_SYM** naquela posição
+- **Polegar EXTERNO (36/41) + tecla da mesma metade** → símbolo de **NORM_SYM** naquela posição
 - Segurar o polegar (>40 ms antes da tecla) = layer momentânea normal; o chord só dispara em pressão quase-simultânea
 
 ---
@@ -176,13 +211,3 @@ Parâmetros: `timeout-ms` 30–50 (quase-simultâneo) · `require-prior-idle-ms`
 | require-prior-idle-ms | 150 | digitação corrida nunca vira mod |
 | hold-trigger-key-positions | allowlist | direita: só metade oposta; **esquerda: metade oposta + W R T S D F G Z X C V B** → Ctrl/Gui+C/V/X etc. com uma mão |
 | hold-trigger-on-release | on | permite encadear mods (Ctrl+Shift+A, Ctrl+Alt+L) |
-
-## Ferramentas de visualização
-
-- **keyboard-layout-editor.com** → ☰ → *Import* → *JSON* → [`keyboard-layout-editor.json`](keyboard-layout-editor.json)
-- **keymap-drawer.streamlit.app** → cole o [`config/corne.keymap`](../config/corne.keymap) (ou a URL do repo/branch) na aba principal e o [`keymap_drawer_config.yaml`](keymap_drawer_config.yaml) na aba *Configuration* — ou use os artefatos já gerados: [`keymap.yaml`](keymap.yaml) / [`keymap.svg`](keymap.svg) / [`keymap_completo.svg`](keymap_completo.svg)
-- Regenerar localmente:
-  ```
-  python -m keymap_drawer -c docs/keymap_drawer_config.yaml parse -z config/corne.keymap -o docs/keymap.yaml
-  python -m keymap_drawer -c docs/keymap_drawer_config.yaml draw docs/keymap.yaml -o docs/keymap_completo.svg
-  ```

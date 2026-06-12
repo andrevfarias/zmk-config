@@ -1,0 +1,100 @@
+[
+ {
+  "name": "Corne 42 — COLEMAK-DH (Delphi + ABNT2)",
+  "notes": "Legendas: centro = base | centro-baixo = hold | topo-centro = shift | frente = CONFIG\nCantos/laterais: TL=NUM  BL=FN  TR=NAV  BR=PROG_SYM  CL=NORM_SYM\nPolegares: internos = NAV (hold) + PROG_SYM (chord) · externos = NUM (hold) + NORM_SYM (chord)\nImportar em https://www.keyboard-layout-editor.com/ -> ☰ -> Import -> JSON"
+ },
+ [
+  {
+   "c": "#ffffff",
+   "fa": [
+    2,
+    2,
+    2,
+    2,
+    0,
+    0,
+    2,
+    2,
+    2,
+    4,
+    2,
+    1
+   ]
+  },
+  "*\n<i class='kb kb-Multimedia-Play-Pause'></i>\n\n\n\n\nº\n\n\"\n'\n\nStu",
+  "/\n\n<i class='kb kb-Multimedia-Play'></i>\n<\n\n\nª\n\n\nQ",
+  "9\nF9\n<i class='kb kb-Arrows-Top-4'></i>\n{\n\n\n_\n\n\nW\n\n→Q",
+  "8\nF8\n<i class='kb kb-Arrows-Bottom-4'></i>\n[\n\n\n*\n\n\nF\n\n→C",
+  "7\nF7\n<i class='kb kb-Multimedia-Back'></i>\n(\n\n\n&\n\n\nP",
+  "\nF12\n<i class='kb kb-Arrows-Top-3'></i>\n/\n\n\n§\n\n\nB",
+  {
+   "x": 1
+  },
+  "\nF12\n<i class='kb kb-Arrows-Top-3'></i>\n/\n\n\n§\n\n\nJ",
+  "7\nF7\n<i class='kb kb-Multimedia-Back'></i>\n(\n\n\n&\n\n\nL\n\nUSB",
+  "8\nF8\n<i class='kb kb-Arrows-Bottom-4'></i>\n[\n\n\n*\n\n\nU\n\nBLE",
+  "9\nF9\n<i class='kb kb-Arrows-Top-4'></i>\n{\n\n\n_\n\n\nY",
+  "/\n\n<i class='kb kb-Multimedia-Play'></i>\n<\n\n\nª\n\n\nç",
+  "*\n<i class='kb kb-Multimedia-Play-Pause'></i>\n\n\n\n\nº\n\n`\n´\n\nBOOT"
+ ],
+ [
+  "-\n<i class='kb kb-Multimedia-Rewind-Start'></i>\n⇧\n\n\n\n¬\n\n\n⇪\n⇧",
+  ".\nMute\n<i class='kb kb-Arrows-Right'></i>\n>\n\n\n£\n\n\nA\nCtrl",
+  "6\nF6\n<i class='kb kb-Arrows-Up'></i>\n}\n\n\n¨\n\n\nR\n⇧",
+  "5\nF5\n<i class='kb kb-Arrows-Down'></i>\n]\n\n\n%\n\n\nS\n⌥",
+  "4\nF4\n<i class='kb kb-Arrows-Left'></i>\n)\n\n\n$\n\n\nT\n❖",
+  "=\nF11\nI⇄M\n\\\n\n\n°\n\n\nG",
+  {
+   "x": 1
+  },
+  "=\nF11\nI⇄M\n\\\n\n\n°\n\n\nM",
+  "4\nF4\n<i class='kb kb-Arrows-Left'></i>\n)\n\n\n$\n\n\nN\n❖",
+  "5\nF5\n<i class='kb kb-Arrows-Down'></i>\n]\n\n\n%\n\n\nE\n⌥",
+  "6\nF6\n<i class='kb kb-Arrows-Up'></i>\n}\n\n\n¨\n\n\nI\n⇧",
+  ".\nMute\n<i class='kb kb-Arrows-Right'></i>\n>\n\n\n£\n\n\nO\nCtrl",
+  "-\n<i class='kb kb-Multimedia-Rewind-Start'></i>\n⇧\n\n\n\n¬\n\n^\n~\n\nRST"
+ ],
+ [
+  "+\n<i class='kb kb-Multimedia-FastForward-End'></i>\n<i class='kb kb-Arrows-Bottom-3'></i>\n:=\n\n\n³\n\n|\n\\\n\nBT0",
+  ",\n\n<i class='kb kb-Line-End'></i>\n:\n\n\n²\n\n\nZ\n\nBT1",
+  "3\nF3\n<i class='kb kb-Multimedia-Up'></i>\n=\n\n\n#\n\n\nX\n\nBT2",
+  "2\nF2\n<i class='kb kb-Multimedia-Down'></i>\n'\n\n\n@\n\n\nC\n\nBT3",
+  "1\nF1\n<i class='kb kb-Line-Start'></i>\n\"\n\n\n!\n\n\nD\n\nBT4",
+  "0\nF10\n→imp\n|\n\n\n¹\n\n\nV",
+  {
+   "x": 1
+  },
+  "0\nF10\n→imp\n|\n\n\n¹\n\n\nK",
+  "1\nF1\n<i class='kb kb-Line-Start'></i>\n\"\n\n\n!\n\n\nH",
+  "2\nF2\n<i class='kb kb-Multimedia-Down'></i>\n'\n\n\n@\n\n<\n,",
+  "3\nF3\n<i class='kb kb-Multimedia-Up'></i>\n=\n\n\n#\n\n>\n.",
+  ",\n\n<i class='kb kb-Line-End'></i>\n:\n\n\n²\n\n:\n;",
+  "+\n<i class='kb kb-Multimedia-FastForward-End'></i>\n<i class='kb kb-Arrows-Bottom-3'></i>\n:=\n\n\n³\n\n?\n/\n\nBTCLR"
+ ],
+ [
+  {
+   "x": 3
+  },
+  "\n\n\n\n\n\nNorm\n\n\nNum\n\ntap = trava",
+  {
+   "a": 7
+  },
+  "⎵",
+  {
+   "a": 4
+  },
+  "\n\n\nProg\n\n\n\n\n\nNav\n\ntap = trava",
+  {
+   "x": 1
+  },
+  "\n\n\nProg\n\n\n\n\n\nNav\n\ntap = trava",
+  {
+   "a": 7
+  },
+  "⏎",
+  {
+   "a": 4
+  },
+  "\n\n\n\n\n\nNorm\n\n\nNum\n\ntap = trava"
+ ]
+]
