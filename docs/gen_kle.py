@@ -13,14 +13,18 @@ Convenção de posições da legenda em cada tecla (KLE, alinhamento padrão):
 """
 import json
 
-# Ícones da fonte "keyboard-font" do KLE
+# Ícones da fonte "keyboard-font" do KLE.
+# Convenção de setas (mesma do layout antigo): triângulos sólidos = caractere/
+# linha; setas finas = palavra (horiz.) e método (vert.); barra = Home/End;
+# diagonais = início/fim do arquivo.
 I = lambda name: f"<i class='kb kb-{name}'></i>"
-AR_L, AR_D, AR_U, AR_R = I("Arrows-Left"), I("Arrows-Down"), I("Arrows-Up"), I("Arrows-Right")
-W_BK, W_FW = I("Multimedia-Back"), I("Multimedia-Play")          # palavra ← / →
-PGUP, PGDN = I("Arrows-Top-4"), I("Arrows-Bottom-4")
-FTOP, FEND = I("Arrows-Top-3"), I("Arrows-Bottom-3")             # início / fim do arquivo
+AR_L, AR_D = I("Multimedia-Back"), I("Multimedia-Down")           # ← ↓ (caractere/linha)
+AR_U, AR_R = I("Multimedia-Up"), I("Multimedia-Play")             # ↑ →
+W_BK, W_FW = I("Arrows-Left"), I("Arrows-Right")                  # palavra ← / →
+MET_U, MET_D = I("Arrows-Up"), I("Arrows-Down")                   # método ↑ / ↓
+PGUP, PGDN = I("Arrows-Top-4"), I("Arrows-Bottom-4")              # PgUp / PgDn
+FTOP, FEND = I("Arrows-Top-3"), I("Arrows-Bottom-3")              # início / fim do arquivo
 LIN_S, LIN_E = I("Line-Start"), I("Line-End")                     # Home / End
-MET_U, MET_D = I("Multimedia-Up"), I("Multimedia-Down")           # método ↑ / ↓
 PP, PREV, NEXT = I("Multimedia-Play-Pause"), I("Multimedia-Rewind-Start"), I("Multimedia-FastForward-End")
 
 E = ""
