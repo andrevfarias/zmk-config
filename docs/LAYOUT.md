@@ -13,8 +13,10 @@ Dois arquivos, um por layout base — são a arte para impressão dos stickers:
 |---------|----------|
 | [`kle_qwerty.json`](kle_qwerty.json) | base QWERTY + as 6 layers nas legendas |
 | [`kle_colemak.json`](kle_colemak.json) | base COLEMAK-DH + as 6 layers nas legendas |
+| [`kle_permalinks.md`](kle_permalinks.md) | links que abrem os layouts direto no site |
 
-**Importar:** <https://www.keyboard-layout-editor.com/> → ☰ → *Import* → *JSON* (arquivo inteiro).
+**Importar:** <https://www.keyboard-layout-editor.com/> → ☰ → *Import* → *JSON* (arquivo inteiro) —
+ou use os permalinks acima.
 **Convenção por tecla:** centro = base · centro-baixo = hold (HRM/polegar) · topo-centro = shift ·
 frente da tecla = CONFIG (nos polegares, a dica "tap = trava") ·
 cantos/laterais: **TL**=NUM **BL**=FN **TR**=NAV **BR**=PROG_SYM **CL**=NORM_SYM (**CR** livre).
@@ -28,11 +30,14 @@ cantos/laterais: **TL**=NUM **BL**=FN **TR**=NAV **BR**=PROG_SYM **CL**=NORM_SYM
 | [`keymap.svg`](keymap.svg) | diagrama completo: 8 layers + combos (sem thumb-chords) |
 | [`keymap.yaml`](keymap.yaml) | fonte do diagrama (edite e redesenhe) |
 | [`keymap_drawer_config.yaml`](keymap_drawer_config.yaml) | legendas ABNT2/Delphi |
+| [`keymap_drawer_permalink.md`](keymap_drawer_permalink.md) | link que abre o diagrama direto no site |
 
-**No site** <https://keymap-drawer.streamlit.app/>: cole o [`keymap.yaml`](keymap.yaml) na aba principal
-e o [`keymap_drawer_config.yaml`](keymap_drawer_config.yaml) na aba *Configuration*.
+**No site** <https://keymap-drawer.streamlit.app/>: use o permalink acima, ou cole o
+[`keymap.yaml`](keymap.yaml) na aba principal e o [`keymap_drawer_config.yaml`](keymap_drawer_config.yaml)
+na aba *Configuration*.
 Os combos aparecem só na layer relevante: gerais/edição/janelas na **QWERTY**, Delphi na **NAV**;
 os thumb-chords de símbolos não são desenhados (espelham as layers PROG_SYM/NORM_SYM).
+Teclas herdadas da base aparecem **esmaecidas com a tecla efetiva** (sem ▽).
 **Regenerar** após mudar o keymap: `python docs/gen_drawer.py` (requer `pip install keymap-drawer`).
 
 ---

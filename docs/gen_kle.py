@@ -95,10 +95,62 @@ def build(base, name):
     return rows
 
 
+# ---------- Permalink do KLE (formato do hash, validado contra exemplo real) ----------
+
+def _esc(s):
+    return "".join("/" + ch if ch in "=&;@:_/" else ch for ch in s)
+
+
+def _enc_item(it):
+    if isinstance(it, str):
+        return "=" + _esc(it)
+    parts = []
+    for k, v in it.items():
+        if isinstance(v, list):
+            parts.append(k + "@" + "&".join(f":{e:g}" for e in v) + ";")
+        elif isinstance(v, (int, float)):
+            parts.append(f"{k}:{v:g}")
+        else:
+            parts.append(k + "=" + _esc(str(v)))
+    return "_" + "&".join(parts) + ";"
+
+
+def permalink(rows):
+    from urllib.parse import quote
+    body = "@" + "&".join(
+        "@" + "&".join(_enc_item(i) for i in row) + ";"
+        for row in rows if isinstance(row, list)
+    )
+    return ("https://www.keyboard-layout-editor.com/##"
+            + quote(body.rstrip(";"), safe="&=@:_!'()*,~$-+."))
+
+
+def _selftest():
+    row = [{"x": 3, "a": 7}, "Top Left", "⎵", "Top Right", {"x": 1}, "Top Right", "⏎", "Top Left"]
+    got = permalink([row])
+    want = ("https://www.keyboard-layout-editor.com/##@@_x:3&a:7%3B&=Top%20Left&="
+            "%E2%8E%B5&=Top%20Right&_x:1%3B&=Top%20Right&=%E2%8F%8E&=Top%20Left")
+    assert got == want, f"permalink (estrutura):\n{got}\n{want}"
+    leg = permalink([["F1\nF1\n<i class='kb kb-Line-Start'></i>\n\n\n\n\n\n\nQ"]])
+    want_leg = ("https://www.keyboard-layout-editor.com/##@@=F1%0AF1%0A%3Ci%20class"
+                "%2F='kb%20kb-Line-Start'%3E%3C%2F%2Fi%3E%0A%0A%0A%0A%0A%0A%0AQ")
+    assert leg == want_leg, f"permalink (legenda):\n{leg}\n{want_leg}"
+
+
+_selftest()
+
+links = ["# Permalinks do keyboard-layout-editor.com",
+         "", "Gerado por `docs/gen_kle.py` — links abrem o layout direto no site.", ""]
 for fname, base, name in [
     ("docs/kle_qwerty.json", BASE_Q, "Corne 42 — QWERTY (Delphi + ABNT2)"),
     ("docs/kle_colemak.json", BASE_C, "Corne 42 — COLEMAK-DH (Delphi + ABNT2)"),
 ]:
+    rows = build(base, name)
     with open(fname, "w", encoding="utf-8") as f:
-        json.dump(build(base, name), f, ensure_ascii=False, indent=1)
+        json.dump(rows, f, ensure_ascii=False, indent=1)
+    links += [f"## {name}", "", f"[Abrir no KLE]({permalink(rows)})", ""]
     print(f"{fname} ok")
+
+with open("docs/kle_permalinks.md", "w", encoding="utf-8") as f:
+    f.write("\n".join(links))
+print("docs/kle_permalinks.md ok")

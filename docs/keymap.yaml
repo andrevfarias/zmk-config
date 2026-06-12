@@ -63,7 +63,7 @@ layers:
   - t: NUM
     h: tap=trava
   COLEMAK:
-  - t: ▽
+  - t: ''''
     type: trans
   - Q
   - W
@@ -75,9 +75,11 @@ layers:
   - U
   - Y
   - ç
-  - t: ▽
+  - t: ´
+    s: '`'
     type: trans
-  - t: ▽
+  - t: CAPS
+    h: LSHFT
     type: trans
   - t: A
     h: LCTRL
@@ -97,9 +99,11 @@ layers:
     h: RSHFT
   - t: O
     h: RCTRL
-  - t: ▽
+  - t: '~'
+    s: ^
     type: trans
-  - t: ▽
+  - t: \
+    s: '|'
     type: trans
   - Z
   - X
@@ -108,25 +112,31 @@ layers:
   - V
   - K
   - H
-  - t: ▽
+  - t: ','
     type: trans
-  - t: ▽
+  - t: .
     type: trans
-  - t: ▽
+  - t: ;
+    s: ':'
     type: trans
-  - t: ▽
+  - t: /
+    s: '?'
     type: trans
-  - t: ▽
+  - t: NUM
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: ␣
     type: trans
-  - t: ▽
+  - t: NAV
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: NAV
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: ⏎
     type: trans
-  - t: ▽
+  - t: NUM
+    h: tap=trava
     type: trans
   NAV:
   - ''
@@ -165,17 +175,21 @@ layers:
   - método ↑
   - END
   - fim arq.
-  - t: ▽
+  - t: NUM
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: ␣
     type: trans
-  - t: ▽
+  - t: NAV
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: NAV
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: ⏎
     type: trans
-  - t: ▽
+  - t: NUM
+    h: tap=trava
     type: trans
   NUM:
   - '*'
@@ -214,17 +228,21 @@ layers:
   - '3'
   - ','
   - +
-  - t: ▽
+  - t: NUM
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: ␣
     type: trans
-  - t: ▽
+  - t: NAV
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: NAV
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: ⏎
     type: trans
-  - t: ▽
+  - t: NUM
+    h: tap=trava
     type: trans
   FN:
   - PP
@@ -268,17 +286,21 @@ layers:
   - F3
   - ''
   - NEXT
-  - t: ▽
+  - t: NUM
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: ␣
     type: trans
-  - t: ▽
+  - t: NAV
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: NAV
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: ⏎
     type: trans
-  - t: ▽
+  - t: NUM
+    h: tap=trava
     type: trans
   CONFIG:
   - Studio
@@ -323,11 +345,11 @@ layers:
   - ''
   - BT CLR
   - ''
-  - t: ▽
+  - t: ␣
     type: trans
   - ''
   - ''
-  - t: ▽
+  - t: ⏎
     type: trans
   - ''
   PROG_SYM:
@@ -371,17 +393,21 @@ layers:
   - '='
   - ':'
   - :=
-  - t: ▽
+  - t: NUM
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: ␣
     type: trans
-  - t: ▽
+  - t: NAV
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: NAV
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: ⏎
     type: trans
-  - t: ▽
+  - t: NUM
+    h: tap=trava
     type: trans
   NORM_SYM:
   - º
@@ -420,17 +446,21 @@ layers:
   - '#'
   - ²
   - ³
-  - t: ▽
+  - t: NUM
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: ␣
     type: trans
-  - t: ▽
+  - t: NAV
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: NAV
+    h: tap=trava
     type: trans
-  - t: ▽
+  - t: ⏎
     type: trans
-  - t: ▽
+  - t: NUM
+    h: tap=trava
     type: trans
 combos:
 - p:
@@ -839,3 +869,11 @@ combos:
   - NAV
   align: bottom
   offset: 1.2
+draw_config:
+  key_w: 64
+  key_h: 60
+  combo_w: 30
+  combo_h: 26
+  n_columns: 1
+  separate_combo_diagrams: false
+  dark_mode: auto
