@@ -234,29 +234,31 @@
         COMBO(alttab_l, &kp LA(TAB),       2 3 4, 30, 150)
         COMBO(alttab_r, &kp LA(TAB),       7 8 9, 30, 150)
 
-        /* ---------- Delphi: compilação / debug / refactor (row inferior) ---------- */
-        COMBO(f9_l,   &kp F9,        28 29,    40, 150)
+        /* ---------- Delphi (tudo na row inferior + polegares) ----------
+         * Par adjacente = comando base; par + polegar INTERNO (38/39) =
+         * variante com modificador; par + polegar EXTERNO (36/41) = mover linha. */
+        COMBO(f9_l,   &kp F9,        28 29,    40, 150)  /* Debugar / continuar    */
         COMBO(f9_r,   &kp F9,        30 31,    40, 150)
-        COMBO(f8_l,   &kp F8,        27 28,    40, 150)
+        COMBO(cf9_l,  &kp LC(F9),    38 28 29, 50, 150)  /* Compilar               */
+        COMBO(cf9_r,  &kp LC(F9),    39 30 31, 50, 150)
+        COMBO(f8_l,   &kp F8,        27 28,    40, 150)  /* Step over              */
         COMBO(f8_r,   &kp F8,        31 32,    40, 150)
-        COMBO(f7_l,   &kp F7,        26 27,    40, 150)
+        COMBO(sf8_l,  &kp LS(F8),    38 27 28, 50, 150)  /* Executar até retorno   */
+        COMBO(sf8_r,  &kp LS(F8),    39 31 32, 50, 150)
+        COMBO(f7_l,   &kp F7,        26 27,    40, 150)  /* Step into              */
         COMBO(f7_r,   &kp F7,        32 33,    40, 150)
-        COMBO(sf8_l,  &kp LS(F8),    25 26,    40, 150)
-        COMBO(sf8_r,  &kp LS(F8),    33 34,    40, 150)
-        COMBO(cf9_l,  &kp LC(F9),    24 25,    40, 150)
-        COMBO(cf9_r,  &kp LC(F9),    34 35,    40, 150)
-        COMBO(cf7_l,  &kp LC(F7),    14 27 28, 40, 150)
-        COMBO(cf7_r,  &kp LC(F7),    21 31 32, 40, 150)
-        COMBO(af5_l,  &kp LA(F5),    16 26 27, 40, 150)
-        COMBO(af5_r,  &kp LA(F5),    19 32 33, 40, 150)
-        COMBO(csa_l,  &kp LC(LS(A)), 16 25 26, 40, 150)
-        COMBO(csa_r,  &kp LC(LS(A)), 19 33 34, 40, 150)
-        COMBO(cal_l,  &kp LC(LA(L)),  4 14 15, 40, 150)
-        COMBO(cal_r,  &kp LC(LA(L)),  7 20 21, 40, 150)
-        COMBO(mvup_l, &kp DX_MOVE_UP, 3 4 14,  40, 150)
-        COMBO(mvup_r, &kp DX_MOVE_UP, 7 8 21,  40, 150)
-        COMBO(mvdn_l, &kp DX_MOVE_DN, 3 4 13,  40, 150)
-        COMBO(mvdn_r, &kp DX_MOVE_DN, 7 8 22,  40, 150)
+        COMBO(cf7_l,  &kp LC(F7),    38 26 27, 50, 150)  /* Avaliar / modificar    */
+        COMBO(cf7_r,  &kp LC(F7),    39 32 33, 50, 150)
+        COMBO(af5_l,  &kp LA(F5),    25 26,    40, 150)  /* Inspecionar            */
+        COMBO(af5_r,  &kp LA(F5),    33 34,    40, 150)
+        COMBO(csa_l,  &kp LC(LS(A)), 38 25 26, 50, 150)  /* Add unit ao uses       */
+        COMBO(csa_r,  &kp LC(LS(A)), 39 33 34, 50, 150)
+        COMBO(cal_l,  &kp LC(LA(L)), 24 25,    40, 150)  /* Renomear (CnPack)      */
+        COMBO(cal_r,  &kp LC(LA(L)), 34 35,    40, 150)
+        COMBO(mvup_l, &kp DX_MOVE_UP, 36 26 27, 50, 150) /* Mover linha acima      */
+        COMBO(mvup_r, &kp DX_MOVE_UP, 41 32 33, 50, 150)
+        COMBO(mvdn_l, &kp DX_MOVE_DN, 36 27 28, 50, 150) /* Mover linha abaixo     */
+        COMBO(mvdn_r, &kp DX_MOVE_DN, 41 31 32, 50, 150)
 
         /* ---------- Thumb-chords: PROG_SYM (polegar interno 38/39) ----------
          * Mesmas posições da layer PROG_SYM — muscle memory transfere.       */

@@ -594,13 +594,13 @@ combos:
 - p:
   - 5
   - 17
-  k: ⎋
+  k: Esc
   l:
   - QWERTY
 - p:
   - 6
   - 18
-  k: ⎋
+  k: Esc
   l:
   - QWERTY
 - p:
@@ -684,191 +684,171 @@ combos:
 - p:
   - 28
   - 29
-  k: F9
+  k: Debugar
   l:
   - NAV
-  align: bottom
-  offset: 0.4
 - p:
   - 30
   - 31
-  k: F9
+  k: Debugar
   l:
   - NAV
+- p:
+  - 38
+  - 28
+  - 29
+  k: Compilar
+  l:
+  - PROG_SYM
   align: bottom
-  offset: 0.4
+  offset: 1.2
+- p:
+  - 39
+  - 30
+  - 31
+  k: Compilar
+  l:
+  - PROG_SYM
+  align: bottom
+  offset: 1.2
 - p:
   - 27
   - 28
-  k: F8
+  k: Step over
   l:
   - NAV
-  align: bottom
-  offset: 0.4
 - p:
   - 31
   - 32
-  k: F8
+  k: Step over
   l:
   - NAV
+- p:
+  - 38
+  - 27
+  - 28
+  k: Até retorno
+  l:
+  - PROG_SYM
   align: bottom
-  offset: 0.4
+  offset: 1.9
+- p:
+  - 39
+  - 31
+  - 32
+  k: Até retorno
+  l:
+  - PROG_SYM
+  align: bottom
+  offset: 1.9
 - p:
   - 26
   - 27
-  k: F7
+  k: Step into
   l:
   - NAV
-  align: bottom
-  offset: 0.4
 - p:
   - 32
   - 33
-  k: F7
+  k: Step into
   l:
   - NAV
+- p:
+  - 38
+  - 26
+  - 27
+  k: Avaliar
+  l:
+  - NORM_SYM
   align: bottom
-  offset: 0.4
+  offset: 1.2
+- p:
+  - 39
+  - 32
+  - 33
+  k: Avaliar
+  l:
+  - NORM_SYM
+  align: bottom
+  offset: 1.2
 - p:
   - 25
   - 26
-  k: ⇧F8
+  k: Inspecionar
   l:
   - NAV
-  align: bottom
-  offset: 0.4
 - p:
   - 33
   - 34
-  k: ⇧F8
+  k: Inspecionar
   l:
   - NAV
+- p:
+  - 38
+  - 25
+  - 26
+  k: Add uses
+  l:
+  - NORM_SYM
   align: bottom
-  offset: 0.4
+  offset: 1.9
+- p:
+  - 39
+  - 33
+  - 34
+  k: Add uses
+  l:
+  - NORM_SYM
+  align: bottom
+  offset: 1.9
 - p:
   - 24
   - 25
-  k: ⌃F9
+  k: Renomear
   l:
   - NAV
-  align: bottom
-  offset: 0.4
 - p:
   - 34
   - 35
-  k: ⌃F9
+  k: Renomear
   l:
   - NAV
-  align: bottom
-  offset: 0.4
 - p:
-  - 14
+  - 36
+  - 26
+  - 27
+  k: Mover ln↑
+  l:
+  - CONFIG
+  align: bottom
+  offset: 1.2
+- p:
+  - 41
+  - 32
+  - 33
+  k: Mover ln↑
+  l:
+  - CONFIG
+  align: bottom
+  offset: 1.2
+- p:
+  - 36
   - 27
   - 28
-  k: ⌃F7
+  k: Mover ln↓
   l:
-  - PROG_SYM
+  - CONFIG
   align: bottom
-  offset: 0.4
+  offset: 1.9
 - p:
-  - 21
+  - 41
   - 31
   - 32
-  k: ⌃F7
-  l:
-  - PROG_SYM
-  align: bottom
-  offset: 0.4
-- p:
-  - 16
-  - 26
-  - 27
-  k: ⌥F5
-  l:
-  - PROG_SYM
-  align: bottom
-  offset: 1.2
-- p:
-  - 19
-  - 32
-  - 33
-  k: ⌥F5
-  l:
-  - PROG_SYM
-  align: bottom
-  offset: 1.2
-- p:
-  - 16
-  - 25
-  - 26
-  k: ⌃⇧A
-  l:
-  - NORM_SYM
-  align: bottom
-  offset: 0.4
-- p:
-  - 19
-  - 33
-  - 34
-  k: ⌃⇧A
-  l:
-  - NORM_SYM
-  align: bottom
-  offset: 0.4
-- p:
-  - 4
-  - 14
-  - 15
-  k: ⌃⌥L
-  l:
-  - NORM_SYM
-  align: top
-  offset: 0.4
-- p:
-  - 7
-  - 20
-  - 21
-  k: ⌃⌥L
-  l:
-  - NORM_SYM
-  align: top
-  offset: 0.4
-- p:
-  - 3
-  - 4
-  - 14
-  k: ln↑
-  l:
-  - CONFIG
-  align: top
-  offset: 0.4
-- p:
-  - 7
-  - 8
-  - 21
-  k: ln↑
-  l:
-  - CONFIG
-  align: top
-  offset: 0.4
-- p:
-  - 3
-  - 4
-  - 13
-  k: ln↓
+  k: Mover ln↓
   l:
   - CONFIG
   align: bottom
-  offset: 0.4
-- p:
-  - 7
-  - 8
-  - 22
-  k: ln↓
-  l:
-  - CONFIG
-  align: bottom
-  offset: 0.4
+  offset: 1.9
 draw_config:
   key_w: 64
   key_h: 60

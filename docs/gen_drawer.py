@@ -6,15 +6,17 @@ partir do config/corne.keymap. Rode após qualquer mudança no keymap:
 
 - Remove os thumb-chords de símbolos do diagrama (eles espelham as layers
   PROG_SYM/NORM_SYM — mostrar as layers basta).
+- Combos Delphi recebem o NOME DA FUNÇÃO (Compilar, Debugar...) por posição.
 - Espalha os combos pelos 8 diagramas, um grupo por layer, p/ nada sobrepor:
     QWERTY=edição · COLEMAK=troca de layer · NUM=abas · FN=janelas ·
-    NAV=Delphi (pares) · PROG_SYM=inspeção · NORM_SYM=refactor · CONFIG=mover linha
-- Alinha os grupos para fora do teclado (topo/base) para não cobrir as teclas.
+    NAV=Delphi base · PROG_SYM=compilar/até retorno · NORM_SYM=avaliar/uses ·
+    CONFIG=mover linha
 - Substitui as teclas transparentes (▽) pela tecla efetiva (estilo esmaecido).
-- Gera docs/keymap_drawer_permalink.md com o link direto do diagrama.
+- Atualiza o permalink dentro do LAYOUT.md (marcadores DRAWER_LINK).
 """
 import base64
 import gzip
+import re
 import subprocess
 import sys
 from urllib.parse import quote
@@ -28,25 +30,52 @@ DRAW = [sys.executable, "-m", "keymap_drawer", "-c", CONFIG,
         "draw", "docs/keymap.yaml", "-o", "docs/keymap.svg"]
 
 THUMBS = {36, 38, 39, 41}
-EDICAO = {"⇥", "⌦", "⌫", "⇤", "⎋", "⏎"}                      # -> QWERTY
+EDICAO = {"⇥", "⌦", "⌫", "⇤", "Esc", "⏎"}                    # -> QWERTY
 ACESSO = {"BASE", "NAV", "NUM", "FN", "PSym", "NSym"}        # -> COLEMAK
 ABAS = {"⌃⇥", "⌃⇧⇥"}                                         # -> NUM
 TELAS = {"⌥⇥", "❖⇥"}                                         # -> FN
-DELPHI_PARES = {"F9", "F8", "F7", "⇧F8", "⌃F9"}              # -> NAV
-INSPECAO = {"⌃F7", "⌥F5"}                                    # -> PROG_SYM
-REFACTOR = {"⌃⇧A", "⌃⌥L"}                                    # -> NORM_SYM
-MOVER = {"ln↑", "ln↓"}                                       # -> CONFIG
+
+# Combos Delphi: nome da função por posições (esq. e dir.)
+DELPHI = {
+    frozenset({28, 29}): "Debugar",        frozenset({30, 31}): "Debugar",
+    frozenset({38, 28, 29}): "Compilar",   frozenset({39, 30, 31}): "Compilar",
+    frozenset({27, 28}): "Step over",      frozenset({31, 32}): "Step over",
+    frozenset({38, 27, 28}): "Até retorno", frozenset({39, 31, 32}): "Até retorno",
+    frozenset({26, 27}): "Step into",      frozenset({32, 33}): "Step into",
+    frozenset({38, 26, 27}): "Avaliar",    frozenset({39, 32, 33}): "Avaliar",
+    frozenset({25, 26}): "Inspecionar",    frozenset({33, 34}): "Inspecionar",
+    frozenset({38, 25, 26}): "Add uses",   frozenset({39, 33, 34}): "Add uses",
+    frozenset({24, 25}): "Renomear",       frozenset({34, 35}): "Renomear",
+    frozenset({36, 26, 27}): "Mover ln↑",  frozenset({41, 32, 33}): "Mover ln↑",
+    frozenset({36, 27, 28}): "Mover ln↓",  frozenset({41, 31, 32}): "Mover ln↓",
+}
+DELPHI_LAYER = {                       # diagrama onde cada função é desenhada
+    "Debugar": "NAV", "Step over": "NAV", "Step into": "NAV",
+    "Inspecionar": "NAV", "Renomear": "NAV",
+    "Compilar": "PROG_SYM", "Até retorno": "PROG_SYM",
+    "Avaliar": "NORM_SYM", "Add uses": "NORM_SYM",
+    "Mover ln↑": "CONFIG", "Mover ln↓": "CONFIG",
+}
 
 km = yaml.safe_load(subprocess.run(PARSE, capture_output=True, check=True).stdout)
 
-# --- combos: filtra thumb-chords e distribui por relevância ---
+# --- combos: filtra thumb-chords de símbolo e distribui por relevância ---
 combos = []
 for c in km.get("combos", []):
-    if set(c["p"]) & THUMBS:          # thumb-chord de símbolo -> só nas layers
+    pos = frozenset(c["p"])
+    nome = DELPHI.get(pos)
+    if nome is None and pos & THUMBS:   # thumb-chord de símbolo -> só nas layers
         continue
     k = c["k"] if isinstance(c["k"], str) else c["k"].get("t", "")
-    big = len(c["p"]) >= 3
-    if k in EDICAO:
+    if nome:                            # Delphi: nome da função
+        c["k"] = nome
+        lay = DELPHI_LAYER[nome]
+        if len(pos) == 2:               # pares: pílula entre as teclas
+            c.update(l=[lay])
+        else:                           # acordes c/ polegar: abaixo dos thumbs
+            off = 1.2 if nome in {"Compilar", "Avaliar", "Mover ln↑"} else 1.9
+            c.update(l=[lay], align="bottom", offset=off)
+    elif k in EDICAO:
         c.update(l=["QWERTY"])
     elif k in ACESSO:
         c.update(l=["COLEMAK"])
@@ -55,15 +84,7 @@ for c in km.get("combos", []):
     elif k in ABAS:
         c.update(l=["NUM"], align="top", offset=0.2)
     elif k in TELAS:
-        c.update(l=["FN"], align="top", offset=1.0 if big else 0.2)
-    elif k in DELPHI_PARES:
-        c.update(l=["NAV"], align="bottom", offset=0.4)
-    elif k in INSPECAO:
-        c.update(l=["PROG_SYM"], align="bottom", offset=0.4 if k == "⌃F7" else 1.2)
-    elif k in REFACTOR:
-        c.update(l=["NORM_SYM"], align="top" if k == "⌃⌥L" else "bottom", offset=0.4)
-    elif k in MOVER:
-        c.update(l=["CONFIG"], align="top" if k == "ln↑" else "bottom", offset=0.4)
+        c.update(l=["FN"], align="top", offset=1.0 if len(pos) >= 3 else 0.2)
     combos.append(c)
 km["combos"] = combos
 
@@ -89,13 +110,14 @@ with open("docs/keymap.yaml", "w", encoding="utf-8") as f:
     yaml.dump(km, f, allow_unicode=True, sort_keys=False)
 subprocess.run(DRAW, check=True)
 
-# --- permalink: ?keymap_yaml = base64-urlsafe(gzip(yaml)) ---
+# --- permalink (?keymap_yaml = base64-urlsafe(gzip(yaml))) dentro do LAYOUT.md ---
 raw = open("docs/keymap.yaml", "rb").read()
 b64 = base64.urlsafe_b64encode(gzip.compress(raw, mtime=0)).decode()
 url = "https://caksoylar.github.io/keymap-drawer?keymap_yaml=" + quote(b64, safe="")
-with open("docs/keymap_drawer_permalink.md", "w", encoding="utf-8") as f:
-    f.write("# Permalink do keymap-drawer\n\n"
-            "Gerado por `docs/gen_drawer.py` — abre o diagrama direto no site.\n\n"
-            f"[Abrir no keymap-drawer]({url})\n")
+md = open("docs/LAYOUT.md", encoding="utf-8").read()
+md = re.sub(r"(<!-- DRAWER_LINK -->).*?(<!-- /DRAWER_LINK -->)",
+            lambda m: m.group(1) + f"[abrir no keymap-drawer]({url})" + m.group(2),
+            md, flags=re.S)
+open("docs/LAYOUT.md", "w", encoding="utf-8", newline="\n").write(md)
 print(f"docs/keymap.yaml ({len(combos)} combos), docs/keymap.svg e "
-      "docs/keymap_drawer_permalink.md gerados")
+      "permalink no LAYOUT.md gerados")

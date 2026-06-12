@@ -139,18 +139,22 @@ def _selftest():
 
 _selftest()
 
-links = ["# Permalinks do keyboard-layout-editor.com",
-         "", "Gerado por `docs/gen_kle.py` — links abrem o layout direto no site.", ""]
-for fname, base, name in [
-    ("docs/kle_qwerty.json", BASE_Q, "Corne 42 — QWERTY (Delphi + ABNT2)"),
-    ("docs/kle_colemak.json", BASE_C, "Corne 42 — COLEMAK-DH (Delphi + ABNT2)"),
+links = []
+for fname, base, name, rotulo in [
+    ("docs/kle_qwerty.json", BASE_Q, "Corne 42 — QWERTY (Delphi + ABNT2)", "QWERTY"),
+    ("docs/kle_colemak.json", BASE_C, "Corne 42 — COLEMAK-DH (Delphi + ABNT2)", "COLEMAK-DH"),
 ]:
     rows = build(base, name)
     with open(fname, "w", encoding="utf-8") as f:
         json.dump(rows, f, ensure_ascii=False, indent=1)
-    links += [f"## {name}", "", f"[Abrir no KLE]({permalink(rows)})", ""]
+    links.append(f"[abrir {rotulo} no KLE]({permalink(rows)})")
     print(f"{fname} ok")
 
-with open("docs/kle_permalinks.md", "w", encoding="utf-8") as f:
-    f.write("\n".join(links))
-print("docs/kle_permalinks.md ok")
+# Atualiza os permalinks dentro do LAYOUT.md (marcadores KLE_LINKS)
+import re
+md = open("docs/LAYOUT.md", encoding="utf-8").read()
+md = re.sub(r"(<!-- KLE_LINKS -->).*?(<!-- /KLE_LINKS -->)",
+            lambda m: m.group(1) + " · ".join(links) + m.group(2),
+            md, flags=re.S)
+open("docs/LAYOUT.md", "w", encoding="utf-8", newline="\n").write(md)
+print("permalinks no LAYOUT.md ok")

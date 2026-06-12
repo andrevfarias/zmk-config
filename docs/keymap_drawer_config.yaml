@@ -65,7 +65,7 @@ parse_config:
     "&kp TAB": "⇥"
     "&kp DEL": "⌦"
     "&kp BSPC": "⌫"
-    "&kp ESC": "⎋"
+    "&kp ESC": "Esc"
     "&kp RET": "⏎"
     "&kp SPACE": "␣"
     # --- Delphi ---
