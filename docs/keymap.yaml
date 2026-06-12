@@ -53,15 +53,15 @@ layers:
   - t: /
     s: '?'
   - t: NUM
-    h: hold=mo / tap=trava
-  - SPACE
+    h: tap=trava
+  - ␣
   - t: NAV
-    h: hold=mo / tap=trava
+    h: tap=trava
   - t: NAV
-    h: hold=mo / tap=trava
-  - RET
+    h: tap=trava
+  - ⏎
   - t: NUM
-    h: hold=mo / tap=trava
+    h: tap=trava
   COLEMAK:
   - t: ▽
     type: trans
@@ -448,67 +448,67 @@ combos:
 - p:
   - 2
   - 4
-  k: NUM ⇄
+  k: NUM
   l:
   - QWERTY
 - p:
   - 7
   - 9
-  k: NUM ⇄
+  k: NUM
   l:
   - QWERTY
 - p:
   - 26
   - 28
-  k: NAV ⇄
+  k: NAV
   l:
   - QWERTY
 - p:
   - 31
   - 33
-  k: NAV ⇄
+  k: NAV
   l:
   - QWERTY
 - p:
   - 3
   - 5
-  k: NORM_SYM ⇄
+  k: NSym
   l:
   - QWERTY
 - p:
   - 6
   - 8
-  k: NORM_SYM ⇄
+  k: NSym
   l:
   - QWERTY
 - p:
   - 15
   - 17
-  k: PROG_SYM ⇄
+  k: PSym
   l:
   - QWERTY
 - p:
   - 18
   - 20
-  k: PROG_SYM ⇄
+  k: PSym
   l:
   - QWERTY
 - p:
   - 27
   - 29
-  k: FN ⇄
+  k: FN
   l:
   - QWERTY
 - p:
   - 30
   - 32
-  k: FN ⇄
+  k: FN
   l:
   - QWERTY
 - p:
   - 0
   - 11
-  k: CONFIG ⇄
+  k: CFG
   l:
   - QWERTY
   align: top
@@ -516,79 +516,79 @@ combos:
 - p:
   - 13
   - 14
-  k: TAB
+  k: ⇥
   l:
   - QWERTY
 - p:
   - 21
   - 22
-  k: TAB
+  k: ⇥
   l:
   - QWERTY
 - p:
   - 14
   - 15
-  k: DEL
+  k: ⌦
   l:
   - QWERTY
 - p:
   - 20
   - 21
-  k: DEL
+  k: ⌦
   l:
   - QWERTY
 - p:
   - 15
   - 16
-  k: BSPC
+  k: ⌫
   l:
   - QWERTY
 - p:
   - 19
   - 20
-  k: BSPC
+  k: ⌫
   l:
   - QWERTY
 - p:
   - 16
   - 17
-  k: Shift+Tab
+  k: ⇤
   l:
   - QWERTY
 - p:
   - 18
   - 19
-  k: Shift+Tab
+  k: ⇤
   l:
   - QWERTY
 - p:
   - 5
   - 17
-  k: ESC
+  k: ⎋
   l:
   - QWERTY
 - p:
   - 6
   - 18
-  k: ESC
+  k: ⎋
   l:
   - QWERTY
 - p:
   - 4
   - 16
-  k: RET
+  k: ⏎
   l:
   - QWERTY
 - p:
   - 7
   - 19
-  k: RET
+  k: ⏎
   l:
   - QWERTY
 - p:
   - 4
   - 5
-  k: Win+Tab
+  k: ❖⇥
   l:
   - QWERTY
   align: top
@@ -596,7 +596,7 @@ combos:
 - p:
   - 6
   - 7
-  k: Win+Tab
+  k: ❖⇥
   l:
   - QWERTY
   align: top
@@ -604,7 +604,7 @@ combos:
 - p:
   - 3
   - 4
-  k: aba ←
+  k: ⌃⇧⇥
   l:
   - QWERTY
   align: top
@@ -612,7 +612,7 @@ combos:
 - p:
   - 7
   - 8
-  k: aba ←
+  k: ⌃⇧⇥
   l:
   - QWERTY
   align: top
@@ -620,7 +620,7 @@ combos:
 - p:
   - 2
   - 3
-  k: aba →
+  k: ⌃⇥
   l:
   - QWERTY
   align: top
@@ -628,7 +628,7 @@ combos:
 - p:
   - 8
   - 9
-  k: aba →
+  k: ⌃⇥
   l:
   - QWERTY
   align: top
@@ -637,7 +637,7 @@ combos:
   - 2
   - 3
   - 4
-  k: Alt+Tab
+  k: ⌥⇥
   l:
   - QWERTY
   align: top
@@ -646,7 +646,7 @@ combos:
   - 7
   - 8
   - 9
-  k: Alt+Tab
+  k: ⌥⇥
   l:
   - QWERTY
   align: top
@@ -658,7 +658,7 @@ combos:
   l:
   - NAV
   align: bottom
-  offset: 0.2
+  offset: 0.4
 - p:
   - 30
   - 31
@@ -666,7 +666,7 @@ combos:
   l:
   - NAV
   align: bottom
-  offset: 0.2
+  offset: 0.4
 - p:
   - 27
   - 28
@@ -674,7 +674,7 @@ combos:
   l:
   - NAV
   align: bottom
-  offset: 0.2
+  offset: 0.4
 - p:
   - 31
   - 32
@@ -682,7 +682,7 @@ combos:
   l:
   - NAV
   align: bottom
-  offset: 0.2
+  offset: 0.4
 - p:
   - 26
   - 27
@@ -690,7 +690,7 @@ combos:
   l:
   - NAV
   align: bottom
-  offset: 0.2
+  offset: 0.4
 - p:
   - 32
   - 33
@@ -698,144 +698,144 @@ combos:
   l:
   - NAV
   align: bottom
-  offset: 0.2
+  offset: 0.4
 - p:
   - 25
   - 26
-  k: Shift+F8
+  k: ⇧F8
   l:
   - NAV
   align: bottom
-  offset: 0.2
+  offset: 0.4
 - p:
   - 33
   - 34
-  k: Shift+F8
+  k: ⇧F8
   l:
   - NAV
   align: bottom
-  offset: 0.2
+  offset: 0.4
 - p:
   - 24
   - 25
-  k: Ctrl+F9
+  k: ⌃F9
   l:
   - NAV
   align: bottom
-  offset: 0.2
+  offset: 0.4
 - p:
   - 34
   - 35
-  k: Ctrl+F9
+  k: ⌃F9
   l:
   - NAV
   align: bottom
-  offset: 0.2
+  offset: 0.4
 - p:
   - 14
   - 27
   - 28
-  k: Ctrl+F7
+  k: ⌃F7
   l:
   - NAV
   align: bottom
-  offset: 1.0
+  offset: 1.2
 - p:
   - 21
   - 31
   - 32
-  k: Ctrl+F7
+  k: ⌃F7
   l:
   - NAV
   align: bottom
-  offset: 1.0
+  offset: 1.2
 - p:
   - 16
   - 26
   - 27
-  k: Alt+F5
+  k: ⌥F5
   l:
   - NAV
   align: bottom
-  offset: 1.0
+  offset: 1.2
 - p:
   - 19
   - 32
   - 33
-  k: Alt+F5
+  k: ⌥F5
   l:
   - NAV
   align: bottom
-  offset: 1.0
+  offset: 1.2
 - p:
   - 16
   - 25
   - 26
-  k: Ctrl+Sh+A
+  k: ⌃⇧A
   l:
   - NAV
   align: bottom
-  offset: 1.0
+  offset: 1.2
 - p:
   - 19
   - 33
   - 34
-  k: Ctrl+Sh+A
+  k: ⌃⇧A
   l:
   - NAV
   align: bottom
-  offset: 1.0
+  offset: 1.2
 - p:
   - 4
   - 14
   - 15
-  k: Ctrl+Alt+L
+  k: ⌃⌥L
   l:
   - NAV
   align: bottom
-  offset: 1.0
+  offset: 1.2
 - p:
   - 7
   - 20
   - 21
-  k: Ctrl+Alt+L
+  k: ⌃⌥L
   l:
   - NAV
   align: bottom
-  offset: 1.0
+  offset: 1.2
 - p:
   - 3
   - 4
   - 14
-  k: mover ln ↑
+  k: ln↑
   l:
   - NAV
   align: bottom
-  offset: 1.0
+  offset: 1.2
 - p:
   - 7
   - 8
   - 21
-  k: mover ln ↑
+  k: ln↑
   l:
   - NAV
   align: bottom
-  offset: 1.0
+  offset: 1.2
 - p:
   - 3
   - 4
   - 13
-  k: mover ln ↓
+  k: ln↓
   l:
   - NAV
   align: bottom
-  offset: 1.0
+  offset: 1.2
 - p:
   - 7
   - 8
   - 22
-  k: mover ln ↓
+  k: ln↓
   l:
   - NAV
   align: bottom
-  offset: 1.0
+  offset: 1.2

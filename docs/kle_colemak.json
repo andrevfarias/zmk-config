@@ -1,7 +1,7 @@
 [
  {
   "name": "Corne 42 — COLEMAK-DH (Delphi + ABNT2)",
-  "notes": "Legendas: centro = base | centro-baixo = hold | topo-centro = shift | frente = CONFIG\nCantos/laterais: TL=NUM  BL=FN  TR=NAV  BR=PROG_SYM  CL=NORM_SYM\nPolegares: internos = NAV (hold) + PROG_SYM (chord) · externos = NUM (hold) + NORM_SYM (chord)\nImportar em https://www.keyboard-layout-editor.com/ -> ☰ -> Import -> JSON"
+  "notes": "Legendas: centro = base | centro-baixo = hold (⌃ Ctrl · ⇧ Shift · ⌥ Alt · ❖ Win) | topo-centro = shift | frente = CONFIG\nCantos/laterais: TL=NUM  BL=FN  TR=NAV  BR=PROG_SYM  CL=NORM_SYM\nPolegares: internos = NAV (hold) + PROG_SYM (chord, canto BR) · externos = NUM (hold) + NORM_SYM (chord, canto BL)\nImportar em https://www.keyboard-layout-editor.com/ -> ☰ -> Import -> JSON"
  },
  [
   {
@@ -39,7 +39,7 @@
  ],
  [
   "-\n<i class='kb kb-Multimedia-Rewind-Start'></i>\n⇧\n\n\n\n¬\n\n\n⇪\n⇧",
-  ".\nMute\n<i class='kb kb-Arrows-Right'></i>\n>\n\n\n£\n\n\nA\nCtrl",
+  ".\nMute\n<i class='kb kb-Arrows-Right'></i>\n>\n\n\n£\n\n\nA\n⌃",
   "6\nF6\n<i class='kb kb-Arrows-Up'></i>\n}\n\n\n¨\n\n\nR\n⇧",
   "5\nF5\n<i class='kb kb-Arrows-Down'></i>\n]\n\n\n%\n\n\nS\n⌥",
   "4\nF4\n<i class='kb kb-Arrows-Left'></i>\n)\n\n\n$\n\n\nT\n❖",
@@ -51,7 +51,7 @@
   "4\nF4\n<i class='kb kb-Arrows-Left'></i>\n)\n\n\n$\n\n\nN\n❖",
   "5\nF5\n<i class='kb kb-Arrows-Down'></i>\n]\n\n\n%\n\n\nE\n⌥",
   "6\nF6\n<i class='kb kb-Arrows-Up'></i>\n}\n\n\n¨\n\n\nI\n⇧",
-  ".\nMute\n<i class='kb kb-Arrows-Right'></i>\n>\n\n\n£\n\n\nO\nCtrl",
+  ".\nMute\n<i class='kb kb-Arrows-Right'></i>\n>\n\n\n£\n\n\nO\n⌃",
   "-\n<i class='kb kb-Multimedia-Rewind-Start'></i>\n⇧\n\n\n\n¬\n\n^\n~\n\nRST"
  ],
  [
@@ -75,7 +75,7 @@
   {
    "x": 3
   },
-  "\n\n\n\n\n\nNorm\n\n\nNum\n\ntap = trava",
+  "\nNorm\n\n\n\n\n\n\n\nNum\n\ntap = trava",
   {
    "a": 7
   },
@@ -95,6 +95,6 @@
   {
    "a": 4
   },
-  "\n\n\n\n\n\nNorm\n\n\nNum\n\ntap = trava"
+  "\nNorm\n\n\n\n\n\n\n\nNum\n\ntap = trava"
  ]
 ]

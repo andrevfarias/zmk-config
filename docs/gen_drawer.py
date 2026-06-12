@@ -19,11 +19,10 @@ DRAW = [sys.executable, "-m", "keymap_drawer", "-c", "docs/keymap_drawer_config.
         "draw", "docs/keymap.yaml", "-o", "docs/keymap.svg"]
 
 THUMBS = {36, 38, 39, 41}
-JANELAS = {"Alt+Tab", "Win+Tab", "aba →", "aba ←"}
-DELPHI = {"F9", "F8", "F7", "Shift+F8", "Ctrl+F9", "Ctrl+F7", "Alt+F5",
-          "Ctrl+Sh+A", "Ctrl+Alt+L", "mover ln ↑", "mover ln ↓"}
-EDICAO = {"TAB", "DEL", "BSPC", "Shift+Tab", "ESC", "RET"}
-ACESSO = {"BASE", "NAV ⇄", "NUM ⇄", "FN ⇄", "PROG_SYM ⇄", "NORM_SYM ⇄"}
+JANELAS = {"⌥⇥", "❖⇥", "⌃⇥", "⌃⇧⇥"}
+DELPHI = {"F9", "F8", "F7", "⇧F8", "⌃F9", "⌃F7", "⌥F5", "⌃⇧A", "⌃⌥L", "ln↑", "ln↓"}
+EDICAO = {"⇥", "⌦", "⌫", "⇤", "⎋", "⏎"}
+ACESSO = {"BASE", "NAV", "NUM", "FN", "PSym", "NSym"}
 
 km = yaml.safe_load(subprocess.run(PARSE, capture_output=True, check=True).stdout)
 
@@ -36,10 +35,10 @@ for c in km.get("combos", []):
     if k in JANELAS:
         c.update(l=["QWERTY"], align="top", offset=1.0 if big else 0.2)
     elif k in DELPHI:
-        c.update(l=["NAV"], align="bottom", offset=1.0 if big else 0.2)
+        c.update(l=["NAV"], align="bottom", offset=1.2 if big else 0.4)
     elif k in EDICAO:
         c.update(l=["QWERTY"])
-    elif k == "CONFIG ⇄":
+    elif k == "CFG":
         c.update(l=["QWERTY"], align="top", offset=1.8)
     elif k in ACESSO:
         c.update(l=["QWERTY"])

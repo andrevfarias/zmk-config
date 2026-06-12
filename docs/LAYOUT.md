@@ -18,6 +18,7 @@ Dois arquivos, um por layout base — são a arte para impressão dos stickers:
 **Convenção por tecla:** centro = base · centro-baixo = hold (HRM/polegar) · topo-centro = shift ·
 frente da tecla = CONFIG (nos polegares, a dica "tap = trava") ·
 cantos/laterais: **TL**=NUM **BL**=FN **TR**=NAV **BR**=PROG_SYM **CL**=NORM_SYM (**CR** livre).
+**Glifos de mods:** ⌃ Ctrl · ⇧ Shift · ⌥ Alt · ❖ Win.
 **Regenerar** após mudar o keymap: `python docs/gen_kle.py` (edite as tabelas no topo do script).
 
 ### keymap-drawer (diagrama de referência)

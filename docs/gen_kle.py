@@ -31,8 +31,8 @@ BASE_C = ["'", "Q", "W", "F", "P", "B", "J", "L", "U", "Y", "ç", "´",
           "⇪", "A", "R", "S", "T", "G", "M", "N", "E", "I", "O", "~",
           "\\", "Z", "X", "C", "D", "V", "K", "H", ",", ".", ";", "/"]
 SHIFT = {0: '"', 11: "`", 23: "^", 24: "|", 32: "<", 33: ">", 34: ":", 35: "?"}
-HOLD = {12: "⇧", 13: "Ctrl", 14: "⇧", 15: "⌥", 16: "❖",
-        19: "❖", 20: "⌥", 21: "⇧", 22: "Ctrl"}
+HOLD = {12: "⇧", 13: "⌃", 14: "⇧", 15: "⌥", 16: "❖",
+        19: "❖", 20: "⌥", 21: "⇧", 22: "⌃"}
 NUM = ["*", "/", "9", "8", "7", E,   E, "7", "8", "9", "/", "*",
        "-", ".", "6", "5", "4", "=", "=", "4", "5", "6", ".", "-",
        "+", ",", "3", "2", "1", "0", "0", "1", "2", "3", ",", "+"]
@@ -70,12 +70,14 @@ def thumb(center, corner_slot, corner_text):
 
 def build(base, name):
     t_nav = thumb("Nav", 3, "Prog")    # interno: hold/tap NAV · chord PROG_SYM (BR)
-    t_num = thumb("Num", 6, "Norm")    # externo: hold/tap NUM · chord NORM_SYM (CL)
+    t_num = thumb("Num", 1, "Norm")    # externo: hold/tap NUM · chord NORM_SYM (BL)
     rows = [
         {"name": name,
-         "notes": ("Legendas: centro = base | centro-baixo = hold | topo-centro = shift | frente = CONFIG\n"
+         "notes": ("Legendas: centro = base | centro-baixo = hold (⌃ Ctrl · ⇧ Shift · ⌥ Alt · ❖ Win) | "
+                   "topo-centro = shift | frente = CONFIG\n"
                    "Cantos/laterais: TL=NUM  BL=FN  TR=NAV  BR=PROG_SYM  CL=NORM_SYM\n"
-                   "Polegares: internos = NAV (hold) + PROG_SYM (chord) · externos = NUM (hold) + NORM_SYM (chord)\n"
+                   "Polegares: internos = NAV (hold) + PROG_SYM (chord, canto BR) · "
+                   "externos = NUM (hold) + NORM_SYM (chord, canto BL)\n"
                    "Importar em https://www.keyboard-layout-editor.com/ -> ☰ -> Import -> JSON")},
         [{"c": "#ffffff", "fa": FA}] + [legend(i, base) for i in range(6)]
         + [{"x": 1}] + [legend(i, base) for i in range(6, 12)],
