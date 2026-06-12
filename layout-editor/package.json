@@ -1,0 +1,26 @@
+{
+  "name": "corne-layout-editor",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Editor visual de layout do Corne 42 — layers, combos e stickers, exportando arquivos funcional/visual para geração do keymap ZMK via agente de IA",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "fflate": "^0.8.2",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/test-utils": "^2.4.6",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7",
+    "vitest": "^2.1.8"
+  }
+}

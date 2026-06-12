@@ -23,3 +23,5 @@ Pode criar um terceiro layout simplificado, renderizando um conjunto de teclas p
 Coloque os links de acesso aos layouts gerados em LAYOUT.md.
 
 Skills do projeto (.claude/skills/): `zmk-keymap` (editar corne.keymap/corne.conf), `kle-stickers` (stickers do KLE) e `keymap-diagram` (diagramas keymap-drawer). Use-as sempre que mexer no firmware ou nos layouts de docs/.
+
+A pasta layout-editor/ contém a página web de configuração visual do layout (Vue 3 + Vite; `npm test` = vitest). Ela exporta functional.json (layers/bindings/combos — contrato lido pela IA para gerar o keymap ZMK) e visual.json (aparência). Ver layout-editor/README.md.
