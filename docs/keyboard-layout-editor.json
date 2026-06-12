@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Corne 42 — Delphi + ABNT2 (branch layout-redesign)",
+    "notes": "Legendas: topo-esquerda = tap | topo-direita = shift | frente da tecla = hold.\nCores: azul = mod-tap/HRM, amarelo = tecla morta, verde = polegar de layer, cinza = herdada/vazia, vermelho = ação crítica.\nComo importar: https://www.keyboard-layout-editor.com/ -> ☰ -> Import -> JSON (este arquivo inteiro), ou cole o conteúdo SEM os colchetes externos na aba Raw data."
+  },
+  [{"y":0.25,"w":13.5,"d":true,"f":6},"LAYER 0 — QWERTY (base)"],
+  [{"f":3},"'\n\n\"","Q","W","E","R","T",{"x":1.5},"Y","U","I","O","P",{"c":"#ffe599"},"´\n\n`"],
+  [{"c":"#cfe2f3"},"Caps\n\n\n\nShift","A\n\n\n\nCtrl","S\n\n\n\nShift","D\n\n\n\nAlt","F\n\n\n\nGui",{"c":"#fcfcfc"},"G",{"x":1.5},"H",{"c":"#cfe2f3"},"J\n\n\n\nGui","K\n\n\n\nAlt","L\n\n\n\nShift","ç\n\n\n\nCtrl",{"c":"#ffe599"},"~\n\n^"],
+  [{"c":"#fcfcfc"},"\\\n\n|","Z","X","C","V","B",{"x":1.5},"N","M",",",".",";\n\n:","/\n\n?"],
+  [{"x":3,"c":"#d9ead3"},"NAV\n\n\n\nhold=mo · tap=trava",{"c":"#fcfcfc"},"Space",{"c":"#d9ead3"},"NUM\n\n\n\nhold=mo · tap=trava",{"x":1.5},"NUM\n\n\n\nhold=mo · tap=trava",{"c":"#fcfcfc"},"Enter",{"c":"#d9ead3"},"NAV\n\n\n\nhold=mo · tap=trava"],
+
+  [{"y":0.5,"w":13.5,"d":true,"f":6,"c":"#cccccc"},"LAYER 1 — COLEMAK-DH (cinza = herdada do QWERTY)"],
+  [{"f":3,"c":"#e8e8e8"},"'\n\n\"",{"c":"#fcfcfc"},"Q","W","F","P","B",{"x":1.5},"J","L","U","Y","ç",{"c":"#e8e8e8"},"´\n\n`"],
+  ["Caps\n\n\n\nShift",{"c":"#cfe2f3"},"A\n\n\n\nCtrl","R\n\n\n\nShift","S\n\n\n\nAlt","T\n\n\n\nGui",{"c":"#fcfcfc"},"G",{"x":1.5},"M",{"c":"#cfe2f3"},"N\n\n\n\nGui","E\n\n\n\nAlt","I\n\n\n\nShift","O\n\n\n\nCtrl",{"c":"#e8e8e8"},"~\n\n^"],
+  ["\\\n\n|",{"c":"#fcfcfc"},"Z","X","C","D","V",{"x":1.5},"K","H",{"c":"#e8e8e8"},",",".",";\n\n:","/\n\n?"],
+  [{"x":3},"NAV","Space","NUM",{"x":1.5},"NUM","Enter","NAV"],
+
+  [{"y":0.5,"w":13.5,"d":true,"f":6,"c":"#cccccc"},"LAYER 2 — NAV (fluxo por coluna; setas seguram/repetem)"],
+  [{"f":3,"c":"#e8e8e8"},"",{"c":"#fcfcfc"},"⌃→\n\n\n\npalavra","PgUp","PgDn","⌃←\n\n\n\npalavra","⌃Home\n\n\n\ninício arq.",{"x":1.5},"⌃Home\n\n\n\ninício arq.","⌃←\n\n\n\npalavra","PgDn","PgUp","⌃→\n\n\n\npalavra",{"c":"#e8e8e8"},""],
+  [{"c":"#fcfcfc"},"Shift","→","↑","↓","←","intf↔impl",{"x":1.5},"intf↔impl","←","↓","↑","→","Shift"],
+  ["⌃End\n\n\n\nfim arq.","End","método ↑","método ↓","Home","ir p/ impl.",{"x":1.5},"ir p/ impl.","Home","método ↓","método ↑","End","⌃End\n\n\n\nfim arq."],
+  [{"x":3,"c":"#efefef"},"▽","▽","▽",{"x":1.5},"▽","▽","▽"],
+
+  [{"y":0.5,"w":13.5,"d":true,"f":6,"c":"#cccccc"},"LAYER 3 — NUM (numpad espelhado por dedo)"],
+  [{"f":3,"c":"#fcfcfc"},"*","/","9","8","7",{"c":"#e8e8e8"},"",{"x":1.5},"",{"c":"#fcfcfc"},"7","8","9","/","*"],
+  ["-",".","6","5","4","=",{"x":1.5},"=","4","5","6",".","-"],
+  ["+",",","3","2","1","0",{"x":1.5},"0","1","2","3",",","+"],
+  [{"x":3,"c":"#efefef"},"▽","▽","▽",{"x":1.5},"▽","▽","▽"],
+
+  [{"y":0.5,"w":13.5,"d":true,"f":6,"c":"#cccccc"},"LAYER 4 — FN (F-keys nas posições dos números)"],
+  [{"f":3,"c":"#fcfcfc"},"⏯",{"c":"#e8e8e8"},"",{"c":"#fcfcfc"},"F9","F8","F7","F12",{"x":1.5},"F12","F7","F8","F9",{"c":"#e8e8e8"},"",{"c":"#fcfcfc"},"⏯"],
+  ["⏮",{"c":"#cfe2f3"},"Mute\n\n\n\nCtrl","F6\n\n\n\nShift","F5\n\n\n\nAlt","F4\n\n\n\nGui",{"c":"#fcfcfc"},"F11",{"x":1.5},"F11",{"c":"#cfe2f3"},"F4\n\n\n\nGui","F5\n\n\n\nAlt","F6\n\n\n\nShift","Mute\n\n\n\nCtrl",{"c":"#fcfcfc"},"⏮"],
+  ["⏭",{"c":"#e8e8e8"},"",{"c":"#fcfcfc"},"F3","F2","F1","F10",{"x":1.5},"F10","F1","F2","F3",{"c":"#e8e8e8"},"",{"c":"#fcfcfc"},"⏭"],
+  [{"x":3,"c":"#efefef"},"▽","▽","▽",{"x":1.5},"▽","▽","▽"],
+
+  [{"y":0.5,"w":13.5,"d":true,"f":6,"c":"#cccccc"},"LAYER 5 — CONFIG (acesso: combo 0+11)"],
+  [{"f":3,"c":"#fcfcfc"},"Studio",{"c":"#e8e8e8"},"",{"c":"#fcfcfc"},"→QWERTY","→COLEMAK",{"c":"#e8e8e8"},"","",{"x":1.5},"",{"c":"#fcfcfc"},"USB","BLE",{"c":"#e8e8e8"},"","",{"c":"#f4cccc"},"BOOT"],
+  [{"c":"#e8e8e8"},"","","","","","",{"x":1.5},"","","","","",{"c":"#f4cccc"},"RESET"],
+  [{"c":"#fcfcfc"},"BT 0","BT 1","BT 2","BT 3","BT 4",{"c":"#e8e8e8"},"",{"x":1.5},"","","","","",{"c":"#f4cccc"},"BT CLR"],
+  [{"x":3,"c":"#e8e8e8"},"",{"c":"#efefef"},"▽",{"c":"#e8e8e8"},"",{"x":1.5},"",{"c":"#efefef"},"▽",{"c":"#e8e8e8"},""],
+
+  [{"y":0.5,"w":13.5,"d":true,"f":6,"c":"#cccccc"},"LAYER 6 — PROG_SYM (= thumb-chord do polegar EXTERNO)"],
+  [{"f":3,"c":"#e8e8e8"},"",{"c":"#fcfcfc"},"<","{","[","(","/",{"x":1.5},"/","(","[","{","<",{"c":"#e8e8e8"},""],
+  ["",{"c":"#fcfcfc"},">","}","]",")","\\",{"x":1.5},"\\",")","]","}",">",{"c":"#e8e8e8"},""],
+  [{"c":"#fcfcfc"},":=",":","=","'","\"","|",{"x":1.5},"|","\"","'","=",":",":="],
+  [{"x":3,"c":"#efefef"},"▽","▽","▽",{"x":1.5},"▽","▽","▽"],
+
+  [{"y":0.5,"w":13.5,"d":true,"f":6,"c":"#cccccc"},"LAYER 7 — NORM_SYM (= thumb-chord do polegar INTERNO)"],
+  [{"f":3,"c":"#fcfcfc"},"º","ª","_","*","&","§",{"x":1.5},"§","&","*","_","ª","º"],
+  ["¬","£","¨","%","$","°",{"x":1.5},"°","$","%","¨","£","¬"],
+  ["³","²","#","@","!","¹",{"x":1.5},"¹","!","@","#","²","³"],
+  [{"x":3,"c":"#efefef"},"▽","▽","▽",{"x":1.5},"▽","▽","▽"]
+]

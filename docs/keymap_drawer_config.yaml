@@ -1,0 +1,105 @@
+# Config do keymap-drawer para este teclado (ABNT2 + atalhos Delphi).
+# Uso local:  python -m keymap_drawer -c docs/keymap_drawer_config.yaml parse -z config/corne.keymap > docs/keymap.yaml
+#             python -m keymap_drawer -c docs/keymap_drawer_config.yaml draw docs/keymap.yaml > docs/keymap.svg
+# No https://keymap-drawer.streamlit.app/ : cole este arquivo na aba "Configuration"
+# e o config/corne.keymap (ou a URL do repo) na aba principal.
+
+parse_config:
+  raw_binding_map:
+    # --- ABNT2: scancode US -> caractere real no Windows PT-BR ---
+    "&kp GRAVE": "'"
+    "&kp LS(GRAVE)": '"'
+    "&kp LBKT": {t: "´", s: "`"}
+    "&kp LS(LBKT)": "`"
+    "&kp SQT": {t: "~", s: "^"}
+    "&kp LS(SQT)": "^"
+    "&kp LS(N6)": "¨"
+    "&kp SEMI": "ç"
+    "&kp FSLH": {t: ";", s: ":"}
+    "&kp LS(FSLH)": ":"
+    "&kp INT1": {t: "/", s: "?"}
+    "&kp LS(INT1)": "?"
+    "&kp NON_US_BSLH": {t: "\\", s: "|"}
+    "&kp LS(NON_US_BSLH)": "|"
+    "&kp RBKT": "["
+    "&kp LS(RBKT)": "{"
+    "&kp BSLH": "]"
+    "&kp LS(BSLH)": "}"
+    "&kp LS(COMMA)": "<"
+    "&kp LS(DOT)": ">"
+    "&kp LS(MINUS)": "_"
+    "&kp LS(EQUAL)": "+"
+    "&kp LS(N1)": "!"
+    "&kp LS(N2)": "@"
+    "&kp LS(N3)": "#"
+    "&kp LS(N4)": "$"
+    "&kp LS(N5)": "%"
+    "&kp LS(N7)": "&"
+    "&kp LS(N8)": "*"
+    "&kp LS(N9)": "("
+    "&kp LS(N0)": ")"
+    "&kp RA(N1)": "¹"
+    "&kp RA(N2)": "²"
+    "&kp RA(N3)": "³"
+    "&kp RA(N4)": "£"
+    "&kp RA(N5)": "¢"
+    "&kp RA(N6)": "¬"
+    "&kp RA(EQUAL)": "§"
+    "&kp RA(RBKT)": "ª"
+    "&kp RA(BSLH)": "º"
+    "&kp RA(E)": "°"
+    "&kp KP_MULTIPLY": "*"
+    "&kp KP_DIVIDE": "/"
+    "&kp KP_MINUS": "-"
+    "&kp KP_PLUS": "+"
+    # --- Navegação / janelas ---
+    "&kp LC(LEFT)": "⌃← palavra"
+    "&kp LC(RIGHT)": "⌃→ palavra"
+    "&kp LC(HOME)": "início arq."
+    "&kp LC(END)": "fim arq."
+    "&kp LC(TAB)": "aba →"
+    "&kp LC(LS(TAB))": "aba ←"
+    "&kp LA(TAB)": "Alt+Tab"
+    "&kp LG(TAB)": "Win+Tab"
+    "&kp LS(TAB)": "Shift+Tab"
+    "&kp LC(BSPC)": "⌃Bksp"
+    # --- Delphi ---
+    "&kp LC(LS(UP))": "intf↔impl"
+    "&kp LC(LA(UP))": "método ↑"
+    "&kp LC(LA(DOWN))": "método ↓"
+    "&kp LA(UP)": "ir p/ impl."
+    "&kp LS(LA(UP))": "mover ln ↑"
+    "&kp LS(LA(DOWN))": "mover ln ↓"
+    "&kp LC(F9)": "Ctrl+F9"
+    "&kp LC(F7)": "Ctrl+F7"
+    "&kp LS(F8)": "Shift+F8"
+    "&kp LA(F5)": "Alt+F5"
+    "&kp LC(LS(A))": "Ctrl+Sh+A"
+    "&kp LC(LA(L))": "Ctrl+Alt+L"
+    # --- Macros / behaviors próprios ---
+    "&delphi_assign": ":="
+    "&base_reset": "BASE"
+    "&go_colemak": "→COLEMAK"
+    "&to 0": "→QWERTY"
+    "&ht_mo_tog 2 2": {t: "NAV", h: "hold=mo / tap=trava"}
+    "&ht_mo_tog 3 3": {t: "NUM", h: "hold=mo / tap=trava"}
+    "&tog 2": "NAV ⇄"
+    "&tog 3": "NUM ⇄"
+    "&tog 4": "FN ⇄"
+    "&tog 5": "CONFIG ⇄"
+    "&tog 6": "PROG_SYM ⇄"
+    "&tog 7": "NORM_SYM ⇄"
+    "&studio_unlock": "Studio"
+    "&bootloader": "BOOT"
+    "&sys_reset": "RESET"
+    "&out OUT_USB": "USB"
+    "&out OUT_BLE": "BLE"
+
+draw_config:
+  key_w: 64
+  key_h: 60
+  combo_w: 30
+  combo_h: 26
+  n_columns: 1
+  separate_combo_diagrams: false
+  dark_mode: auto
