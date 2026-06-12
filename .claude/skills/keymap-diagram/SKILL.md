@@ -35,12 +35,13 @@ o permalink (`?keymap_yaml=` gzip+base64) nos marcadores
    esse mapa junto.
 4. **Distribui os combos: um grupo por diagrama** (evita linhas sobrepostas):
    QWERTY=edição · COLEMAK=troca de layer · NUM=abas · FN=janelas ·
-   NAV=Delphi base · PROG_SYM=compilar/até retorno · NORM_SYM=avaliar/uses ·
-   CONFIG=mover linha. Combos valem em qualquer layer — a divisão é só visual.
-5. **Alinha para fora do teclado**: pares pequenos = pílula entre as teclas;
-   grupos no topo = `align: top` (offsets 0.2/1.0/...); acordes com polegar =
-   `align: bottom` com offsets escalonados (1.2/1.9) para passar **abaixo**
-   dos polegares. Sobrepôs? Aumente o offset ou mova o grupo de diagrama.
+   NAV=Delphi (relacionados juntos: pares embaixo, acordes c/ modificador em
+   cima) · CONFIG=mover linha. Combos valem em qualquer layer — divisão visual.
+5. **Alinha para fora do teclado** com **bandas alternadas**: combos vizinhos
+   que compartilham teclas recebem offsets diferentes (0.2/1.0 em cima,
+   1.6/2.3 embaixo — abaixo dos polegares). Sobrepôs? Aumente o offset ou
+   alterne a banda. Legendas de combo preferem TEXTO curto e funcional
+   ("Compilar", "aba →") a glifos crípticos.
 6. **Elimina ▽**: tecla transparente vira a tecla efetiva herdada da base,
    com `type: trans` (esmaecida) — exigência do usuário.
 

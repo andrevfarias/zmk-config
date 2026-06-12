@@ -566,37 +566,37 @@ combos:
 - p:
   - 4
   - 5
-  k: ❖⇥
+  k: Win+Tab
 - p:
   - 6
   - 7
-  k: ❖⇥
+  k: Win+Tab
 - p:
   - 3
   - 4
-  k: ⌃⇧⇥
+  k: aba ←
 - p:
   - 7
   - 8
-  k: ⌃⇧⇥
+  k: aba ←
 - p:
   - 2
   - 3
-  k: ⌃⇥
+  k: aba →
 - p:
   - 8
   - 9
-  k: ⌃⇥
+  k: aba →
 - p:
   - 2
   - 3
   - 4
-  k: ⌥⇥
+  k: Alt+Tab
 - p:
   - 7
   - 8
   - 9
-  k: ⌥⇥
+  k: Alt+Tab
 - p:
   - 28
   - 29

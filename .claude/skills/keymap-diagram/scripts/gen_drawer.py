@@ -8,10 +8,10 @@ no keymap:
 - Remove os thumb-chords de símbolos do diagrama (eles espelham as layers
   PROG_SYM/NORM_SYM — mostrar as layers basta).
 - Combos Delphi recebem o NOME DA FUNÇÃO (Compilar, Debugar...) por posição.
-- Espalha os combos pelos 8 diagramas, um grupo por layer, p/ nada sobrepor:
+- Espalha os combos pelos diagramas, um grupo por layer, p/ nada sobrepor:
     QWERTY=edição · COLEMAK=troca de layer · NUM=abas · FN=janelas ·
-    NAV=Delphi base · PROG_SYM=compilar/até retorno · NORM_SYM=avaliar/uses ·
-    CONFIG=mover linha
+    NAV=Delphi (pares embaixo, acordes c/ modificador em cima, bandas
+    alternadas) · CONFIG=mover linha
 - Substitui as teclas transparentes (▽) pela tecla efetiva (estilo esmaecido).
 - Atualiza o permalink dentro do LAYOUT.md (marcadores DRAWER_LINK).
 """
@@ -33,8 +33,8 @@ DRAW = [sys.executable, "-m", "keymap_drawer", "-c", CONFIG,
 THUMBS = {36, 38, 39, 41}
 EDICAO = {"⇥", "⌦", "⌫", "⇤", "Esc", "⏎"}                    # -> QWERTY
 ACESSO = {"BASE", "NAV", "NUM", "FN", "PSym", "NSym"}        # -> COLEMAK
-ABAS = {"⌃⇥", "⌃⇧⇥"}                                         # -> NUM
-TELAS = {"⌥⇥", "❖⇥"}                                         # -> FN
+ABAS = {"aba →", "aba ←"}                                    # -> NUM
+TELAS = {"Alt+Tab", "Win+Tab"}                               # -> FN
 
 # Combos Delphi: nome da função por posições (esq. e dir.)
 DELPHI = {
@@ -50,13 +50,13 @@ DELPHI = {
     frozenset({36, 26, 27}): "Mover ln↑",  frozenset({41, 32, 33}): "Mover ln↑",
     frozenset({36, 27, 28}): "Mover ln↓",  frozenset({41, 31, 32}): "Mover ln↓",
 }
-DELPHI_LAYER = {                       # diagrama onde cada função é desenhada
-    "Debugar": "NAV", "Step over": "NAV", "Step into": "NAV",
-    "Inspecionar": "NAV", "Renomear": "NAV",
-    "Compilar": "PROG_SYM", "Até retorno": "PROG_SYM",
-    "Avaliar": "NORM_SYM", "Add uses": "NORM_SYM",
-    "Mover ln↑": "CONFIG", "Mover ln↓": "CONFIG",
-}
+# Todos os combos Delphi ficam no diagrama NAV (relacionados na mesma layer),
+# distribuídos: pares (comando base) ABAIXO do teclado, acordes com polegar
+# (variante com modificador) ACIMA — vizinhos em bandas alternadas para as
+# pílulas não colidirem (eles compartilham teclas).
+DELPHI_BAIXO = ["Debugar", "Step over", "Step into", "Inspecionar", "Renomear"]
+DELPHI_CIMA = ["Compilar", "Até retorno", "Avaliar", "Add uses"]
+DELPHI_CFG = {"Mover ln↑", "Mover ln↓"}        # -> CONFIG (cima/baixo)
 
 km = yaml.safe_load(subprocess.run(PARSE, capture_output=True, check=True).stdout)
 
@@ -70,12 +70,15 @@ for c in km.get("combos", []):
     k = c["k"] if isinstance(c["k"], str) else c["k"].get("t", "")
     if nome:                            # Delphi: nome da função
         c["k"] = nome
-        lay = DELPHI_LAYER[nome]
-        if len(pos) == 2:               # pares: pílula entre as teclas
-            c.update(l=[lay])
-        else:                           # acordes c/ polegar: abaixo dos thumbs
-            off = 1.2 if nome in {"Compilar", "Avaliar", "Mover ln↑"} else 1.9
-            c.update(l=[lay], align="bottom", offset=off)
+        if nome in DELPHI_CFG:          # mover linha: CONFIG, cima/baixo
+            c.update(l=["CONFIG"],
+                     align="top" if nome == "Mover ln↑" else "bottom", offset=0.4)
+        elif nome in DELPHI_BAIXO:      # pares: abaixo (limpa os polegares)
+            i = DELPHI_BAIXO.index(nome)
+            c.update(l=["NAV"], align="bottom", offset=1.6 if i % 2 == 0 else 2.3)
+        else:                           # acordes c/ polegar: acima
+            i = DELPHI_CIMA.index(nome)
+            c.update(l=["NAV"], align="top", offset=0.2 if i % 2 == 0 else 1.0)
     elif k in EDICAO:
         c.update(l=["QWERTY"])
     elif k in ACESSO:

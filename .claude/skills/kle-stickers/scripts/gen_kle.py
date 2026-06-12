@@ -56,7 +56,9 @@ NORM = ["º", "ª", "_", "*", "&", "§",      "§", "&", "*", "_", "ª", "º",
 CFG = {0: "Stu", 2: "→Q", 3: "→C", 7: "USB", 8: "BLE", 11: "BOOT", 23: "RST",
        24: "BT0", 25: "BT1", 26: "BT2", 27: "BT3", 28: "BT4", 35: "BTCLR"}
 
-FA = [2, 2, 2, 2, 0, 0, 2, 2, 2, 4, 2, 1]   # tamanho de fonte por posição (centro maior)
+# Fonte por posição: centro maior; cantos de TEXTO (TL=NUM, BL=FN) menores que
+# os de ícone (TR=NAV) — "F10" em fonte 2 fica grande demais no sticker.
+FA = [1, 1, 2, 2, 0, 0, 2, 2, 2, 4, 2, 1]
 
 
 def legend(i, base):
