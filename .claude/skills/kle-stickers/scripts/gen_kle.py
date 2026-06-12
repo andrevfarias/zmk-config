@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """Gera os layouts do keyboard-layout-editor.com (stickers) a partir das
-tabelas abaixo — uma por layer. Rode após qualquer mudança no corne.keymap:
+tabelas abaixo — uma por layer. Rode da raiz do repo após qualquer mudança
+no corne.keymap:
 
-    python docs/gen_kle.py
+    python .claude/skills/kle-stickers/scripts/gen_kle.py
 
 Convenção de posições da legenda em cada tecla (KLE, alinhamento padrão):
     TL = NUM        TR = NAV (ícones)

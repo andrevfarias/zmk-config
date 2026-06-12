@@ -1,0 +1,708 @@
+layout:
+  zmk_keyboard: corne
+layers:
+  QWERTY:
+  - ''''
+  - Q
+  - W
+  - E
+  - R
+  - T
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - t: ´
+    s: '`'
+  - t: CAPS
+    h: LSHFT
+  - t: A
+    h: LCTRL
+  - t: S
+    h: LSHFT
+  - t: D
+    h: LALT
+  - t: F
+    h: LGUI
+  - G
+  - H
+  - t: J
+    h: RGUI
+  - t: K
+    h: RALT
+  - t: L
+    h: RSHFT
+  - t: ç
+    h: RCTRL
+  - t: '~'
+    s: ^
+  - t: \
+    s: '|'
+  - Z
+  - X
+  - C
+  - V
+  - B
+  - N
+  - M
+  - ','
+  - .
+  - t: ;
+    s: ':'
+  - t: /
+    s: '?'
+  - t: NUM
+    h: tap=trava
+  - ␣
+  - t: NAV
+    h: tap=trava
+  - t: NAV
+    h: tap=trava
+  - ⏎
+  - t: NUM
+    h: tap=trava
+  COLEMAK:
+  - t: ''''
+    type: trans
+  - Q
+  - W
+  - F
+  - P
+  - B
+  - J
+  - L
+  - U
+  - Y
+  - ç
+  - t: ´
+    s: '`'
+    type: trans
+  - t: CAPS
+    h: LSHFT
+    type: trans
+  - t: A
+    h: LCTRL
+  - t: R
+    h: LSHFT
+  - t: S
+    h: LALT
+  - t: T
+    h: LGUI
+  - G
+  - M
+  - t: N
+    h: RGUI
+  - t: E
+    h: RALT
+  - t: I
+    h: RSHFT
+  - t: O
+    h: RCTRL
+  - t: '~'
+    s: ^
+    type: trans
+  - t: \
+    s: '|'
+    type: trans
+  - Z
+  - X
+  - C
+  - D
+  - V
+  - K
+  - H
+  - t: ','
+    type: trans
+  - t: .
+    type: trans
+  - t: ;
+    s: ':'
+    type: trans
+  - t: /
+    s: '?'
+    type: trans
+  - t: NUM
+    h: tap=trava
+    type: trans
+  - t: ␣
+    type: trans
+  - t: NAV
+    h: tap=trava
+    type: trans
+  - t: NAV
+    h: tap=trava
+    type: trans
+  - t: ⏎
+    type: trans
+  - t: NUM
+    h: tap=trava
+    type: trans
+  NAV:
+  - ''
+  - ⌃→ palavra
+  - PG UP
+  - PG DN
+  - ⌃← palavra
+  - início arq.
+  - início arq.
+  - ⌃← palavra
+  - PG DN
+  - PG UP
+  - ⌃→ palavra
+  - ''
+  - LSHFT
+  - RIGHT
+  - UP
+  - DOWN
+  - LEFT
+  - intf↔impl
+  - intf↔impl
+  - LEFT
+  - DOWN
+  - UP
+  - RIGHT
+  - RSHFT
+  - fim arq.
+  - END
+  - método ↑
+  - método ↓
+  - HOME
+  - ir p/ impl.
+  - ir p/ impl.
+  - HOME
+  - método ↓
+  - método ↑
+  - END
+  - fim arq.
+  - t: NUM
+    h: tap=trava
+    type: trans
+  - t: ␣
+    type: trans
+  - t: NAV
+    h: tap=trava
+    type: trans
+  - t: NAV
+    h: tap=trava
+    type: trans
+  - t: ⏎
+    type: trans
+  - t: NUM
+    h: tap=trava
+    type: trans
+  NUM:
+  - '*'
+  - /
+  - '9'
+  - '8'
+  - '7'
+  - ''
+  - ''
+  - '7'
+  - '8'
+  - '9'
+  - /
+  - '*'
+  - '-'
+  - .
+  - '6'
+  - '5'
+  - '4'
+  - '='
+  - '='
+  - '4'
+  - '5'
+  - '6'
+  - .
+  - '-'
+  - +
+  - ','
+  - '3'
+  - '2'
+  - '1'
+  - '0'
+  - '0'
+  - '1'
+  - '2'
+  - '3'
+  - ','
+  - +
+  - t: NUM
+    h: tap=trava
+    type: trans
+  - t: ␣
+    type: trans
+  - t: NAV
+    h: tap=trava
+    type: trans
+  - t: NAV
+    h: tap=trava
+    type: trans
+  - t: ⏎
+    type: trans
+  - t: NUM
+    h: tap=trava
+    type: trans
+  FN:
+  - PP
+  - ''
+  - F9
+  - F8
+  - F7
+  - F12
+  - F12
+  - F7
+  - F8
+  - F9
+  - ''
+  - PP
+  - PREV
+  - t: MUTE
+    h: LCTRL
+  - F6
+  - F5
+  - F4
+  - F11
+  - F11
+  - t: F4
+    h: RGUI
+  - t: F5
+    h: RALT
+  - t: F6
+    h: RSHFT
+  - t: MUTE
+    h: RCTRL
+  - PREV
+  - NEXT
+  - ''
+  - F3
+  - F2
+  - F1
+  - F10
+  - F10
+  - F1
+  - F2
+  - F3
+  - ''
+  - NEXT
+  - t: NUM
+    h: tap=trava
+    type: trans
+  - t: ␣
+    type: trans
+  - t: NAV
+    h: tap=trava
+    type: trans
+  - t: NAV
+    h: tap=trava
+    type: trans
+  - t: ⏎
+    type: trans
+  - t: NUM
+    h: tap=trava
+    type: trans
+  CONFIG:
+  - Studio
+  - ''
+  - →QWERTY
+  - →COLEMAK
+  - ''
+  - ''
+  - ''
+  - USB
+  - BLE
+  - ''
+  - ''
+  - BOOT
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - RESET
+  - t: BT
+    h: '0'
+  - t: BT
+    h: '1'
+  - t: BT
+    h: '2'
+  - t: BT
+    h: '3'
+  - t: BT
+    h: '4'
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - BT CLR
+  - ''
+  - t: ␣
+    type: trans
+  - ''
+  - ''
+  - t: ⏎
+    type: trans
+  - ''
+  PROG_SYM:
+  - ''
+  - <
+  - '{'
+  - '['
+  - (
+  - t: /
+    s: '?'
+  - t: /
+    s: '?'
+  - (
+  - '['
+  - '{'
+  - <
+  - ''
+  - ''
+  - '>'
+  - '}'
+  - ']'
+  - )
+  - t: \
+    s: '|'
+  - t: \
+    s: '|'
+  - )
+  - ']'
+  - '}'
+  - '>'
+  - ''
+  - :=
+  - ':'
+  - '='
+  - ''''
+  - '"'
+  - '|'
+  - '|'
+  - '"'
+  - ''''
+  - '='
+  - ':'
+  - :=
+  - t: NUM
+    h: tap=trava
+    type: trans
+  - t: ␣
+    type: trans
+  - t: NAV
+    h: tap=trava
+    type: trans
+  - t: NAV
+    h: tap=trava
+    type: trans
+  - t: ⏎
+    type: trans
+  - t: NUM
+    h: tap=trava
+    type: trans
+  NORM_SYM:
+  - º
+  - ª
+  - _
+  - '*'
+  - '&'
+  - §
+  - §
+  - '&'
+  - '*'
+  - _
+  - ª
+  - º
+  - ¬
+  - £
+  - ¨
+  - '%'
+  - $
+  - °
+  - °
+  - $
+  - '%'
+  - ¨
+  - £
+  - ¬
+  - ³
+  - ²
+  - '#'
+  - '@'
+  - '!'
+  - ¹
+  - ¹
+  - '!'
+  - '@'
+  - '#'
+  - ²
+  - ³
+  - t: NUM
+    h: tap=trava
+    type: trans
+  - t: ␣
+    type: trans
+  - t: NAV
+    h: tap=trava
+    type: trans
+  - t: NAV
+    h: tap=trava
+    type: trans
+  - t: ⏎
+    type: trans
+  - t: NUM
+    h: tap=trava
+    type: trans
+combos:
+- p:
+  - 14
+  - 16
+  k: BASE
+- p:
+  - 19
+  - 21
+  k: BASE
+- p:
+  - 2
+  - 4
+  k: NUM
+- p:
+  - 7
+  - 9
+  k: NUM
+- p:
+  - 26
+  - 28
+  k: NAV
+- p:
+  - 31
+  - 33
+  k: NAV
+- p:
+  - 3
+  - 5
+  k: NSym
+- p:
+  - 6
+  - 8
+  k: NSym
+- p:
+  - 15
+  - 17
+  k: PSym
+- p:
+  - 18
+  - 20
+  k: PSym
+- p:
+  - 27
+  - 29
+  k: FN
+- p:
+  - 30
+  - 32
+  k: FN
+- p:
+  - 0
+  - 11
+  k: CFG
+- p:
+  - 13
+  - 14
+  k: ⇥
+- p:
+  - 21
+  - 22
+  k: ⇥
+- p:
+  - 14
+  - 15
+  k: ⌦
+- p:
+  - 20
+  - 21
+  k: ⌦
+- p:
+  - 15
+  - 16
+  k: ⌫
+- p:
+  - 19
+  - 20
+  k: ⌫
+- p:
+  - 16
+  - 17
+  k: ⇤
+- p:
+  - 18
+  - 19
+  k: ⇤
+- p:
+  - 5
+  - 17
+  k: Esc
+- p:
+  - 6
+  - 18
+  k: Esc
+- p:
+  - 4
+  - 16
+  k: ⏎
+- p:
+  - 7
+  - 19
+  k: ⏎
+- p:
+  - 4
+  - 5
+  k: ❖⇥
+- p:
+  - 6
+  - 7
+  k: ❖⇥
+- p:
+  - 3
+  - 4
+  k: ⌃⇧⇥
+- p:
+  - 7
+  - 8
+  k: ⌃⇧⇥
+- p:
+  - 2
+  - 3
+  k: ⌃⇥
+- p:
+  - 8
+  - 9
+  k: ⌃⇥
+- p:
+  - 2
+  - 3
+  - 4
+  k: ⌥⇥
+- p:
+  - 7
+  - 8
+  - 9
+  k: ⌥⇥
+- p:
+  - 28
+  - 29
+  k: Debugar
+- p:
+  - 30
+  - 31
+  k: Debugar
+- p:
+  - 38
+  - 28
+  - 29
+  k: Compilar
+- p:
+  - 39
+  - 30
+  - 31
+  k: Compilar
+- p:
+  - 27
+  - 28
+  k: Step over
+- p:
+  - 31
+  - 32
+  k: Step over
+- p:
+  - 38
+  - 27
+  - 28
+  k: Até retorno
+- p:
+  - 39
+  - 31
+  - 32
+  k: Até retorno
+- p:
+  - 26
+  - 27
+  k: Step into
+- p:
+  - 32
+  - 33
+  k: Step into
+- p:
+  - 38
+  - 26
+  - 27
+  k: Avaliar
+- p:
+  - 39
+  - 32
+  - 33
+  k: Avaliar
+- p:
+  - 25
+  - 26
+  k: Inspecionar
+- p:
+  - 33
+  - 34
+  k: Inspecionar
+- p:
+  - 38
+  - 25
+  - 26
+  k: Add uses
+- p:
+  - 39
+  - 33
+  - 34
+  k: Add uses
+- p:
+  - 24
+  - 25
+  k: Renomear
+- p:
+  - 34
+  - 35
+  k: Renomear
+- p:
+  - 36
+  - 26
+  - 27
+  k: Mover ln↑
+- p:
+  - 41
+  - 32
+  - 33
+  k: Mover ln↑
+- p:
+  - 36
+  - 27
+  - 28
+  k: Mover ln↓
+- p:
+  - 41
+  - 31
+  - 32
+  k: Mover ln↓
+draw_config:
+  key_w: 64
+  key_h: 60
+  combo_w: 30
+  combo_h: 26
+  n_columns: 1
+  separate_combo_diagrams: true
+  dark_mode: auto
+  combo_diagrams_scale: 2

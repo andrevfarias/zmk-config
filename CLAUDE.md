@@ -21,3 +21,5 @@ Os demais layouts serão impressos como um guia de referência para o usuário. 
 Pode criar um terceiro layout simplificado, renderizando um conjunto de teclas para cada combo existente(exceto os que já existem em NORM_SYM e PROG_SYM) colorindo as teclas que devem ser pressionadas para ativar o combo. colocando um texto embaixo indicando a ação do combo.
 
 Coloque os links de acesso aos layouts gerados em LAYOUT.md.
+
+Skills do projeto (.claude/skills/): `zmk-keymap` (editar corne.keymap/corne.conf), `kle-stickers` (stickers do KLE) e `keymap-diagram` (diagramas keymap-drawer). Use-as sempre que mexer no firmware ou nos layouts de docs/.

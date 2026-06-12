@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """Gera docs/keymap.yaml, docs/keymap.svg e o permalink do keymap-drawer a
-partir do config/corne.keymap. Rode após qualquer mudança no keymap:
+partir do config/corne.keymap. Rode da raiz do repo após qualquer mudança
+no keymap:
 
-    python docs/gen_drawer.py
+    python .claude/skills/keymap-diagram/scripts/gen_drawer.py
 
 - Remove os thumb-chords de símbolos do diagrama (eles espelham as layers
   PROG_SYM/NORM_SYM — mostrar as layers basta).
@@ -110,14 +111,32 @@ with open("docs/keymap.yaml", "w", encoding="utf-8") as f:
     yaml.dump(km, f, allow_unicode=True, sort_keys=False)
 subprocess.run(DRAW, check=True)
 
-# --- permalink (?keymap_yaml = base64-urlsafe(gzip(yaml))) dentro do LAYOUT.md ---
-raw = open("docs/keymap.yaml", "rb").read()
-b64 = base64.urlsafe_b64encode(gzip.compress(raw, mtime=0)).decode()
-url = "https://caksoylar.github.io/keymap-drawer?keymap_yaml=" + quote(b64, safe="")
+# --- variante "combos": um mini-teclado por combo (teclas coloridas + nome
+#     da ação), só com a base QWERTY — guia simplificado de combos ---
+kc = dict(km)
+kc["combos"] = [{k: v for k, v in c.items() if k in ("p", "k")}
+                for c in combos]
+kc["draw_config"] = dict(km["draw_config"],
+                         separate_combo_diagrams=True, combo_diagrams_scale=2)
+with open("docs/keymap_combos.yaml", "w", encoding="utf-8") as f:
+    yaml.dump(kc, f, allow_unicode=True, sort_keys=False)
+subprocess.run([sys.executable, "-m", "keymap_drawer", "-c", CONFIG, "draw",
+                "docs/keymap_combos.yaml", "-s", "QWERTY",
+                "-o", "docs/keymap_combos.svg"], check=True)
+
+
+def permalink(path):
+    b64 = base64.urlsafe_b64encode(
+        gzip.compress(open(path, "rb").read(), mtime=0)).decode()
+    return "https://caksoylar.github.io/keymap-drawer?keymap_yaml=" + quote(b64, safe="")
+
+
+# --- permalinks (?keymap_yaml = base64-urlsafe(gzip(yaml))) no LAYOUT.md ---
+links = (f"[abrir completo no keymap-drawer]({permalink('docs/keymap.yaml')}) · "
+         f"[abrir guia de combos]({permalink('docs/keymap_combos.yaml')})")
 md = open("docs/LAYOUT.md", encoding="utf-8").read()
 md = re.sub(r"(<!-- DRAWER_LINK -->).*?(<!-- /DRAWER_LINK -->)",
-            lambda m: m.group(1) + f"[abrir no keymap-drawer]({url})" + m.group(2),
-            md, flags=re.S)
+            lambda m: m.group(1) + links + m.group(2), md, flags=re.S)
 open("docs/LAYOUT.md", "w", encoding="utf-8", newline="\n").write(md)
-print(f"docs/keymap.yaml ({len(combos)} combos), docs/keymap.svg e "
-      "permalink no LAYOUT.md gerados")
+print(f"docs/keymap[.combos].yaml/svg ({len(combos)} combos) e "
+      "permalinks no LAYOUT.md gerados")
