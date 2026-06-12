@@ -468,81 +468,81 @@ combos:
   - 16
   k: BASE
   l:
-  - QWERTY
+  - COLEMAK
 - p:
   - 19
   - 21
   k: BASE
   l:
-  - QWERTY
+  - COLEMAK
 - p:
   - 2
   - 4
   k: NUM
   l:
-  - QWERTY
+  - COLEMAK
 - p:
   - 7
   - 9
   k: NUM
   l:
-  - QWERTY
+  - COLEMAK
 - p:
   - 26
   - 28
   k: NAV
   l:
-  - QWERTY
+  - COLEMAK
 - p:
   - 31
   - 33
   k: NAV
   l:
-  - QWERTY
+  - COLEMAK
 - p:
   - 3
   - 5
   k: NSym
   l:
-  - QWERTY
+  - COLEMAK
 - p:
   - 6
   - 8
   k: NSym
   l:
-  - QWERTY
+  - COLEMAK
 - p:
   - 15
   - 17
   k: PSym
   l:
-  - QWERTY
+  - COLEMAK
 - p:
   - 18
   - 20
   k: PSym
   l:
-  - QWERTY
+  - COLEMAK
 - p:
   - 27
   - 29
   k: FN
   l:
-  - QWERTY
+  - COLEMAK
 - p:
   - 30
   - 32
   k: FN
   l:
-  - QWERTY
+  - COLEMAK
 - p:
   - 0
   - 11
   k: CFG
   l:
-  - QWERTY
+  - COLEMAK
   align: top
-  offset: 1.8
+  offset: 0.5
 - p:
   - 13
   - 14
@@ -620,7 +620,7 @@ combos:
   - 5
   k: ❖⇥
   l:
-  - QWERTY
+  - FN
   align: top
   offset: 0.2
 - p:
@@ -628,7 +628,7 @@ combos:
   - 7
   k: ❖⇥
   l:
-  - QWERTY
+  - FN
   align: top
   offset: 0.2
 - p:
@@ -636,7 +636,7 @@ combos:
   - 4
   k: ⌃⇧⇥
   l:
-  - QWERTY
+  - NUM
   align: top
   offset: 0.2
 - p:
@@ -644,7 +644,7 @@ combos:
   - 8
   k: ⌃⇧⇥
   l:
-  - QWERTY
+  - NUM
   align: top
   offset: 0.2
 - p:
@@ -652,7 +652,7 @@ combos:
   - 3
   k: ⌃⇥
   l:
-  - QWERTY
+  - NUM
   align: top
   offset: 0.2
 - p:
@@ -660,7 +660,7 @@ combos:
   - 9
   k: ⌃⇥
   l:
-  - QWERTY
+  - NUM
   align: top
   offset: 0.2
 - p:
@@ -669,7 +669,7 @@ combos:
   - 4
   k: ⌥⇥
   l:
-  - QWERTY
+  - FN
   align: top
   offset: 1.0
 - p:
@@ -678,7 +678,7 @@ combos:
   - 9
   k: ⌥⇥
   l:
-  - QWERTY
+  - FN
   align: top
   offset: 1.0
 - p:
@@ -767,25 +767,25 @@ combos:
   - 28
   k: ⌃F7
   l:
-  - NAV
+  - PROG_SYM
   align: bottom
-  offset: 1.2
+  offset: 0.4
 - p:
   - 21
   - 31
   - 32
   k: ⌃F7
   l:
-  - NAV
+  - PROG_SYM
   align: bottom
-  offset: 1.2
+  offset: 0.4
 - p:
   - 16
   - 26
   - 27
   k: ⌥F5
   l:
-  - NAV
+  - PROG_SYM
   align: bottom
   offset: 1.2
 - p:
@@ -794,7 +794,7 @@ combos:
   - 33
   k: ⌥F5
   l:
-  - NAV
+  - PROG_SYM
   align: bottom
   offset: 1.2
 - p:
@@ -803,72 +803,72 @@ combos:
   - 26
   k: ⌃⇧A
   l:
-  - NAV
+  - NORM_SYM
   align: bottom
-  offset: 1.2
+  offset: 0.4
 - p:
   - 19
   - 33
   - 34
   k: ⌃⇧A
   l:
-  - NAV
+  - NORM_SYM
   align: bottom
-  offset: 1.2
+  offset: 0.4
 - p:
   - 4
   - 14
   - 15
   k: ⌃⌥L
   l:
-  - NAV
-  align: bottom
-  offset: 1.2
+  - NORM_SYM
+  align: top
+  offset: 0.4
 - p:
   - 7
   - 20
   - 21
   k: ⌃⌥L
   l:
-  - NAV
-  align: bottom
-  offset: 1.2
+  - NORM_SYM
+  align: top
+  offset: 0.4
 - p:
   - 3
   - 4
   - 14
   k: ln↑
   l:
-  - NAV
-  align: bottom
-  offset: 1.2
+  - CONFIG
+  align: top
+  offset: 0.4
 - p:
   - 7
   - 8
   - 21
   k: ln↑
   l:
-  - NAV
-  align: bottom
-  offset: 1.2
+  - CONFIG
+  align: top
+  offset: 0.4
 - p:
   - 3
   - 4
   - 13
   k: ln↓
   l:
-  - NAV
+  - CONFIG
   align: bottom
-  offset: 1.2
+  offset: 0.4
 - p:
   - 7
   - 8
   - 22
   k: ln↓
   l:
-  - NAV
+  - CONFIG
   align: bottom
-  offset: 1.2
+  offset: 0.4
 draw_config:
   key_w: 64
   key_h: 60

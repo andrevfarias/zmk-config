@@ -35,8 +35,10 @@ cantos/laterais: **TL**=NUM **BL**=FN **TR**=NAV **BR**=PROG_SYM **CL**=NORM_SYM
 **No site** <https://keymap-drawer.streamlit.app/>: use o permalink acima, ou cole o
 [`keymap.yaml`](keymap.yaml) na aba principal e o [`keymap_drawer_config.yaml`](keymap_drawer_config.yaml)
 na aba *Configuration*.
-Os combos aparecem só na layer relevante: gerais/edição/janelas na **QWERTY**, Delphi na **NAV**;
-os thumb-chords de símbolos não são desenhados (espelham as layers PROG_SYM/NORM_SYM).
+Cada grupo de combos é desenhado em **um diagrama próprio** (evita sobreposição de linhas):
+QWERTY = edição · COLEMAK = troca de layer · NUM = abas · FN = janelas · NAV = Delphi (pares) ·
+PROG_SYM = inspeção · NORM_SYM = refactor · CONFIG = mover linha.
+Os thumb-chords de símbolos não são desenhados (espelham as layers PROG_SYM/NORM_SYM).
 Teclas herdadas da base aparecem **esmaecidas com a tecla efetiva** (sem ▽).
 **Regenerar** após mudar o keymap: `python docs/gen_drawer.py` (requer `pip install keymap-drawer`).
 
@@ -151,7 +153,10 @@ BT0    BT1   BT2   BT3   BT4   —        —    —    —    —    —    BT 
 
 Parâmetros: `timeout-ms` 30–50 (quase-simultâneo) · `require-prior-idle-ms` 100–150 (não dispara em digitação corrida).
 
-### Acesso a layers
+> Os combos valem em **qualquer layer/base** (são posicionais). A coluna "diagrama" indica apenas
+> onde cada grupo é desenhado no [`keymap.svg`](keymap.svg).
+
+### Acesso a layers *(diagrama: COLEMAK)*
 
 | Esquerda | Direita | Ação |
 |----------|---------|------|
@@ -163,7 +168,7 @@ Parâmetros: `timeout-ms` 30–50 (quase-simultâneo) · `require-prior-idle-ms`
 | 27+29 (C+B) | 30+32 (N+,) | FN ⇄ |
 | 0+11 (canto a canto, duas mãos) | | CONFIG ⇄ |
 
-### Edição (home row + verticais do indicador)
+### Edição (home row + verticais do indicador) *(diagrama: QWERTY)*
 
 | Esquerda | Direita | Ação |
 |----------|---------|------|
@@ -174,7 +179,7 @@ Parâmetros: `timeout-ms` 30–50 (quase-simultâneo) · `require-prior-idle-ms`
 | 5+17 (T+G) | 6+18 (Y+H) | Esc |
 | 4+16 (R+F) | 7+19 (U+J) | Enter |
 
-### Janelas / abas (row superior)
+### Janelas / abas (row superior) *(diagramas: FN = janelas · NUM = abas)*
 
 | Esquerda | Direita | Ação |
 |----------|---------|------|
@@ -183,7 +188,7 @@ Parâmetros: `timeout-ms` 30–50 (quase-simultâneo) · `require-prior-idle-ms`
 | 2+3 | 8+9 | próxima aba (Ctrl+Tab) |
 | 2+3+4 | 7+8+9 | Alt+Tab |
 
-### Delphi — compilação / debug / refactor (row inferior)
+### Delphi — compilação / debug / refactor (row inferior) *(diagramas: NAV = pares · PROG_SYM = inspeção · NORM_SYM = refactor · CONFIG = mover linha)*
 
 | Esquerda | Direita | Ação |
 |----------|---------|------|

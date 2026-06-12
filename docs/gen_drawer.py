@@ -6,7 +6,9 @@ partir do config/corne.keymap. Rode após qualquer mudança no keymap:
 
 - Remove os thumb-chords de símbolos do diagrama (eles espelham as layers
   PROG_SYM/NORM_SYM — mostrar as layers basta).
-- Distribui os combos por relevância: gerais na layer QWERTY, Delphi na NAV.
+- Espalha os combos pelos 8 diagramas, um grupo por layer, p/ nada sobrepor:
+    QWERTY=edição · COLEMAK=troca de layer · NUM=abas · FN=janelas ·
+    NAV=Delphi (pares) · PROG_SYM=inspeção · NORM_SYM=refactor · CONFIG=mover linha
 - Alinha os grupos para fora do teclado (topo/base) para não cobrir as teclas.
 - Substitui as teclas transparentes (▽) pela tecla efetiva (estilo esmaecido).
 - Gera docs/keymap_drawer_permalink.md com o link direto do diagrama.
@@ -26,10 +28,14 @@ DRAW = [sys.executable, "-m", "keymap_drawer", "-c", CONFIG,
         "draw", "docs/keymap.yaml", "-o", "docs/keymap.svg"]
 
 THUMBS = {36, 38, 39, 41}
-JANELAS = {"⌥⇥", "❖⇥", "⌃⇥", "⌃⇧⇥"}
-DELPHI = {"F9", "F8", "F7", "⇧F8", "⌃F9", "⌃F7", "⌥F5", "⌃⇧A", "⌃⌥L", "ln↑", "ln↓"}
-EDICAO = {"⇥", "⌦", "⌫", "⇤", "⎋", "⏎"}
-ACESSO = {"BASE", "NAV", "NUM", "FN", "PSym", "NSym"}
+EDICAO = {"⇥", "⌦", "⌫", "⇤", "⎋", "⏎"}                      # -> QWERTY
+ACESSO = {"BASE", "NAV", "NUM", "FN", "PSym", "NSym"}        # -> COLEMAK
+ABAS = {"⌃⇥", "⌃⇧⇥"}                                         # -> NUM
+TELAS = {"⌥⇥", "❖⇥"}                                         # -> FN
+DELPHI_PARES = {"F9", "F8", "F7", "⇧F8", "⌃F9"}              # -> NAV
+INSPECAO = {"⌃F7", "⌥F5"}                                    # -> PROG_SYM
+REFACTOR = {"⌃⇧A", "⌃⌥L"}                                    # -> NORM_SYM
+MOVER = {"ln↑", "ln↓"}                                       # -> CONFIG
 
 km = yaml.safe_load(subprocess.run(PARSE, capture_output=True, check=True).stdout)
 
@@ -40,16 +46,24 @@ for c in km.get("combos", []):
         continue
     k = c["k"] if isinstance(c["k"], str) else c["k"].get("t", "")
     big = len(c["p"]) >= 3
-    if k in JANELAS:
-        c.update(l=["QWERTY"], align="top", offset=1.0 if big else 0.2)
-    elif k in DELPHI:
-        c.update(l=["NAV"], align="bottom", offset=1.2 if big else 0.4)
-    elif k in EDICAO:
+    if k in EDICAO:
         c.update(l=["QWERTY"])
-    elif k == "CFG":
-        c.update(l=["QWERTY"], align="top", offset=1.8)
     elif k in ACESSO:
-        c.update(l=["QWERTY"])
+        c.update(l=["COLEMAK"])
+    elif k == "CFG":
+        c.update(l=["COLEMAK"], align="top", offset=0.5)
+    elif k in ABAS:
+        c.update(l=["NUM"], align="top", offset=0.2)
+    elif k in TELAS:
+        c.update(l=["FN"], align="top", offset=1.0 if big else 0.2)
+    elif k in DELPHI_PARES:
+        c.update(l=["NAV"], align="bottom", offset=0.4)
+    elif k in INSPECAO:
+        c.update(l=["PROG_SYM"], align="bottom", offset=0.4 if k == "⌃F7" else 1.2)
+    elif k in REFACTOR:
+        c.update(l=["NORM_SYM"], align="top" if k == "⌃⌥L" else "bottom", offset=0.4)
+    elif k in MOVER:
+        c.update(l=["CONFIG"], align="top" if k == "ln↑" else "bottom", offset=0.4)
     combos.append(c)
 km["combos"] = combos
 
