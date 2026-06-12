@@ -44,9 +44,11 @@ NUM = ["*", "/", "9", "8", "7", E,   E, "7", "8", "9", "/", "*",
 FN = [PP, E, "F9", "F8", "F7", "F12",      "F12", "F7", "F8", "F9", E, PP,
       PREV, "Mute", "F6", "F5", "F4", "F11", "F11", "F4", "F5", "F6", "Mute", PREV,
       NEXT, E, "F3", "F2", "F1", "F10",    "F10", "F1", "F2", "F3", E, NEXT]
-NAV = [E, W_FW, PGUP, PGDN, W_BK, FTOP,    FTOP, W_BK, PGDN, PGUP, W_FW, E,
-       "⇧", AR_R, AR_U, AR_D, AR_L, "I⇄M", "I⇄M", AR_L, AR_D, AR_U, AR_R, "⇧",
-       FEND, LIN_E, MET_U, MET_D, LIN_S, "→imp", "→imp", LIN_S, MET_D, MET_U, LIN_E, FEND]
+# Direcionais mantêm o sentido FÍSICO nas duas metades (sem espelhar direção):
+# ← sempre mais à esquerda que →, como nas arrow keys.
+NAV = [E, W_BK, PGDN, PGUP, W_FW, FTOP,    FTOP, W_BK, PGDN, PGUP, W_FW, E,
+       "⇧", AR_L, AR_D, AR_U, AR_R, "I⇄M", "I⇄M", AR_L, AR_D, AR_U, AR_R, "⇧",
+       FEND, LIN_S, MET_D, MET_U, LIN_E, "→imp", "→imp", LIN_S, MET_D, MET_U, LIN_E, FEND]
 PROG = [E, "<", "{", "[", "(", "/",        "/", "(", "[", "{", "<", E,
         E, ">", "}", "]", ")", "\\",       "\\", ")", "]", "}", ">", E,
         ":=", ":", "=", "'", '"', "|",     "|", '"', "'", "=", ":", ":="]

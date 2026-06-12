@@ -47,6 +47,9 @@ do layout é `docs/LAYOUT.md` — leia-a antes de mudanças estruturais.
   `ht_mo_tog`: hold = momentâneo, tap = trava.
 - **Espelhamento por dedo**: layers de função e combos existem nas duas
   metades, mesmo dedo dos dois lados (uso com uma mão; mouse na outra).
+  **Exceção — comandos DIRECIONAIS** (setas, palavra, Home/End, abas):
+  mantêm o sentido físico nas duas metades (← sempre mais à esquerda que →,
+  como nas arrow keys) — nunca espelhar a direção.
 - **HRM**: `hrl`/`hrr` com `hold-trigger-key-positions` (allowlist).
   Direita = só metade oposta + polegares. Esquerda = metade oposta + teclas-
   alvo da própria mão (W R T S D F G Z X C V B) → Ctrl/Gui+C/V/X… com uma mão.
@@ -72,8 +75,8 @@ Timing: pares 40 ms · acordes com polegar 50 ms · acesso a layer 30 ms ·
 - **Anti-disparo acidental**: antes de criar combo em par de letras, conferir
   se o dígrafo é raro em PT-BR (ex.: 22+23 = ç+~ dispararia em "ção" — proibido).
 - **Delphi**: tudo na row inferior — par adjacente = comando base; par +
-  polegar interno = variante com modificador; par + polegar externo = mover
-  linha. Tabela completa em `docs/LAYOUT.md`.
+  polegar interno (38/39) = variante com modificador; par + Space/Enter
+  (37/40) = mover linha. Tabela completa em `docs/LAYOUT.md`.
 - **Limites**: polegares chegam a 20 combos/tecla. Ao adicionar combo em
   polegar, recontar e ajustar `CONFIG_ZMK_COMBO_MAX_COMBOS_PER_KEY` (hoje 25).
 

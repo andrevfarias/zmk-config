@@ -8,10 +8,13 @@ no keymap:
 - Remove os thumb-chords de símbolos do diagrama (eles espelham as layers
   PROG_SYM/NORM_SYM — mostrar as layers basta).
 - Combos Delphi recebem o NOME DA FUNÇÃO (Compilar, Debugar...) por posição.
+- Mescla layers espelhadas em um diagrama ("PROG_SYM | NAV", "NORM_SYM | NUM"):
+  metade esquerda mostra uma layer, direita a outra. Combos espelhados são
+  desenhados uma vez só (lado direito, direção física).
 - Espalha os combos pelos diagramas, um grupo por layer, p/ nada sobrepor:
-    QWERTY=edição · COLEMAK=troca de layer · NUM=abas · FN=janelas ·
-    NAV=Delphi (pares embaixo, acordes c/ modificador em cima, bandas
-    alternadas) · CONFIG=mover linha
+    QWERTY=edição · COLEMAK=troca de layer · "NORM_SYM | NUM"=abas ·
+    FN=janelas · "PROG_SYM | NAV"=Delphi (todos bottom, bandas alternadas) ·
+    CONFIG=mover linha
 - Substitui as teclas transparentes (▽) pela tecla efetiva (estilo esmaecido).
 - Atualiza o permalink dentro do LAYOUT.md (marcadores DRAWER_LINK).
 """
@@ -47,16 +50,24 @@ DELPHI = {
     frozenset({25, 26}): "Inspecionar",    frozenset({33, 34}): "Inspecionar",
     frozenset({38, 25, 26}): "Add uses",   frozenset({39, 33, 34}): "Add uses",
     frozenset({24, 25}): "Renomear",       frozenset({34, 35}): "Renomear",
-    frozenset({36, 26, 27}): "Mover ln↑",  frozenset({41, 32, 33}): "Mover ln↑",
-    frozenset({36, 27, 28}): "Mover ln↓",  frozenset({41, 31, 32}): "Mover ln↓",
+    frozenset({37, 26, 27}): "Mover ln↑",  frozenset({40, 32, 33}): "Mover ln↑",
+    frozenset({37, 27, 28}): "Mover ln↓",  frozenset({40, 31, 32}): "Mover ln↓",
 }
-# Todos os combos Delphi ficam no diagrama NAV (relacionados na mesma layer),
-# distribuídos: pares (comando base) ABAIXO do teclado, acordes com polegar
-# (variante com modificador) ACIMA — vizinhos em bandas alternadas para as
-# pílulas não colidirem (eles compartilham teclas).
+# Todos os combos Delphi no diagrama mesclado (relacionados juntos), TODOS
+# align bottom em bandas: pares (comando base) e acordes (modificador) em
+# offsets distintos — vizinhos compartilham teclas e não podem colidir.
+# Acordes incluem o polegar no bounding box, por isso offsets diferentes.
 DELPHI_BAIXO = ["Debugar", "Step over", "Step into", "Inspecionar", "Renomear"]
 DELPHI_CIMA = ["Compilar", "Até retorno", "Avaliar", "Add uses"]
-DELPHI_CFG = {"Mover ln↑", "Mover ln↓"}        # -> CONFIG (cima/baixo)
+DELPHI_CFG = {"Mover ln↑", "Mover ln↓"}        # -> CONFIG
+
+# Diagramas mesclados: as layers de função são espelhadas, então cada metade
+# mostra uma layer (título "ESQUERDA | DIREITA"). Combos espelhados são
+# desenhados só na instância da metade direita (uma vez, direção física).
+M_NAV = "PROG_SYM | NAV"
+M_NUM = "NORM_SYM | NUM"
+LEFT_HALF = set(range(0, 6)) | set(range(12, 18)) | set(range(24, 30)) | {36, 37, 38}
+RIGHT_KEEP = set(range(42)) - LEFT_HALF        # metade direita + thumbs 39-41
 
 km = yaml.safe_load(subprocess.run(PARSE, capture_output=True, check=True).stdout)
 
@@ -69,16 +80,18 @@ for c in km.get("combos", []):
         continue
     k = c["k"] if isinstance(c["k"], str) else c["k"].get("t", "")
     if nome:                            # Delphi: nome da função
+        if not pos <= RIGHT_KEEP:       # espelhado: desenhar só o lado direito
+            continue
         c["k"] = nome
-        if nome in DELPHI_CFG:          # mover linha: CONFIG, cima/baixo
-            c.update(l=["CONFIG"],
-                     align="top" if nome == "Mover ln↑" else "bottom", offset=0.4)
-        elif nome in DELPHI_BAIXO:      # pares: abaixo (limpa os polegares)
+        if nome in DELPHI_CFG:          # mover linha: CONFIG, ambos bottom
+            c.update(l=["CONFIG"], align="bottom",
+                     offset=0.4 if nome == "Mover ln↑" else 1.1)
+        elif nome in DELPHI_BAIXO:      # pares: bandas 1.6/2.3
             i = DELPHI_BAIXO.index(nome)
-            c.update(l=["NAV"], align="bottom", offset=1.6 if i % 2 == 0 else 2.3)
-        else:                           # acordes c/ polegar: acima
-            i = DELPHI_CIMA.index(nome)
-            c.update(l=["NAV"], align="top", offset=0.2 if i % 2 == 0 else 1.0)
+            c.update(l=[M_NAV], align="bottom", offset=1.6 if i % 2 == 0 else 2.3)
+        else:                           # acordes c/ polegar (bbox inclui thumb):
+            i = DELPHI_CIMA.index(nome)  # bandas mais fundas 1.8/2.5
+            c.update(l=[M_NAV], align="bottom", offset=1.8 if i % 2 == 0 else 2.5)
     elif k in EDICAO:
         c.update(l=["QWERTY"])
     elif k in ACESSO:
@@ -86,7 +99,9 @@ for c in km.get("combos", []):
     elif k == "CFG":
         c.update(l=["COLEMAK"], align="top", offset=0.5)
     elif k in ABAS:
-        c.update(l=["NUM"], align="top", offset=0.2)
+        if not pos <= RIGHT_KEEP:       # uma instância, direção física
+            continue
+        c.update(l=[M_NUM], align="top", offset=0.2 if k == "aba ←" else 0.9)
     elif k in TELAS:
         c.update(l=["FN"], align="top", offset=1.0 if len(pos) >= 3 else 0.2)
     combos.append(c)
@@ -105,6 +120,17 @@ for name, layer in layers.items():
             nk = dict(b) if isinstance(b, dict) else {"t": b}
             nk["type"] = "trans"
             layer[i] = nk
+
+# --- mescla layers espelhadas: metade esquerda = uma layer, direita = outra ---
+def merge(esq, dir_, titulo):
+    layers[titulo] = [layers[esq][i] if i in LEFT_HALF else layers[dir_][i]
+                      for i in range(42)]
+
+
+merge("PROG_SYM", "NAV", M_NAV)
+merge("NORM_SYM", "NUM", M_NUM)
+km["layers"] = {n: layers[n] for n in
+                ["QWERTY", "COLEMAK", M_NAV, M_NUM, "FN", "CONFIG"]}
 
 # --- embute o draw_config p/ o permalink renderizar igual ao SVG local ---
 with open(CONFIG, encoding="utf-8") as f:

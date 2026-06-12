@@ -138,37 +138,39 @@ layers:
   - t: NUM
     h: tap=trava
     type: trans
-  NAV:
+  PROG_SYM | NAV:
   - ''
-  - ⌃→ palavra
-  - PG UP
-  - PG DN
-  - ⌃← palavra
-  - início arq.
+  - <
+  - '{'
+  - '['
+  - (
+  - t: /
+    s: '?'
   - início arq.
   - ⌃← palavra
   - PG DN
   - PG UP
   - ⌃→ palavra
   - ''
-  - LSHFT
-  - RIGHT
-  - UP
-  - DOWN
-  - LEFT
-  - intf↔impl
+  - ''
+  - '>'
+  - '}'
+  - ']'
+  - )
+  - t: \
+    s: '|'
   - intf↔impl
   - LEFT
   - DOWN
   - UP
   - RIGHT
   - RSHFT
-  - fim arq.
-  - END
-  - método ↑
-  - método ↓
-  - HOME
-  - ir p/ impl.
+  - :=
+  - ':'
+  - '='
+  - ''''
+  - '"'
+  - '|'
   - ir p/ impl.
   - HOME
   - método ↓
@@ -191,37 +193,37 @@ layers:
   - t: NUM
     h: tap=trava
     type: trans
-  NUM:
+  NORM_SYM | NUM:
+  - º
+  - ª
+  - _
   - '*'
-  - /
-  - '9'
-  - '8'
-  - '7'
-  - ''
+  - '&'
+  - §
   - ''
   - '7'
   - '8'
   - '9'
   - /
   - '*'
-  - '-'
-  - .
-  - '6'
-  - '5'
-  - '4'
+  - ¬
+  - £
+  - ¨
+  - '%'
+  - $
+  - °
   - '='
-  - '='
   - '4'
   - '5'
   - '6'
   - .
   - '-'
-  - +
-  - ','
-  - '3'
-  - '2'
-  - '1'
-  - '0'
+  - ³
+  - ²
+  - '#'
+  - '@'
+  - '!'
+  - ¹
   - '0'
   - '1'
   - '2'
@@ -352,116 +354,6 @@ layers:
   - t: ⏎
     type: trans
   - ''
-  PROG_SYM:
-  - ''
-  - <
-  - '{'
-  - '['
-  - (
-  - t: /
-    s: '?'
-  - t: /
-    s: '?'
-  - (
-  - '['
-  - '{'
-  - <
-  - ''
-  - ''
-  - '>'
-  - '}'
-  - ']'
-  - )
-  - t: \
-    s: '|'
-  - t: \
-    s: '|'
-  - )
-  - ']'
-  - '}'
-  - '>'
-  - ''
-  - :=
-  - ':'
-  - '='
-  - ''''
-  - '"'
-  - '|'
-  - '|'
-  - '"'
-  - ''''
-  - '='
-  - ':'
-  - :=
-  - t: NUM
-    h: tap=trava
-    type: trans
-  - t: ␣
-    type: trans
-  - t: NAV
-    h: tap=trava
-    type: trans
-  - t: NAV
-    h: tap=trava
-    type: trans
-  - t: ⏎
-    type: trans
-  - t: NUM
-    h: tap=trava
-    type: trans
-  NORM_SYM:
-  - º
-  - ª
-  - _
-  - '*'
-  - '&'
-  - §
-  - §
-  - '&'
-  - '*'
-  - _
-  - ª
-  - º
-  - ¬
-  - £
-  - ¨
-  - '%'
-  - $
-  - °
-  - °
-  - $
-  - '%'
-  - ¨
-  - £
-  - ¬
-  - ³
-  - ²
-  - '#'
-  - '@'
-  - '!'
-  - ¹
-  - ¹
-  - '!'
-  - '@'
-  - '#'
-  - ²
-  - ³
-  - t: NUM
-    h: tap=trava
-    type: trans
-  - t: ␣
-    type: trans
-  - t: NAV
-    h: tap=trava
-    type: trans
-  - t: NAV
-    h: tap=trava
-    type: trans
-  - t: ⏎
-    type: trans
-  - t: NUM
-    h: tap=trava
-    type: trans
 combos:
 - p:
   - 14
@@ -632,27 +524,11 @@ combos:
   align: top
   offset: 0.2
 - p:
-  - 3
-  - 4
-  k: aba ←
-  l:
-  - NUM
-  align: top
-  offset: 0.2
-- p:
   - 7
   - 8
   k: aba ←
   l:
-  - NUM
-  align: top
-  offset: 0.2
-- p:
-  - 2
-  - 3
-  k: aba →
-  l:
-  - NUM
+  - NORM_SYM | NUM
   align: top
   offset: 0.2
 - p:
@@ -660,9 +536,9 @@ combos:
   - 9
   k: aba →
   l:
-  - NUM
+  - NORM_SYM | NUM
   align: top
-  offset: 0.2
+  offset: 0.9
 - p:
   - 2
   - 3
@@ -682,193 +558,99 @@ combos:
   align: top
   offset: 1.0
 - p:
-  - 28
-  - 29
-  k: Debugar
-  l:
-  - NAV
-  align: bottom
-  offset: 1.6
-- p:
   - 30
   - 31
   k: Debugar
   l:
-  - NAV
+  - PROG_SYM | NAV
   align: bottom
   offset: 1.6
-- p:
-  - 38
-  - 28
-  - 29
-  k: Compilar
-  l:
-  - NAV
-  align: top
-  offset: 0.2
 - p:
   - 39
   - 30
   - 31
   k: Compilar
   l:
-  - NAV
-  align: top
-  offset: 0.2
-- p:
-  - 27
-  - 28
-  k: Step over
-  l:
-  - NAV
+  - PROG_SYM | NAV
   align: bottom
-  offset: 2.3
+  offset: 1.8
 - p:
   - 31
   - 32
   k: Step over
   l:
-  - NAV
+  - PROG_SYM | NAV
   align: bottom
   offset: 2.3
-- p:
-  - 38
-  - 27
-  - 28
-  k: Até retorno
-  l:
-  - NAV
-  align: top
-  offset: 1.0
 - p:
   - 39
   - 31
   - 32
   k: Até retorno
   l:
-  - NAV
-  align: top
-  offset: 1.0
-- p:
-  - 26
-  - 27
-  k: Step into
-  l:
-  - NAV
+  - PROG_SYM | NAV
   align: bottom
-  offset: 1.6
+  offset: 2.5
 - p:
   - 32
   - 33
   k: Step into
   l:
-  - NAV
+  - PROG_SYM | NAV
   align: bottom
   offset: 1.6
-- p:
-  - 38
-  - 26
-  - 27
-  k: Avaliar
-  l:
-  - NAV
-  align: top
-  offset: 0.2
 - p:
   - 39
   - 32
   - 33
   k: Avaliar
   l:
-  - NAV
-  align: top
-  offset: 0.2
-- p:
-  - 25
-  - 26
-  k: Inspecionar
-  l:
-  - NAV
+  - PROG_SYM | NAV
   align: bottom
-  offset: 2.3
+  offset: 1.8
 - p:
   - 33
   - 34
   k: Inspecionar
   l:
-  - NAV
+  - PROG_SYM | NAV
   align: bottom
   offset: 2.3
-- p:
-  - 38
-  - 25
-  - 26
-  k: Add uses
-  l:
-  - NAV
-  align: top
-  offset: 1.0
 - p:
   - 39
   - 33
   - 34
   k: Add uses
   l:
-  - NAV
-  align: top
-  offset: 1.0
-- p:
-  - 24
-  - 25
-  k: Renomear
-  l:
-  - NAV
+  - PROG_SYM | NAV
   align: bottom
-  offset: 1.6
+  offset: 2.5
 - p:
   - 34
   - 35
   k: Renomear
   l:
-  - NAV
+  - PROG_SYM | NAV
   align: bottom
   offset: 1.6
 - p:
-  - 36
-  - 26
-  - 27
-  k: Mover ln↑
-  l:
-  - CONFIG
-  align: top
-  offset: 0.4
-- p:
-  - 41
+  - 40
   - 32
   - 33
   k: Mover ln↑
   l:
   - CONFIG
-  align: top
-  offset: 0.4
-- p:
-  - 36
-  - 27
-  - 28
-  k: Mover ln↓
-  l:
-  - CONFIG
   align: bottom
   offset: 0.4
 - p:
-  - 41
+  - 40
   - 31
   - 32
   k: Mover ln↓
   l:
   - CONFIG
   align: bottom
-  offset: 0.4
+  offset: 1.1
 draw_config:
   key_w: 64
   key_h: 60

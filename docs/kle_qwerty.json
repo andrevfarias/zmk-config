@@ -22,10 +22,10 @@
    ]
   },
   "*\n<i class='kb kb-Multimedia-Play-Pause'></i>\n\n\n\n\nº\n\n\"\n'\n\nStu",
-  "/\n\n<i class='kb kb-Arrows-Right'></i>\n<\n\n\nª\n\n\nQ",
-  "9\nF9\n<i class='kb kb-Arrows-Top-4'></i>\n{\n\n\n_\n\n\nW\n\n→Q",
-  "8\nF8\n<i class='kb kb-Arrows-Bottom-4'></i>\n[\n\n\n*\n\n\nE\n\n→C",
-  "7\nF7\n<i class='kb kb-Arrows-Left'></i>\n(\n\n\n&\n\n\nR",
+  "/\n\n<i class='kb kb-Arrows-Left'></i>\n<\n\n\nª\n\n\nQ",
+  "9\nF9\n<i class='kb kb-Arrows-Bottom-4'></i>\n{\n\n\n_\n\n\nW\n\n→Q",
+  "8\nF8\n<i class='kb kb-Arrows-Top-4'></i>\n[\n\n\n*\n\n\nE\n\n→C",
+  "7\nF7\n<i class='kb kb-Arrows-Right'></i>\n(\n\n\n&\n\n\nR",
   "\nF12\n<i class='kb kb-Arrows-Top-3'></i>\n/\n\n\n§\n\n\nT",
   {
    "x": 1
@@ -39,10 +39,10 @@
  ],
  [
   "-\n<i class='kb kb-Multimedia-Rewind-Start'></i>\n⇧\n\n\n\n¬\n\n\n⇪\n⇧",
-  ".\nMute\n<i class='kb kb-Multimedia-Play'></i>\n>\n\n\n£\n\n\nA\n⌃",
-  "6\nF6\n<i class='kb kb-Multimedia-Up'></i>\n}\n\n\n¨\n\n\nS\n⇧",
-  "5\nF5\n<i class='kb kb-Multimedia-Down'></i>\n]\n\n\n%\n\n\nD\n⌥",
-  "4\nF4\n<i class='kb kb-Multimedia-Back'></i>\n)\n\n\n$\n\n\nF\n❖",
+  ".\nMute\n<i class='kb kb-Multimedia-Back'></i>\n>\n\n\n£\n\n\nA\n⌃",
+  "6\nF6\n<i class='kb kb-Multimedia-Down'></i>\n}\n\n\n¨\n\n\nS\n⇧",
+  "5\nF5\n<i class='kb kb-Multimedia-Up'></i>\n]\n\n\n%\n\n\nD\n⌥",
+  "4\nF4\n<i class='kb kb-Multimedia-Play'></i>\n)\n\n\n$\n\n\nF\n❖",
   "=\nF11\nI⇄M\n\\\n\n\n°\n\n\nG",
   {
    "x": 1
@@ -56,10 +56,10 @@
  ],
  [
   "+\n<i class='kb kb-Multimedia-FastForward-End'></i>\n<i class='kb kb-Arrows-Bottom-3'></i>\n:=\n\n\n³\n\n|\n\\\n\nBT0",
-  ",\n\n<i class='kb kb-Line-End'></i>\n:\n\n\n²\n\n\nZ\n\nBT1",
-  "3\nF3\n<i class='kb kb-Arrows-Up'></i>\n=\n\n\n#\n\n\nX\n\nBT2",
-  "2\nF2\n<i class='kb kb-Arrows-Down'></i>\n'\n\n\n@\n\n\nC\n\nBT3",
-  "1\nF1\n<i class='kb kb-Line-Start'></i>\n\"\n\n\n!\n\n\nV\n\nBT4",
+  ",\n\n<i class='kb kb-Line-Start'></i>\n:\n\n\n²\n\n\nZ\n\nBT1",
+  "3\nF3\n<i class='kb kb-Arrows-Down'></i>\n=\n\n\n#\n\n\nX\n\nBT2",
+  "2\nF2\n<i class='kb kb-Arrows-Up'></i>\n'\n\n\n@\n\n\nC\n\nBT3",
+  "1\nF1\n<i class='kb kb-Line-End'></i>\n\"\n\n\n!\n\n\nV\n\nBT4",
   "0\nF10\n→imp\n|\n\n\n¹\n\n\nB",
   {
    "x": 1

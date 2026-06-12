@@ -33,16 +33,23 @@ o permalink (`?keymap_yaml=` gzip+base64) nos marcadores
 3. **Nomeia combos Delphi pela FUNÇÃO** (Debugar, Compilar, Avaliar…) via
    mapa posição→nome (`DELPHI` no script). Mudou combo no firmware? Atualize
    esse mapa junto.
-4. **Distribui os combos: um grupo por diagrama** (evita linhas sobrepostas):
-   QWERTY=edição · COLEMAK=troca de layer · NUM=abas · FN=janelas ·
-   NAV=Delphi (relacionados juntos: pares embaixo, acordes c/ modificador em
-   cima) · CONFIG=mover linha. Combos valem em qualquer layer — divisão visual.
-5. **Alinha para fora do teclado** com **bandas alternadas**: combos vizinhos
-   que compartilham teclas recebem offsets diferentes (0.2/1.0 em cima,
-   1.6/2.3 embaixo — abaixo dos polegares). Sobrepôs? Aumente o offset ou
-   alterne a banda. Legendas de combo preferem TEXTO curto e funcional
-   ("Compilar", "aba →") a glifos crípticos.
-6. **Elimina ▽**: tecla transparente vira a tecla efetiva herdada da base,
+4. **Mescla layers espelhadas** num diagrama só (metade esquerda = uma layer,
+   direita = outra; título "ESQ | DIR"): "PROG_SYM | NAV" e "NORM_SYM | NUM".
+   Combos espelhados são desenhados **uma vez** (instância do lado direito —
+   também garante leitura direcional correta, ex.: aba ← / aba →).
+5. **Distribui os combos: um grupo por diagrama** (evita linhas sobrepostas):
+   QWERTY=edição · COLEMAK=troca de layer · "NORM_SYM | NUM"=abas ·
+   FN=janelas · "PROG_SYM | NAV"=Delphi · CONFIG=mover linha.
+   Combos valem em qualquer layer — divisão visual.
+6. **Alinha para fora do teclado** com **bandas alternadas**: combos vizinhos
+   que compartilham teclas recebem offsets diferentes. Delphi: tudo `align:
+   bottom` — pares 1.6/2.3; acordes com polegar 1.8/2.5 (o bbox deles inclui
+   o polegar, então o offset conta de mais baixo). Atenção: `align: top` em
+   combo que inclui polegar posiciona a pílula EM CIMA do teclado (o bbox
+   começa na row de baixo) — para acordes com polegar use sempre bottom.
+   Legendas de combo preferem TEXTO curto e funcional ("Compilar", "aba →")
+   a glifos crípticos.
+7. **Elimina ▽**: tecla transparente vira a tecla efetiva herdada da base,
    com `type: trans` (esmaecida) — exigência do usuário.
 
 ## Legendas

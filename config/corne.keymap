@@ -227,16 +227,17 @@
         /* ---------- Janelas / abas (row superior) ---------- */
         COMBO(wintab_l, &kp LG(TAB),       4 5,   30, 150)
         COMBO(wintab_r, &kp LG(TAB),       6 7,   30, 150)
-        COMBO(ptab_l,   &kp LC(LS(TAB)),   3 4,   30, 150)
+        /* Direcionais seguem o sentido físico: par mais à esquerda = aba ← */
+        COMBO(ptab_l,   &kp LC(LS(TAB)),   2 3,   30, 150)
         COMBO(ptab_r,   &kp LC(LS(TAB)),   7 8,   30, 150)
-        COMBO(ntab_l,   &kp LC(TAB),       2 3,   30, 150)
+        COMBO(ntab_l,   &kp LC(TAB),       3 4,   30, 150)
         COMBO(ntab_r,   &kp LC(TAB),       8 9,   30, 150)
         COMBO(alttab_l, &kp LA(TAB),       2 3 4, 30, 150)
         COMBO(alttab_r, &kp LA(TAB),       7 8 9, 30, 150)
 
         /* ---------- Delphi (tudo na row inferior + polegares) ----------
          * Par adjacente = comando base; par + polegar INTERNO (38/39) =
-         * variante com modificador; par + polegar EXTERNO (36/41) = mover linha. */
+         * variante com modificador; par + Space/Enter (37/40) = mover linha. */
         COMBO(f9_l,   &kp F9,        28 29,    40, 150)  /* Debugar / continuar    */
         COMBO(f9_r,   &kp F9,        30 31,    40, 150)
         COMBO(cf9_l,  &kp LC(F9),    38 28 29, 50, 150)  /* Compilar               */
@@ -255,10 +256,10 @@
         COMBO(csa_r,  &kp LC(LS(A)), 39 33 34, 50, 150)
         COMBO(cal_l,  &kp LC(LA(L)), 24 25,    40, 150)  /* Renomear (CnPack)      */
         COMBO(cal_r,  &kp LC(LA(L)), 34 35,    40, 150)
-        COMBO(mvup_l, &kp DX_MOVE_UP, 36 26 27, 50, 150) /* Mover linha acima      */
-        COMBO(mvup_r, &kp DX_MOVE_UP, 41 32 33, 50, 150)
-        COMBO(mvdn_l, &kp DX_MOVE_DN, 36 27 28, 50, 150) /* Mover linha abaixo     */
-        COMBO(mvdn_r, &kp DX_MOVE_DN, 41 31 32, 50, 150)
+        COMBO(mvup_l, &kp DX_MOVE_UP, 37 26 27, 50, 150) /* Mover linha acima      */
+        COMBO(mvup_r, &kp DX_MOVE_UP, 40 32 33, 50, 150)
+        COMBO(mvdn_l, &kp DX_MOVE_DN, 37 27 28, 50, 150) /* Mover linha abaixo     */
+        COMBO(mvdn_r, &kp DX_MOVE_DN, 40 31 32, 50, 150)
 
         /* ---------- Thumb-chords: PROG_SYM (polegar interno 38/39) ----------
          * Mesmas posições da layer PROG_SYM — muscle memory transfere.       */
@@ -362,9 +363,9 @@
         nav_layer {
             display-name = "NAV";
             bindings = <
-&none        &kp LC(RIGHT)  &kp PG_UP       &kp PG_DN       &kp LC(LEFT)  &kp LC(HOME)        &kp LC(HOME)      &kp LC(LEFT)  &kp PG_DN       &kp PG_UP       &kp LC(RIGHT)  &none
-&kp LSHFT    &kp RIGHT      &kp UP          &kp DOWN        &kp LEFT      &kp DX_INTF_IMPL    &kp DX_INTF_IMPL  &kp LEFT      &kp DOWN        &kp UP          &kp RIGHT      &kp RSHFT
-&kp LC(END)  &kp END        &kp DX_METH_UP  &kp DX_METH_DN  &kp HOME      &kp DX_GOTO_IMPL    &kp DX_GOTO_IMPL  &kp HOME      &kp DX_METH_DN  &kp DX_METH_UP  &kp END        &kp LC(END)
+&none        &kp LC(LEFT)   &kp PG_DN       &kp PG_UP       &kp LC(RIGHT) &kp LC(HOME)        &kp LC(HOME)      &kp LC(LEFT)  &kp PG_DN       &kp PG_UP       &kp LC(RIGHT)  &none
+&kp LSHFT    &kp LEFT       &kp DOWN        &kp UP          &kp RIGHT     &kp DX_INTF_IMPL    &kp DX_INTF_IMPL  &kp LEFT      &kp DOWN        &kp UP          &kp RIGHT      &kp RSHFT
+&kp LC(END)  &kp HOME       &kp DX_METH_DN  &kp DX_METH_UP  &kp END       &kp DX_GOTO_IMPL    &kp DX_GOTO_IMPL  &kp HOME      &kp DX_METH_DN  &kp DX_METH_UP  &kp END        &kp LC(END)
                                             &trans          &trans        &trans              &trans            &trans        &trans
             >;
         };
