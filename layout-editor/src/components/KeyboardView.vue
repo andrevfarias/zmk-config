@@ -2,38 +2,48 @@
 /**
  * Board interativo:
  * - drag de legendas entre slots/teclas (Shift = copiar)
- * - pílulas de combo com linhas ORTOGONAIS (estilo keymap-drawer), anchor
- *   auto/esq/dir/cima/baixo, arrastáveis; o espaço cresce p/ caber etiquetas
- * - clique na pílula = edita o combo (destaque + esmaecidos)
+ * - combos como INSTÂNCIAS (espelhados = 2 pílulas a partir de 1 config),
+ *   linhas ortogonais, anchor, arrastáveis; espaço cresce p/ etiquetas
+ * - clique na pílula = destaque; ✎ na pílula = edição (expande o painel)
  * - duplo clique em slot/pílula = edição inline (Enter salva, Esc cancela)
  */
 import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
-import { useStore } from '../model/store'
-import type { Combo, Slot } from '../model/types'
+import { useStore, type ComboInstance } from '../model/store'
+import type { Slot } from '../model/types'
 import KeyView from './KeyView.vue'
+import { splitLines } from '../model/text'
 
 const store = useStore()
 const props = defineProps<{
   showCombos: boolean
-  /** grupos visíveis (null = todos) */
   groups: string[] | null
+  hiddenCombos?: string[]
+  slotsShown?: Slot[] | null
 }>()
 
 const board = computed(() => store.board.value)
 const svgEl = ref<SVGSVGElement>()
-defineExpose({ svgEl, viewBoxW: () => viewBox.value.w })
 
-/* ------------------------- combos visíveis ------------------------- */
-const visibleCombos = computed(() => {
+/* ------------------------- instâncias visíveis ------------------------- */
+const visible = computed<ComboInstance[]>(() => {
   if (!props.showCombos) return []
-  return store.state.f.combos.filter(
-    (c) => !props.groups || props.groups.includes(c.group ?? 'outros'))
+  return store.comboInstances.value.filter((i) =>
+    (!props.groups || props.groups.includes(i.combo.group ?? 'outros')) &&
+    !(props.hiddenCombos ?? []).includes(i.iid))
 })
 
-interface Pill { c: Combo; x: number; y: number; w: number; editing: boolean }
+interface Pill {
+  i: ComboInstance
+  x: number
+  y: number
+  w: number
+  h: number
+  lines: string[]
+  editing: boolean
+}
 
-function comboBBox(c: Combo) {
-  const ks = c.keys.map((k) => board.value.keys[k])
+function instBBox(i: ComboInstance) {
+  const ks = i.keys.map((k) => board.value.keys[k])
   return {
     minX: Math.min(...ks.map((k) => k.x)),
     maxX: Math.max(...ks.map((k) => k.x + k.w)),
@@ -45,37 +55,40 @@ function comboBBox(c: Combo) {
 }
 
 const pills = computed<Pill[]>(() =>
-  visibleCombos.value.map((c) => {
-    const bb = comboBBox(c)
-    const lab = store.state.v.comboLabels[c.id]
+  visible.value.map((i) => {
+    const bb = instBBox(i)
+    const lab = store.state.v.comboLabels[i.iid]
     const anchor = lab?.anchor ?? 'auto'
     let x = bb.cx
     let y = bb.cy
     if (anchor === 'top') y = bb.minY - 22
     else if (anchor === 'bottom') y = bb.maxY + 22
-    else if (anchor === 'left') { x = bb.minX - 30; y = bb.cy }
-    else if (anchor === 'right') { x = bb.maxX + 30; y = bb.cy }
+    else if (anchor === 'left') { x = bb.minX - 34; y = bb.cy }
+    else if (anchor === 'right') { x = bb.maxX + 34; y = bb.cy }
+    const lines = splitLines(i.label)
     return {
-      c,
+      i,
       x: x + (lab?.dx ?? 0),
       y: y + (lab?.dy ?? 0),
-      w: Math.max(34, c.label.length * 5.6 + 14),
-      editing: store.state.editingCombo === c.id,
+      w: Math.max(34, Math.max(...lines.map((l) => l.length)) * 5.6 + 14),
+      h: lines.length * 11 + 7,
+      lines,
+      editing: store.state.editingCombo === i.combo.id,
     }
   }))
 
-/** caminho ortogonal pílula→tecla (vertical-primeiro quando acima/abaixo) */
+/** caminho ortogonal pílula→tecla */
 function comboPath(p: Pill, keyPos: number): string {
   const g = board.value.keys[keyPos]
   const kx = g.x + g.w / 2
   const ky = g.y + g.h / 2
-  const bb = comboBBox(p.c)
+  const bb = instBBox(p.i)
   const verticalFirst = p.y < bb.minY || p.y > bb.maxY
   if (verticalFirst) {
     const px = p.x < kx ? p.x + p.w / 2 : p.x - p.w / 2
     return `M ${kx} ${ky} V ${p.y} H ${px}`
   }
-  const py = p.y < ky ? p.y + 9 : p.y - 9
+  const py = p.y < ky ? p.y + p.h / 2 : p.y - p.h / 2
   return `M ${kx} ${ky} H ${p.x} V ${py}`
 }
 
@@ -86,20 +99,26 @@ const viewBox = computed(() => {
   let maxX = board.value.width
   let maxY = board.value.height
   for (const p of pills.value) {
-    minX = Math.min(minX, p.x - p.w / 2 - 6)
-    maxX = Math.max(maxX, p.x + p.w / 2 + 6)
-    minY = Math.min(minY, p.y - 16)
-    maxY = Math.max(maxY, p.y + 16)
+    minX = Math.min(minX, p.x - p.w / 2 - 8)
+    maxX = Math.max(maxX, p.x + p.w / 2 + 8)
+    minY = Math.min(minY, p.y - p.h / 2 - 8)
+    maxY = Math.max(maxY, p.y + p.h / 2 + 8)
   }
   return { x: minX - 8, y: minY - 8, w: maxX - minX + 16, h: maxY - minY + 16 }
 })
 const viewBoxAttr = computed(() =>
   `${viewBox.value.x} ${viewBox.value.y} ${viewBox.value.w} ${viewBox.value.h}`)
 
-/* ------------------------- destaque do combo em edição ------------------------- */
+defineExpose({ svgEl })
+
+/* ------------------- destaque do combo em edição ------------------- */
 const editingKeys = computed(() => {
   const c = store.comboById(store.state.editingCombo)
-  return new Set(store.state.pickingCombo ? store.state.pickedKeys : c?.keys ?? [])
+  if (!c) return new Set<number>()
+  const base = store.state.pickingCombo ? store.state.pickedKeys : c.keys
+  const all = [...base]
+  if (c.mirror) all.push(...store.mirrorKeys(base))
+  return new Set(all)
 })
 function keyDim(pos: number): boolean {
   return !!store.state.editingCombo && !editingKeys.value.has(pos)
@@ -123,12 +142,16 @@ function onSlotDown(pos: number, slot: Slot, text: string, ev: PointerEvent) {
 function onKeyDown(pos: number, ev: PointerEvent) {
   store.selectKey(pos, ev.ctrlKey || ev.metaKey)
 }
+function onKeyEdit(pos: number) {
+  if (!store.state.selection.includes(pos)) store.selectKey(pos)
+  store.openPanel('tecla')
+}
 
 function onMove(ev: PointerEvent) {
-  if (comboDrag.id) {
+  if (comboDrag.iid) {
     const s = scale()
     comboDrag.moved = true
-    store.setComboOffset(comboDrag.id,
+    store.setComboOffset(comboDrag.iid,
       comboDrag.baseDx + (ev.clientX - comboDrag.startX) / s,
       comboDrag.baseDy + (ev.clientY - comboDrag.startY) / s)
     return
@@ -143,12 +166,11 @@ function onMove(ev: PointerEvent) {
 }
 
 function onUp(ev: PointerEvent) {
-  if (comboDrag.id) {
-    const id = comboDrag.id
-    const moved = comboDrag.moved
-    comboDrag.id = ''
+  if (comboDrag.iid) {
+    const { comboId, moved } = comboDrag
+    comboDrag.iid = ''
     if (moved) store.commit()
-    else store.editCombo(store.state.editingCombo === id ? null : id)
+    else store.editCombo(store.state.editingCombo === comboId ? null : comboId)
     return
   }
   if (!pending.active) return
@@ -170,18 +192,23 @@ function scale(): number {
 }
 
 /* ------------------------- drag/clique de pílula ------------------------- */
-const comboDrag = reactive({ id: '', moved: false, startX: 0, startY: 0, baseDx: 0, baseDy: 0 })
-function onComboDown(c: Combo, ev: PointerEvent) {
-  const off = store.state.v.comboLabels[c.id]
+const comboDrag = reactive({ iid: '', comboId: '', moved: false, startX: 0, startY: 0, baseDx: 0, baseDy: 0 })
+function onComboDown(p: Pill, ev: PointerEvent) {
+  const off = store.state.v.comboLabels[p.i.iid]
   Object.assign(comboDrag, {
-    id: c.id, moved: false, startX: ev.clientX, startY: ev.clientY,
+    iid: p.i.iid, comboId: p.i.combo.id, moved: false,
+    startX: ev.clientX, startY: ev.clientY,
     baseDx: off?.dx ?? 0, baseDy: off?.dy ?? 0,
   })
+}
+function onPillEditBtn(p: Pill) {
+  store.editCombo(p.i.combo.id)
+  store.openPanel('combos')
 }
 
 /* ------------------------- edição inline ------------------------- */
 const slotEdit = reactive({ open: false, pos: 0, slot: 'C' as Slot, value: '' })
-const pillEdit = reactive({ open: false, id: '', value: '' })
+const pillEdit = reactive({ open: false, iid: '', comboId: '', mirrorSide: false, value: '' })
 
 function openSlotEdit(pos: number, slot: Slot) {
   slotEdit.open = true
@@ -197,15 +224,18 @@ function saveSlotEdit() {
     slotEdit.value ? { ...cur, hidden: undefined, text: slotEdit.value } : undefined)
   slotEdit.open = false
 }
-function openPillEdit(c: Combo) {
+function openPillEdit(p: Pill) {
   pillEdit.open = true
-  pillEdit.id = c.id
-  pillEdit.value = c.label
+  pillEdit.iid = p.i.iid
+  pillEdit.comboId = p.i.combo.id
+  pillEdit.mirrorSide = p.i.side === 'R' && !!p.i.combo.mirror
+  pillEdit.value = p.i.label
   slotEdit.open = false
 }
 function savePillEdit() {
   if (!pillEdit.open) return
-  if (pillEdit.value.trim()) store.updateCombo(pillEdit.id, { label: pillEdit.value.trim() })
+  const v = pillEdit.value.trim()
+  if (v) store.updateCombo(pillEdit.comboId, pillEdit.mirrorSide ? { mirrorLabel: v } : { label: v })
   pillEdit.open = false
 }
 
@@ -217,9 +247,13 @@ function onGlyphDrop(pos: number, slot: Slot, glyph: string) {
   const cur = store.getSlotOverride(pos, slot)
   store.setSlotOverride(pos, slot, { ...cur, hidden: undefined, text: glyph })
 }
-function onPillGlyphDrop(c: Combo, ev: DragEvent) {
+function onPillGlyphDrop(p: Pill, ev: DragEvent) {
   const glyph = ev.dataTransfer?.getData('text/plain')
-  if (glyph) store.updateCombo(c.id, { label: c.label + glyph })
+  if (!glyph) return
+  store.updateCombo(p.i.combo.id,
+    p.i.side === 'R' && p.i.combo.mirror
+      ? { mirrorLabel: (p.i.combo.mirrorLabel ?? p.i.combo.label) + glyph }
+      : { label: p.i.combo.label + glyph })
 }
 
 onMounted(() => {
@@ -236,21 +270,31 @@ onBeforeUnmount(() => {
   <div>
     <svg ref="svgEl" class="board-svg" :viewBox="viewBoxAttr" xmlns="http://www.w3.org/2000/svg">
       <KeyView v-for="g in board.keys" :key="g.pos" :geom="g"
-        :dimmed="keyDim(g.pos)" :highlight="keyHighlight(g.pos)"
-        @key-down="onKeyDown" @slot-down="onSlotDown"
+        :dimmed="keyDim(g.pos)" :highlight="keyHighlight(g.pos)" :slots-shown="slotsShown"
+        @key-down="onKeyDown" @key-edit="onKeyEdit" @slot-down="onSlotDown"
         @slot-dblclick="openSlotEdit" @glyph-drop="onGlyphDrop" />
 
-      <g v-for="p in pills" :key="p.c.id" class="combo-pill"
+      <g v-for="p in pills" :key="p.i.iid" class="combo-pill"
         :class="{ dim: store.state.editingCombo && !p.editing, editing: p.editing }"
-        @pointerdown.stop="onComboDown(p.c, $event)"
-        @dblclick.stop="openPillEdit(p.c)"
-        @dragover.prevent @drop.prevent="onPillGlyphDrop(p.c, $event)">
-        <path v-for="k in p.c.keys" :key="k" class="combo-line" :d="comboPath(p, k)" />
-        <rect :x="p.x - p.w / 2" :y="p.y - 9" :width="p.w" height="18" rx="7"
-          :fill="store.comboColor(p.c)" />
-        <text :x="p.x" :y="p.y + 3" text-anchor="middle">{{ p.c.label }}</text>
-        <title>{{ p.c.label }} → {{ p.c.action }}
-clique = editar · arrastar = posicionar · duplo clique = renomear</title>
+        :data-pill="p.i.iid"
+        @pointerdown.stop="onComboDown(p, $event)"
+        @dblclick.stop="openPillEdit(p)"
+        @dragover.prevent @drop.prevent="onPillGlyphDrop(p, $event)">
+        <path v-for="k in p.i.keys" :key="k" class="combo-line" :d="comboPath(p, k)" />
+        <rect :x="p.x - p.w / 2" :y="p.y - p.h / 2" :width="p.w" :height="p.h" rx="7"
+          :fill="store.comboColor(p.i.combo)" />
+        <text :y="p.y - p.h / 2 + 12" text-anchor="middle">
+          <tspan v-for="(ln, li) in p.lines" :key="li" :x="p.x" :dy="li === 0 ? 0 : 11">{{ ln }}</tspan>
+        </text>
+        <g class="pill-edit-btn" :transform="`translate(${p.x + p.w / 2 - 1} ${p.y - p.h / 2 + 1})`"
+          :data-pill-edit-btn="p.i.iid"
+          @pointerdown.stop @click.stop="onPillEditBtn(p)">
+          <circle r="7" />
+          <text text-anchor="middle" dominant-baseline="middle" font-size="8">✎</text>
+          <title>Editar combo (expande o painel Combos)</title>
+        </g>
+        <title>{{ p.i.label }} → {{ p.i.action }}
+clique = destacar · arrastar = posicionar · duplo clique = renomear</title>
       </g>
 
       <foreignObject v-if="slotEdit.open" v-bind="slotEditXY()" :width="board.keys[slotEdit.pos].w" height="22">
@@ -260,8 +304,8 @@ clique = editar · arrastar = posicionar · duplo clique = renomear</title>
           @blur="slotEdit.open = false" @vue:mounted="(e: any) => e.el.focus()" />
       </foreignObject>
       <foreignObject v-if="pillEdit.open"
-        :x="(pills.find(p => p.c.id === pillEdit.id)?.x ?? 0) - 50"
-        :y="(pills.find(p => p.c.id === pillEdit.id)?.y ?? 0) - 11" width="100" height="22">
+        :x="(pills.find(p => p.i.iid === pillEdit.iid)?.x ?? 0) - 50"
+        :y="(pills.find(p => p.i.iid === pillEdit.iid)?.y ?? 0) - 11" width="100" height="22">
         <input class="inline-edit" :value="pillEdit.value" autofocus data-pill-edit
           @input="pillEdit.value = ($event.target as HTMLInputElement).value"
           @keydown.enter="savePillEdit" @keydown.esc="pillEdit.open = false"

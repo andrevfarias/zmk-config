@@ -52,17 +52,20 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
       <BoardsSection />
     </div>
     <aside class="side">
-      <CollapsibleSection title="Tecla" hint="Edição da tecla selecionada">
+      <CollapsibleSection title="Tecla" hint="Edição da tecla selecionada"
+        :open="store.state.panels.tecla" @update:open="store.state.panels.tecla = $event">
         <SidePanel />
       </CollapsibleSection>
-      <CollapsibleSection title="Combos" hint="Criação e edição de combos">
+      <CollapsibleSection title="Combos" hint="Criação e edição de combos"
+        :open="store.state.panels.combos" @update:open="store.state.panels.combos = $event">
         <ComboPanel />
       </CollapsibleSection>
-      <CollapsibleSection title="Layers" hint="Layers e mapeamento de slots" :start-open="false">
+      <CollapsibleSection title="Layers" hint="Layers e mapeamento de slots"
+        :open="store.state.panels.layers" @update:open="store.state.panels.layers = $event">
         <LayerPanel />
       </CollapsibleSection>
       <CollapsibleSection title="Paleta de ícones" hint="Clique insere · arraste p/ slots e etiquetas"
-        :start-open="false">
+        :open="store.state.panels.paleta" @update:open="store.state.panels.paleta = $event">
         <GlyphPalette />
       </CollapsibleSection>
     </aside>

@@ -9,7 +9,55 @@ describe('store: seed', () => {
     expect(s.getBinding(22, 'qwerty')?.tap).toBe('ç')
     expect(s.getBinding(22, 'qwerty')?.notes).toContain('hold = Ctrl')
     expect(s.getBinding(22, 'colemak')?.tap).toBe('O')
-    expect(s.state.f.combos.length).toBeGreaterThan(30)
+    // base COLEMAK completa (não só as letras que diferem)
+    expect(s.getBinding(1, 'colemak')?.tap).toBe('Q')
+    expect(s.state.f.combos.length).toBeGreaterThanOrEqual(25)
+    expect(s.comboInstances.value.length).toBeGreaterThan(50)
+  })
+})
+
+describe('store: combos espelhados (instâncias)', () => {
+  const s = createStore()
+
+  it('mirror gera duas instâncias com teclas espelhadas por dedo', () => {
+    const tab = s.state.f.combos.find((c) => c.label === 'Tab')!
+    const insts = s.comboInstances.value.filter((i) => i.combo.id === tab.id)
+    expect(insts).toHaveLength(2)
+    expect(insts[0].keys).toEqual([13, 14])
+    expect(insts[1].keys).toEqual([21, 22])
+    expect(insts[1].iid).toBe(`${tab.id}~m`)
+  })
+
+  it('direcionais: lado espelhado tem label/ação próprios (aba → vira aba ←)', () => {
+    const abaE = s.state.f.combos.find((c) => c.label === 'aba ←')!
+    const r = s.comboInstances.value.find((i) => i.iid === `${abaE.id}~m`)!
+    expect(r.keys).toEqual([8, 9])
+    expect(r.label).toBe('aba →')
+    expect(r.action).toBe('Ctrl+Tab')
+  })
+
+  it('combo não espelhado gera uma instância só', () => {
+    expect(s.comboInstances.value.filter((i) => i.combo.id === 'cfg')).toHaveLength(1)
+  })
+
+  it('instancesFor filtra grupos e instâncias ocultas (por lado)', () => {
+    const b = s.state.boards[0]
+    const tab = s.state.f.combos.find((c) => c.label === 'Tab')!
+    const all = s.instancesFor(b).length
+    s.toggleComboVisibility(b, `${tab.id}~m`)
+    expect(s.instancesFor(b).length).toBe(all - 1)
+    expect(s.instancesFor(b).some((i) => i.iid === tab.id)).toBe(true)
+    s.toggleComboVisibility(b, `${tab.id}~m`)
+    expect(s.instancesFor(b).length).toBe(all)
+  })
+})
+
+describe('store: display vs ação', () => {
+  it('a tecla exibe display quando definido; a ação permanece p/ a IA', () => {
+    const s = createStore()
+    s.setBinding(1, 'qwerty', { tap: 'Ctrl+F9', display: '⚙' })
+    expect(s.resolveSlot(1, 'C')?.text).toBe('⚙')
+    expect(s.getBinding(1, 'qwerty')?.tap).toBe('Ctrl+F9')
   })
 })
 

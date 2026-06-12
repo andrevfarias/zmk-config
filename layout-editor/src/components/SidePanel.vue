@@ -9,6 +9,7 @@ import { computed, reactive, ref, watch } from 'vue'
 import { useStore } from '../model/store'
 import type { KeyBinding, Slot } from '../model/types'
 import { SLOTS } from '../model/types'
+import ScanButton from './ScanButton.vue'
 
 const store = useStore()
 const sel = computed(() => store.state.selection)
@@ -21,7 +22,7 @@ watch([pos, () => store.state.f], () => {
   const d: Record<string, KeyBinding> = {}
   for (const l of store.state.f.layers) {
     const b = store.getBinding(pos.value, l.id)
-    d[l.id] = { tap: b?.tap ?? '', notes: b?.notes ?? '' }
+    d[l.id] = { tap: b?.tap ?? '', display: b?.display ?? '', notes: b?.notes ?? '' }
   }
   draft.value = d
 }, { immediate: true })
@@ -146,9 +147,14 @@ const keyColor = computed({
     <div v-for="l in store.state.f.layers" :key="l.id" class="binding-row">
       <div class="row">
         <span class="dot" :style="{ background: l.color ?? '#adb5bd' }" />
-        <label style="width:90px" :title="l.access">{{ l.name }}</label>
-        <input v-model="draft[l.id].tap" :data-bind="`${l.id}-tap`" placeholder="ação (tap)"
-          :title="`O que a tecla faz na layer ${l.name}`" @change="apply(l.id)" />
+        <label style="width:78px" :title="l.access">{{ l.name }}</label>
+        <input v-model="draft[l.id].tap" :data-bind="`${l.id}-tap`" placeholder="ação (texto ou atalho)"
+          :title="`O que a tecla executa na layer ${l.name} — texto livre ou atalho (use o scan ⌨)`"
+          @change="apply(l.id)" />
+        <ScanButton @scan="draft[l.id].tap = $event; apply(l.id)" />
+        <input v-model="draft[l.id].display" :data-bind="`${l.id}-display`" style="width:64px"
+          placeholder="exibir" title="Ícone/caractere/texto exibido na tecla (vazio = a própria ação)"
+          @change="apply(l.id)" />
       </div>
       <input v-model="draft[l.id].notes" :data-bind="`${l.id}-notes`" class="notes"
         placeholder="detalhes de comportamento (hold, shift, timing...)"

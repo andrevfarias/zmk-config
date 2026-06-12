@@ -42,15 +42,32 @@ describe('KeyboardView', () => {
     expect(store.state.selection).toEqual([13, 14])
   })
 
-  it('pílulas: todas, filtradas por grupo, e caminhos ortogonais', () => {
+  it('pílulas: instâncias (espelhados = 2), filtro por grupo e caminhos ortogonais', () => {
     const store = useStore()
     const all = mountKb(null, true)
-    expect(all.findAll('.combo-pill').length).toBe(store.state.f.combos.length)
+    expect(all.findAll('.combo-pill').length).toBe(store.comboInstances.value.length)
     const d = all.find('.combo-line').attributes('d')!
     expect(d).toMatch(/^M [\d.-]+ [\d.-]+ (V|H) /)
     const so = mountKb(['delphi'], true)
     expect(so.findAll('.combo-pill').length).toBe(
-      store.state.f.combos.filter((c) => c.group === 'delphi').length)
+      store.comboInstances.value.filter((i) => i.combo.group === 'delphi').length)
+  })
+
+  it('hiddenCombos oculta a instância de um lado só', () => {
+    const store = useStore()
+    const tab = store.state.f.combos.find((c) => c.label === 'Tab')!
+    const w = mount(KeyboardView, {
+      props: { showCombos: true, groups: ['edição'], hiddenCombos: [`${tab.id}~m`] },
+    })
+    expect(w.find(`[data-pill="${tab.id}"]`).exists()).toBe(true)
+    expect(w.find(`[data-pill="${tab.id}~m"]`).exists()).toBe(false)
+  })
+
+  it('slotsShown filtra as legendas exibidas', () => {
+    const w = mount(KeyboardView, { props: { showCombos: false, groups: null, slotsShown: ['C'] } })
+    const texts = w.findAll('[data-pos="7"] text').map((t) => t.text())
+    expect(texts).toContain('U')
+    expect(texts).not.toContain('7') // TL (num) filtrado
   })
 
   it('modo números mostra a posição física', async () => {
@@ -61,15 +78,29 @@ describe('KeyboardView', () => {
     expect(w.find('[data-pos="39"] .key-number').text()).toBe('39')
   })
 
-  it('combo em edição: pílulas alheias esmaecem e teclas do combo destacam', () => {
+  it('combo em edição: pílulas alheias esmaecem e teclas (dos 2 lados) destacam', () => {
     const store = useStore()
     const c = store.state.f.combos.find((x) => x.group === 'delphi')!
     store.editCombo(c.id)
     const w = mountKb(null, true)
-    expect(w.findAll('.combo-pill.dim').length).toBe(store.state.f.combos.length - 1)
+    const own = c.mirror ? 2 : 1
+    expect(w.findAll('.combo-pill.dim').length).toBe(store.comboInstances.value.length - own)
     expect(w.find(`[data-pos="${c.keys[0]}"]`).classes()).not.toContain('dimmed')
-    const other = [...Array(42).keys()].find((p) => !c.keys.includes(p))!
+    const mirrored = store.mirrorKeys(c.keys)[0]
+    expect(w.find(`[data-pos="${mirrored}"]`).classes()).not.toContain('dimmed')
+    const all = new Set([...c.keys, ...store.mirrorKeys(c.keys)])
+    const other = [...Array(42).keys()].find((p) => !all.has(p))!
     expect(w.find(`[data-pos="${other}"]`).classes()).toContain('dimmed')
+  })
+
+  it('✎ da pílula entra em edição e expande o painel Combos', async () => {
+    const store = useStore()
+    store.state.panels.combos = false
+    const c = store.state.f.combos.find((x) => x.group === 'edição')!
+    const w = mountKb(null, true)
+    await w.find(`[data-pill-edit-btn="${c.id}"]`).trigger('click')
+    expect(store.state.editingCombo).toBe(c.id)
+    expect(store.state.panels.combos).toBe(true)
   })
 
   it('etiqueta com anchor bottom fica abaixo das teclas e expande o viewBox', () => {
@@ -115,19 +146,26 @@ describe('LayerSection', () => {
     expect(nav.text()).toContain('PgUp')
     const q = w.find('[data-layer-board="qwerty"]')
     expect(q.text()).toContain('A')
+    // COLEMAK completo (bug das letras ausentes)
+    const c = w.find('[data-layer-board="colemak"]')
+    expect(c.text()).toContain('Q')
+    expect(c.text()).toContain('W')
   })
 })
 
 describe('SidePanel', () => {
-  it('edita tap e notes inline', async () => {
+  it('edita ação, display e notes inline', async () => {
     const store = useStore()
     store.selectKey(1)
     const w = mount(SidePanel)
     await w.find('[data-bind="qwerty-tap"]').setValue('Ω')
     await w.find('[data-bind="qwerty-tap"]').trigger('change')
+    await w.find('[data-bind="qwerty-display"]').setValue('☆')
+    await w.find('[data-bind="qwerty-display"]').trigger('change')
     await w.find('[data-bind="qwerty-notes"]').setValue('hold = teste')
     await w.find('[data-bind="qwerty-notes"]').trigger('change')
-    expect(store.getBinding(1, 'qwerty')).toEqual({ tap: 'Ω', notes: 'hold = teste' })
+    expect(store.getBinding(1, 'qwerty')).toEqual({ tap: 'Ω', display: '☆', notes: 'hold = teste' })
+    expect(store.resolveSlot(1, 'C')?.text).toBe('☆')
   })
 
   it('editor de slot inline: texto, tinta e reset', async () => {

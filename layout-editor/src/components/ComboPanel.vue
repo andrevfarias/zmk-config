@@ -9,7 +9,10 @@ import type { Combo, ComboAnchor } from '../model/types'
 
 const store = useStore()
 const collapsed = ref(new Set<string>())
-const form = reactive({ label: '', action: '', notes: '', group: '' })
+const form = reactive({
+  label: '', action: '', notes: '', group: '',
+  mirror: false, mirrorLabel: '', mirrorAction: '',
+})
 const creating = ref(false)
 
 const groups = computed(() => {
@@ -26,7 +29,10 @@ watch(() => store.state.editingCombo, (id) => {
   const c = store.comboById(id)
   if (c) {
     creating.value = false
-    Object.assign(form, { label: c.label, action: c.action, notes: c.notes ?? '', group: c.group ?? '' })
+    Object.assign(form, {
+      label: c.label, action: c.action, notes: c.notes ?? '', group: c.group ?? '',
+      mirror: !!c.mirror, mirrorLabel: c.mirrorLabel ?? '', mirrorAction: c.mirrorAction ?? '',
+    })
   }
 })
 
@@ -44,6 +50,13 @@ function startNew() {
   Object.assign(form, { label: '', action: '', notes: '', group: '' })
   store.startPickCombo(null)
 }
+function mirrorPatch(): Partial<Combo> {
+  return {
+    mirror: form.mirror || undefined,
+    mirrorLabel: (form.mirror && form.mirrorLabel.trim()) || undefined,
+    mirrorAction: (form.mirror && form.mirrorAction.trim()) || undefined,
+  }
+}
 function confirmNew() {
   const keys = [...store.state.pickedKeys].sort((a, b) => a - b)
   if (keys.length < 2 || !form.label.trim() || !form.action.trim()) {
@@ -54,7 +67,7 @@ function confirmNew() {
     id: `combo_${Date.now().toString(36)}`,
     label: form.label.trim(), action: form.action.trim(),
     notes: form.notes.trim() || undefined, group: form.group.trim() || undefined,
-    keys,
+    keys, ...mirrorPatch(),
   })
   creating.value = false
 }
@@ -64,6 +77,7 @@ function saveEdit(c: Combo) {
     action: form.action.trim() || c.action,
     notes: form.notes.trim() || undefined,
     group: form.group.trim() || undefined,
+    ...mirrorPatch(),
     ...(store.state.pickingCombo && store.state.pickedKeys.length >= 2
       ? { keys: [...store.state.pickedKeys].sort((a, b) => a - b) }
       : {}),
@@ -120,12 +134,24 @@ function saveEdit(c: Combo) {
           <!-- editor inline, logo abaixo do item -->
           <div v-if="store.state.editingCombo === c.id && !creating" class="combo-editor" :data-combo-editor="c.id">
             <input v-model="form.label" placeholder="etiqueta" data-combo-label
-              title="Texto da pílula (aceita ícones da paleta)" />
+              title="Texto da pílula (ícones e \n permitidos)" />
             <input v-model="form.action" placeholder="atalho/comando" data-combo-action
               title="Tecla/atalho/comando que o combo executa (lido pela IA)" />
             <input v-model="form.notes" placeholder="observações p/ a IA"
               title="Detalhes: restrições, layers onde vale, comportamento especial..." />
-            <input v-model="form.group" placeholder="grupo" list="grupos-list" title="Grupo (cor/filtros)" />
+            <input v-model="form.group" placeholder="grupo (escolha ou digite novo)" list="grupos-list"
+              title="Grupo (cor/filtros)" />
+            <label class="chip" style="cursor:pointer"
+              title="Vale nos dois lados: as teclas espelhadas por dedo formam o mesmo combo">
+              <input v-model="form.mirror" type="checkbox" data-combo-mirror style="margin:0" /> espelhado ⇋
+            </label>
+            <template v-if="form.mirror">
+              <input v-model="form.mirrorLabel" data-combo-mirror-label
+                placeholder="etiqueta do lado espelhado (se difere)"
+                title="Comandos direcionais invertem no espelho: ex. aba → vira aba ←" />
+              <input v-model="form.mirrorAction" data-combo-mirror-action
+                placeholder="ação do lado espelhado (se difere)" />
+            </template>
             <div class="row">
               <label title="Lado da etiqueta em relação às teclas (vale p/ todos os layouts)">etiqueta</label>
               <select :value="anchorOf(c)" data-combo-anchor

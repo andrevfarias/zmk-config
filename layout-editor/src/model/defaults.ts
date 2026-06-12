@@ -83,49 +83,49 @@ const THUMB_NOTES: Record<number, string> = {
   41: 'hold = NUM momentâneo; tap = trava/destrava NUM; chord c/ tecla = símbolo NORM_SYM',
 }
 
-// ---- combos ------------------------------------------------------------------
+// ---- combos (espelhados: 1 config define os dois lados) -----------------------
 let seq = 0
-function par(label: string, action: string, group: string, l: number[], r: number[],
-  notes?: string): Combo[] {
-  const mk = (keys: number[], lado: string): Combo =>
-    ({ id: `c${seq}_${lado}`, label, action, group, keys, notes })
-  seq++
-  return [mk(l, 'l'), mk(r, 'r')]
+function esp(label: string, action: string, group: string, keys: number[],
+  notes?: string, extra?: Partial<Combo>): Combo {
+  return { id: `c${seq++}`, label, action, group, keys, notes, mirror: true, ...extra }
 }
 
 const COMBOS: Combo[] = [
-  ...par('Tab', '⇥', 'edição', [13, 14], [21, 22]),
-  ...par('Del', '⌦', 'edição', [14, 15], [20, 21]),
-  ...par('Backspace', '⌫', 'edição', [15, 16], [19, 20]),
-  ...par('Shift+Tab', '⇤', 'edição', [16, 17], [18, 19], 'des-indenta'),
-  ...par('Esc', 'Esc', 'edição', [5, 17], [6, 18]),
-  ...par('Enter', '⏎', 'edição', [4, 16], [7, 19]),
+  esp('Tab', '⇥', 'edição', [13, 14]),
+  esp('Del', '⌦', 'edição', [14, 15]),
+  esp('Backspace', '⌫', 'edição', [15, 16]),
+  esp('Shift+Tab', '⇤', 'edição', [16, 17], 'des-indenta'),
+  esp('Esc', 'Esc', 'edição', [5, 17]),
+  esp('Enter', '⏎', 'edição', [4, 16]),
 
-  ...par('BASE', 'base_reset', 'layers', [14, 16], [19, 21],
+  esp('BASE', 'base_reset', 'layers', [14, 16],
     'desliga todas as funções; preserva a base ativa (QWERTY/COLEMAK)'),
-  ...par('NUM ⇄', 'toggle NUM', 'layers', [2, 4], [7, 9]),
-  ...par('NAV ⇄', 'toggle NAV', 'layers', [26, 28], [31, 33]),
-  ...par('NORM_SYM ⇄', 'toggle NORM_SYM', 'layers', [3, 5], [6, 8]),
-  ...par('PROG_SYM ⇄', 'toggle PROG_SYM', 'layers', [15, 17], [18, 20]),
-  ...par('FN ⇄', 'toggle FN', 'layers', [27, 29], [30, 32]),
+  esp('NUM ⇄', 'toggle NUM', 'layers', [2, 4]),
+  esp('NAV ⇄', 'toggle NAV', 'layers', [26, 28]),
+  esp('NORM_SYM ⇄', 'toggle NORM_SYM', 'layers', [3, 5]),
+  esp('PROG_SYM ⇄', 'toggle PROG_SYM', 'layers', [15, 17]),
+  esp('FN ⇄', 'toggle FN', 'layers', [27, 29]),
   { id: 'cfg', label: 'CONFIG ⇄', action: 'toggle CONFIG', group: 'layers', keys: [0, 11] },
 
-  ...par('Win+Tab', 'Win+Tab', 'janelas', [4, 5], [6, 7]),
-  ...par('Alt+Tab', 'Alt+Tab', 'janelas', [2, 3, 4], [7, 8, 9]),
-  ...par('aba ←', 'Ctrl+Shift+Tab', 'abas', [2, 3], [7, 8]),
-  ...par('aba →', 'Ctrl+Tab', 'abas', [3, 4], [8, 9]),
+  esp('Win+Tab', 'Win+Tab', 'janelas', [4, 5]),
+  esp('Alt+Tab', 'Alt+Tab', 'janelas', [2, 3, 4]),
+  // direcionais: o espelho INVERTE o sentido → label/ação próprios do lado R
+  esp('aba ←', 'Ctrl+Shift+Tab', 'abas', [2, 3], undefined,
+    { mirrorLabel: 'aba →', mirrorAction: 'Ctrl+Tab' }),
+  esp('aba →', 'Ctrl+Tab', 'abas', [3, 4], undefined,
+    { mirrorLabel: 'aba ←', mirrorAction: 'Ctrl+Shift+Tab' }),
 
-  ...par('Debugar', 'F9', 'delphi', [28, 29], [30, 31], 'run / continuar'),
-  ...par('Compilar', 'Ctrl+F9', 'delphi', [38, 28, 29], [39, 30, 31]),
-  ...par('Step over', 'F8', 'delphi', [27, 28], [31, 32]),
-  ...par('Até retorno', 'Shift+F8', 'delphi', [38, 27, 28], [39, 31, 32]),
-  ...par('Step into', 'F7', 'delphi', [26, 27], [32, 33]),
-  ...par('Avaliar', 'Ctrl+F7', 'delphi', [38, 26, 27], [39, 32, 33], 'avaliar/modificar'),
-  ...par('Inspecionar', 'Alt+F5', 'delphi', [25, 26], [33, 34]),
-  ...par('Add uses', 'Ctrl+Shift+A', 'delphi', [38, 25, 26], [39, 33, 34], 'add unit ao uses'),
-  ...par('Renomear', 'Ctrl+Alt+L', 'delphi', [24, 25], [34, 35], 'CnPack'),
-  ...par('Mover ln↑', 'Shift+Alt+↑', 'delphi', [37, 26, 27], [40, 32, 33]),
-  ...par('Mover ln↓', 'Shift+Alt+↓', 'delphi', [37, 27, 28], [40, 31, 32]),
+  esp('Debugar', 'F9', 'delphi', [28, 29], 'run / continuar'),
+  esp('Compilar', 'Ctrl+F9', 'delphi', [38, 28, 29]),
+  esp('Step over', 'F8', 'delphi', [27, 28]),
+  esp('Até retorno', 'Shift+F8', 'delphi', [38, 27, 28]),
+  esp('Step into', 'F7', 'delphi', [26, 27]),
+  esp('Avaliar', 'Ctrl+F7', 'delphi', [38, 26, 27], 'avaliar/modificar'),
+  esp('Inspecionar', 'Alt+F5', 'delphi', [25, 26]),
+  esp('Add uses', 'Ctrl+Shift+A', 'delphi', [38, 25, 26], 'add unit ao uses'),
+  esp('Renomear', 'Ctrl+Alt+L', 'delphi', [24, 25], 'CnPack'),
+  esp('Mover ln↑', 'Shift+Alt+↑', 'delphi', [37, 26, 27]),
+  esp('Mover ln↓', 'Shift+Alt+↓', 'delphi', [37, 27, 28]),
 ]
 
 // ---- montagem ----------------------------------------------------------------
@@ -180,7 +180,9 @@ export function defaultBundle(): Bundle {
     }
     if (THUMB_NOTES[i]) notas.push(THUMB_NOTES[i])
     put(i, 'qwerty', QWERTY[i], notas.join('; ') || undefined)
-    if (COLEMAK[i] !== QWERTY[i]) put(i, 'colemak', COLEMAK[i])
+    // base completa: TODAS as teclas, não só as que diferem (a troca da
+    // base exibida depende disso)
+    put(i, 'colemak', COLEMAK[i])
     if (NUM[i]) put(i, 'num', NUM[i])
     if (FN[i]) put(i, 'fn', FN[i])
     if (NAV[i]) put(i, 'nav', NAV[i])

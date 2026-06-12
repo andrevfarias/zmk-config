@@ -26,12 +26,36 @@ interface DragState {
   y: number
 }
 
-/** instância de board na seção Integrado (filtros próprios) */
+/** painel de layout configurável da seção Integrado */
 export interface BoardInstance {
   id: number
+  /**
+   * slots = teclado integrado (legendas nos slots)
+   * layer = teclado com UMA layer centrada por metade (esq/dir)
+   * cards = só os mini-layouts de combo (catálogo embutido)
+   */
+  mode: 'slots' | 'layer' | 'cards'
+  /** filtro de slots exibidos no modo slots (null = todos) */
+  slotsShown: Slot[] | null
+  /** layers das metades no modo layer */
+  layerLeft?: LayerId
+  layerRight?: LayerId
+  /** exibir etiquetas de combo (modos de teclado) */
+  showCombos: boolean
   /** grupos de combo visíveis (null = todos) */
   groups: string[] | null
-  showCombos: boolean
+  /** instâncias de combo ocultas (id ou id~m do lado espelhado) */
+  hiddenCombos: string[]
+}
+
+/** uma "instância" visual de combo: o lado definido ou o lado espelhado */
+export interface ComboInstance {
+  iid: string
+  combo: Combo
+  side: 'L' | 'R'
+  keys: number[]
+  label: string
+  action: string
 }
 
 function snapshot(b: Bundle): string {
@@ -56,11 +80,16 @@ export function createStore(initial?: Bundle) {
     redoStack: [] as string[],
     /** seções: integrado | layers | catalogo */
     activeTab: 'integrado' as 'integrado' | 'layers' | 'catalogo',
-    /** boards da seção Integrado */
-    boards: [{ id: 0, groups: null, showCombos: true }] as BoardInstance[],
+    /** painéis de layout da seção Integrado */
+    boards: [{
+      id: 0, mode: 'slots', slotsShown: null, showCombos: true,
+      groups: null, hiddenCombos: [],
+    }] as BoardInstance[],
     boardColumns: 1,
     /** overlay com o número físico de cada tecla */
     showNumbers: false,
+    /** painéis laterais abertos (✎ nas etiquetas/teclas expande) */
+    panels: { tecla: true, combos: true, layers: false, paleta: false } as Record<string, boolean>,
   })
 
   const board = computed(() => getBoard(state.f.keyboard))
@@ -72,6 +101,41 @@ export function createStore(initial?: Bundle) {
     for (const c of state.f.combos) s.add(c.group ?? 'outros')
     return [...s]
   })
+
+  /** espelha um conjunto de teclas por dedo */
+  function mirrorKeys(keys: number[]): number[] {
+    return keys.map((k) => board.value.mirror[k]).sort((a, b) => a - b)
+  }
+
+  /** combos expandidos: espelhados geram duas instâncias (L e R) */
+  const comboInstances = computed<ComboInstance[]>(() => {
+    const out: ComboInstance[] = []
+    for (const c of state.f.combos) {
+      out.push({ iid: c.id, combo: c, side: 'L', keys: c.keys, label: c.label, action: c.action })
+      if (c.mirror)
+        out.push({
+          iid: `${c.id}~m`, combo: c, side: 'R', keys: mirrorKeys(c.keys),
+          label: c.mirrorLabel ?? c.label, action: c.mirrorAction ?? c.action,
+        })
+    }
+    return out
+  })
+
+  /** instâncias visíveis num painel de layout (grupos + ocultas) */
+  function instancesFor(b: BoardInstance): ComboInstance[] {
+    return comboInstances.value.filter((i) =>
+      (!b.groups || b.groups.includes(i.combo.group ?? 'outros')) &&
+      !b.hiddenCombos.includes(i.iid))
+  }
+  function toggleComboVisibility(b: BoardInstance, iid: string) {
+    const i = b.hiddenCombos.indexOf(iid)
+    if (i >= 0) b.hiddenCombos.splice(i, 1)
+    else b.hiddenCombos.push(iid)
+  }
+
+  function openPanel(name: 'tecla' | 'combos' | 'layers' | 'paleta') {
+    state.panels[name] = true
+  }
 
   function layerById(id: LayerId | undefined): Layer | undefined {
     return id ? state.f.layers.find((l) => l.id === id) : undefined
@@ -140,23 +204,28 @@ export function createStore(initial?: Bundle) {
     return layerById(srcLayer)?.color
   }
 
+  /** o que a tecla EXIBE para um binding (display ?? ação) */
+  function shown(b: KeyBinding | undefined): string | undefined {
+    return b?.display || b?.tap
+  }
+
   function resolveSlot(pos: number, slot: Slot): ResolvedSlot | null {
     const o: SlotOverride | undefined = state.v.keySlots[String(pos)]?.[slot]
     if (o?.hidden) return null
     if (o?.text !== undefined && o.text !== '')
       return { text: o.text, source: 'custom', color: slotColor(o) }
     if (o?.layer) {
-      const t = getBinding(pos, o.layer)?.tap
+      const t = shown(getBinding(pos, o.layer))
       return t ? { text: t, source: o.layer, color: slotColor(o, o.layer) } : null
     }
     if (slot === 'C') {
       const base = activeBase.value
-      const t = base && getBinding(pos, base.id)?.tap
+      const t = base && shown(getBinding(pos, base.id))
       return t ? { text: t, source: 'base', color: slotColor(o) } : null
     }
     for (const layer of state.f.layers) {
       if (state.v.layerSlots[layer.id] === slot) {
-        const t = getBinding(pos, layer.id)?.tap
+        const t = shown(getBinding(pos, layer.id))
         if (t) return { text: t, source: layer.id, color: slotColor(o, layer.id) }
       }
     }
@@ -332,15 +401,21 @@ export function createStore(initial?: Bundle) {
   }
 
   /* --------------------------- boards (Integrado) --------------------------- */
+  function newBoard(partial?: Partial<BoardInstance>): BoardInstance {
+    return {
+      id: boardSeq++, mode: 'slots', slotsShown: null, showCombos: true,
+      groups: null, hiddenCombos: [], ...partial,
+    }
+  }
   function addBoard() {
-    state.boards.push({ id: boardSeq++, groups: null, showCombos: true })
+    state.boards.push(newBoard())
   }
   function removeBoard(id: number) {
     if (state.boards.length > 1) state.boards = state.boards.filter((b) => b.id !== id)
   }
-  /** um board por grupo de combo */
+  /** um painel por grupo de combo */
   function splitBoardsByGroup() {
-    state.boards = comboGroups.value.map((g) => ({ id: boardSeq++, groups: [g], showCombos: true }))
+    state.boards = comboGroups.value.map((g) => newBoard({ groups: [g] }))
   }
   function toggleBoardGroup(b: BoardInstance, group: string) {
     const all = comboGroups.value
@@ -364,6 +439,7 @@ export function createStore(initial?: Bundle) {
 
   return {
     state, board, baseLayers, activeBase, comboGroups, layerById,
+    mirrorKeys, comboInstances, instancesFor, toggleComboVisibility, openPanel,
     undo, redo, commit,
     selectKey, clearSelection,
     getBinding, setBinding,

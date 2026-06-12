@@ -43,9 +43,24 @@ interpreta ao gerar o ZMK.
 
 | Seção | Conteúdo |
 |---|---|
-| **Integrado** | board(s) completo(s) com todas as legendas + etiquetas de combo. Pode haver **N layouts**, cada um com filtros de grupos próprios, grade com 1–3 colunas e "separar por grupo" |
+| **Integrado** | **N painéis configuráveis** com scroll: cada um pode ser *Teclado integrado* (com filtro de slots exibidos), *Teclado por layer* (uma layer por metade — esq/dir podem diferir) ou *Mini-layouts de combo*. Filtros de grupo, visibilidade combo a combo (e por lado), colunas e "separar por grupo" |
 | **Por layer** | um board por layer, só com a ação central na cor da layer |
-| **Combos** | catálogo/colinha: mini-teclado por combo (teclas coloridas + etiqueta/atalho/observações), grupos colapsáveis, edição clicando nas teclas do mini |
+| **Combos** | catálogo/colinha: mini-teclado por combo com os números nas teclas, grupos colapsáveis, edição clicando nas teclas do mini |
+
+## Combos espelhados
+
+Um combo com a flag **espelhado ⇋** vale nos dois lados: uma config gera as
+duas instâncias (as teclas do outro lado vêm do espelho por dedo da
+geometria). Comandos **direcionais** podem definir `mirrorLabel`/
+`mirrorAction` — ex.: `aba → (Ctrl+Tab)` espelha como `aba ← (Ctrl+Shift+Tab)`.
+Cada lado pode ser exibido/oculto individualmente em cada painel.
+
+## Ação × exibição
+
+Cada binding tem **ação** (o que executa — texto livre ou atalho; use o botão
+**⌨ scan** para capturar a combinação direto do teclado físico) e, opcional,
+**exibir** (ícone/caractere mostrado na tecla). Etiquetas e textos aceitam
+quebra de linha manual com `\n`.
 
 ## Interações (todas com hint no hover)
 

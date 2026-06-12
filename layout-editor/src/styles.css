@@ -87,8 +87,14 @@ label { font-size: 12px; color: var(--muted); }
 .combo-pill rect { stroke: #00000022; }
 .combo-pill text { font-size: 10px; fill: #1a1a1a; pointer-events: none; }
 .combo-pill.dim { opacity: 0.25; }
-.combo-pill.editing rect { stroke: var(--ink); stroke-width: 1.6; }
+.combo-pill.editing > rect { stroke: var(--ink); stroke-width: 1.6; }
 .combo-line { stroke: #00000033; stroke-width: 1.4; fill: none; stroke-linejoin: round; }
+.pill-edit-btn { cursor: pointer; opacity: 0; transition: opacity 0.12s; }
+.combo-pill:hover .pill-edit-btn { opacity: 1; }
+.pill-edit-btn circle { fill: #fff; stroke: #00000044; }
+.key-edit-btn { cursor: pointer; }
+.key-edit-btn circle { fill: var(--accent); }
+.key-edit-btn text { fill: #fff; }
 
 .drag-ghost {
   position: fixed; pointer-events: none; z-index: 50; background: var(--accent);
@@ -148,6 +154,13 @@ label { font-size: 12px; color: var(--muted); }
   border: 1px solid var(--accent-soft); background: #f6faff; border-radius: 8px;
   padding: 8px; margin: 4px 0 8px; display: flex; flex-direction: column; gap: 5px;
 }
+
+.slot-chip { padding: 1px 5px; font-size: 10.5px; }
+.chip-row { display: inline-flex; flex-wrap: wrap; gap: 2px; }
+.vis-list { padding: 6px 10px; border-bottom: 1px solid var(--line); font-size: 12px; }
+.vis-group { margin: 3px 0; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.vis-group b { margin-right: 4px; font-size: 11.5px; }
+.vis-group small { color: var(--muted); }
 
 .glyph-group { margin-bottom: 6px; }
 .glyph-row { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 2px; }

@@ -33,8 +33,10 @@ export interface Layer {
 
 /** O que uma tecla faz numa layer. */
 export interface KeyBinding {
-  /** Ação ("A", "ç", "Ctrl+F9", "→", "PgUp", "Num"...) */
+  /** Ação executada ("A", "ç", "Ctrl+F9", "toggle NAV"...) — o que a IA lê */
   tap?: string
+  /** Ícone/caractere/texto EXIBIDO na tecla (default = tap) */
+  display?: string
   /**
    * Detalhes de comportamento p/ a IA (texto livre): hold, shift ABNT2,
    * timing especial etc. Ex.: "home row mod: hold = Ctrl" ou
@@ -45,18 +47,27 @@ export interface KeyBinding {
 
 export interface Combo {
   id: string
-  /** Etiqueta exibida na pílula/catálogo (pode conter ícones) */
+  /** Etiqueta exibida na pílula/catálogo (ícones e \n permitidos) */
   label: string
   /** Tecla/atalho/comando executado ("Ctrl+F9", "⌫", "toggle NAV") */
   action: string
   /** Observações p/ a IA (detalhamento, restrições, layer onde vale...) */
   notes?: string
-  /** Posições físicas (0..41) pressionadas juntas */
+  /** Posições físicas (0..41) pressionadas juntas (lado definido) */
   keys: number[]
   /** Grupo p/ organização, cor e filtros ("edição", "delphi"...) */
   group?: string
   /** Layers onde vale; ausente = global */
   layers?: LayerId[]
+  /**
+   * Espelhado: existe também na outra metade (teclas espelhadas por dedo,
+   * via mapa da geometria). Uma config define os dois lados.
+   */
+  mirror?: boolean
+  /** Etiqueta do lado espelhado, quando difere (comandos direcionais) */
+  mirrorLabel?: string
+  /** Ação do lado espelhado, quando difere (ex.: aba → vira aba ←) */
+  mirrorAction?: string
 }
 
 export interface FunctionalDoc {
