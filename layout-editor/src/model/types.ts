@@ -1,12 +1,13 @@
 /**
- * Modelo de dados do editor — separado em FUNCIONAL e VISUAL.
+ * Modelo de dados v2 — separado em FUNCIONAL e VISUAL.
  *
- * FUNCIONAL (functional.json): o que o teclado FAZ. É o contrato lido pelo
- * agente de IA para gerar o keymap ZMK: layers, bindings (tap/hold/shift)
- * por tecla/layer e combos. Sem nada de posicionamento, fonte ou cor.
+ * FUNCIONAL (lido pela IA p/ gerar o keymap ZMK): layers, bindings por
+ * tecla/layer (ação + notas de comportamento) e combos. Sem posicionamento.
  *
- * VISUAL (visual.json): como a página DESENHA. Mapeamento layer→posição da
- * legenda, overrides por tecla, cores, offsets das pílulas de combo.
+ * VISUAL (a página/stickers): SLOTS SÃO REPRESENTAÇÃO, não amarração —
+ * um slot pode referenciar uma layer, ter texto livre e/ou "tingir" com a
+ * cor de uma layer sem pertencer a ela (ex.: "Norm" no BL do polegar).
+ * O mapeamento global layer→slot é apenas o GERADOR PADRÃO das legendas.
  */
 
 /** Posições de legenda numa tecla: 9 do KLE + frente ("F"). */
@@ -19,45 +20,47 @@ export interface Layer {
   id: LayerId
   name: string
   /**
-   * base    = layer de letras (QWERTY/COLEMAK); renderiza no centro da tecla
-   * overlay = layer de função real no firmware (NAV, NUM, FN...)
-   * virtual = "layer" implementada por combos/thumb-chords (PROG_SYM etc.)
+   * base    = layer de letras (QWERTY/COLEMAK); renderiza no centro
+   * overlay = layer real do firmware (NAV, NUM, FN...)
+   * virtual = "layer" via combos/thumb-chords (a IA implementa como combos)
    */
   kind: 'base' | 'overlay' | 'virtual'
   color?: string
-  /** Como se acessa (texto livre p/ a IA: "hold polegar 39", "combo 2+4"...) */
+  /** Como se acessa (texto p/ a IA: "hold polegar 39", "combo 2+4"...) */
   access?: string
   note?: string
 }
 
-/** O que uma tecla faz numa layer. Textos livres, legíveis por humano e IA. */
+/** O que uma tecla faz numa layer. */
 export interface KeyBinding {
-  /** Ação no toque ("A", "ç", "Ctrl+F9", "→", "PgUp"...) */
+  /** Ação ("A", "ç", "Ctrl+F9", "→", "PgUp", "Num"...) */
   tap?: string
-  /** Ação segurando (home row mod "Ctrl", layer "NAV"...) */
-  hold?: string
-  /** O que sai com Shift, quando difere do óbvio (";"→":") */
-  shift?: string
+  /**
+   * Detalhes de comportamento p/ a IA (texto livre): hold, shift ABNT2,
+   * timing especial etc. Ex.: "home row mod: hold = Ctrl" ou
+   * "shift produz :" ou "hold = NAV momentâneo; tap trava a layer".
+   */
+  notes?: string
 }
 
 export interface Combo {
   id: string
-  /** Nome FUNCIONAL exibido no catálogo ("Compilar", "Backspace") */
-  name: string
-  /** Atalho/efeito produzido ("Ctrl+F9", "⌫") — o que a IA implementa */
+  /** Etiqueta exibida na pílula/catálogo (pode conter ícones) */
+  label: string
+  /** Tecla/atalho/comando executado ("Ctrl+F9", "⌫", "toggle NAV") */
   action: string
-  description?: string
+  /** Observações p/ a IA (detalhamento, restrições, layer onde vale...) */
+  notes?: string
   /** Posições físicas (0..41) pressionadas juntas */
   keys: number[]
-  /** Grupo p/ organização e cor no catálogo ("edição", "delphi"...) */
+  /** Grupo p/ organização, cor e filtros ("edição", "delphi"...) */
   group?: string
   /** Layers onde vale; ausente = global */
   layers?: LayerId[]
 }
 
 export interface FunctionalDoc {
-  version: 1
-  /** Identificador da geometria (hoje só "corne42") */
+  version: 2
   keyboard: string
   layers: Layer[]
   /** keys[posição][layerId] = binding (esparso) */
@@ -67,38 +70,51 @@ export interface FunctionalDoc {
 
 /* ------------------------------- VISUAL ------------------------------- */
 
+/**
+ * Conteúdo de um slot de uma tecla (override do gerador padrão).
+ * Prioridade: hidden > text > layer(ref) > gerador padrão.
+ */
 export interface SlotOverride {
-  /** Texto custom (substitui o derivado da layer) */
+  /** Texto livre (representativo — não precisa pertencer a layer alguma) */
   text?: string
-  /** Re-mapeia: este slot desta tecla mostra esta layer */
+  /** Este slot desta tecla mostra o tap desta layer */
   layer?: LayerId
   /** Esconde o conteúdo derivado */
   hidden?: boolean
+  /** Cor explícita do texto */
+  color?: string
+  /** "Tinge" com a cor desta layer (sem vincular o conteúdo a ela) */
+  tint?: LayerId
+}
+
+export type ComboAnchor = 'auto' | 'left' | 'right' | 'top' | 'bottom'
+
+export interface ComboLabelPos {
+  dx: number
+  dy: number
+  /** Lado da etiqueta em relação às teclas (compartilhado entre layouts) */
+  anchor?: ComboAnchor
 }
 
 export interface VisualDoc {
-  version: 1
-  /** Slot padrão de cada layer overlay/virtual (base usa C/TC + holdSlot) */
+  version: 2
+  /** Gerador padrão: slot onde cada layer overlay/virtual aparece */
   layerSlots: Record<LayerId, Slot>
-  /** Onde renderizar o HOLD das teclas da base (padrão BC) */
-  holdSlot: Slot
-  /** Onde renderizar o SHIFT da base (padrão TC) */
-  shiftSlot: Slot
-  /** Estilo do hold: 'text' simples ou 'badge' (fundo destacado) */
-  holdStyle: 'text' | 'badge'
-  /** Escala de fonte por slot (1 = padrão) */
-  slotScale: Partial<Record<Slot, number>>
-  /** Overrides por tecla: keyOverrides[pos][slot] */
-  keyOverrides: Record<string, Partial<Record<Slot, SlotOverride>>>
+  /** Overrides por tecla: keySlots[pos][slot] */
+  keySlots: Record<string, Partial<Record<Slot, SlotOverride>>>
   /** Cor de fundo por tecla */
   keyColors: Record<string, string>
-  /** Offset da pílula de cada combo no board (arrastável) */
-  comboLabels: Record<string, { dx: number; dy: number }>
+  /** Etiquetas de combo: offset arrastável + anchor */
+  comboLabels: Record<string, ComboLabelPos>
   /** Cor por grupo de combo */
   groupColors: Record<string, string>
+  /** Escala de fonte por slot (1 = padrão) */
+  slotScale: Partial<Record<Slot, number>>
+  /** Qual layer base exibir quando houver mais de uma (QWERTY/COLEMAK) */
+  baseLayer?: LayerId
 }
 
-/** Bundle completo (export único / permalink) */
+/** Bundle completo — formato único de import/export/permalink. */
 export interface Bundle {
   functional: FunctionalDoc
   visual: VisualDoc
@@ -106,19 +122,16 @@ export interface Bundle {
 
 export function emptyVisual(): VisualDoc {
   return {
-    version: 1,
+    version: 2,
     layerSlots: {},
-    holdSlot: 'BC',
-    shiftSlot: 'TC',
-    holdStyle: 'text',
-    slotScale: {},
-    keyOverrides: {},
+    keySlots: {},
     keyColors: {},
     comboLabels: {},
     groupColors: {},
+    slotScale: {},
   }
 }
 
 export function emptyFunctional(keyboard = 'corne42'): FunctionalDoc {
-  return { version: 1, keyboard, layers: [], keys: {}, combos: [] }
+  return { version: 2, keyboard, layers: [], keys: {}, combos: [] }
 }

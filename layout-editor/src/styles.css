@@ -31,62 +31,79 @@ input, select, textarea {
 }
 input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent-soft); }
 label { font-size: 12px; color: var(--muted); }
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex: none; }
 
 .toolbar {
   display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
   padding: 8px 14px; background: var(--panel); border-bottom: 1px solid var(--line);
 }
 .toolbar h1 { font-size: 16px; margin: 0 12px 0 0; }
-.toolbar .spacer { flex: 1; }
+.spacer { flex: 1; }
 .tabs { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .tabs button { border: 0; border-radius: 0; }
 .tabs button.active { background: var(--accent); color: #fff; }
 
 .main { display: flex; flex: 1; min-height: 0; }
-.board-area { flex: 1; overflow: auto; padding: 18px; }
-.board-svg { width: 100%; max-width: 1180px; height: auto; display: block; margin: 0 auto; user-select: none; }
+.board-area { flex: 1; overflow: auto; padding: 12px 0; }
+
+.boards-grid { display: grid; gap: 12px; padding: 8px 14px; }
+.board-panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); }
+.board-toolbar {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  padding: 6px 10px; border-bottom: 1px solid var(--line);
+}
+.board-scroller { overflow: auto; max-height: 72vh; cursor: grab; }
+.board-scroller.panning { cursor: grabbing; }
+.board-svg { display: block; user-select: none; width: 100%; height: auto; }
 
 .side {
   width: 360px; background: var(--panel); border-left: 1px solid var(--line);
-  overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 12px;
+  overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px;
 }
 .side h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin: 4px 0; }
-.side section { border: 1px solid var(--line); border-radius: var(--radius); padding: 10px; }
+.collapsible { border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 10px; }
 
-.row { display: flex; gap: 6px; align-items: center; margin: 4px 0; }
-.row > input { flex: 1; }
+.row { display: flex; gap: 6px; align-items: center; margin: 4px 0; flex-wrap: wrap; }
+.row > input[type='text'], .row > input:not([type]) { flex: 1; }
 .hint { font-size: 11.5px; color: var(--muted); line-height: 1.4; }
 .chip {
   display: inline-flex; align-items: center; gap: 5px; font-size: 12px;
   border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px; background: #fff;
 }
-.chip .dot { width: 9px; height: 9px; border-radius: 50%; }
 .chip.off { opacity: 0.4; }
 
 /* teclas (SVG) */
 .key-body { fill: var(--key); stroke: var(--key-line); stroke-width: 1.1; }
 .key.selected .key-body { stroke: var(--accent); stroke-width: 2.4; }
 .key.picked .key-body { stroke: var(--warn); stroke-width: 2.4; fill: #fff4e6; }
+.key.dimmed { opacity: 0.45; }
 .key-front { fill: #00000010; }
-.slot-text { fill: var(--ink); pointer-events: none; }
-.slot-text.muted { fill: var(--muted); }
+.key-number { fill: var(--accent); font-weight: 600; }
+.slot-text { pointer-events: none; }
 .slot-hit { fill: transparent; cursor: grab; }
 .slot-hit.droppable:hover { fill: var(--accent-soft); }
 
 .combo-pill { cursor: grab; }
-.combo-pill rect { rx: 7px; stroke: #00000022; }
+.combo-pill rect { stroke: #00000022; }
 .combo-pill text { font-size: 10px; fill: #1a1a1a; pointer-events: none; }
-.combo-line { stroke: #00000033; stroke-width: 1.4; fill: none; }
+.combo-pill.dim { opacity: 0.25; }
+.combo-pill.editing rect { stroke: var(--ink); stroke-width: 1.6; }
+.combo-line { stroke: #00000033; stroke-width: 1.4; fill: none; stroke-linejoin: round; }
 
 .drag-ghost {
   position: fixed; pointer-events: none; z-index: 50; background: var(--accent);
   color: #fff; font-size: 12px; padding: 3px 8px; border-radius: 6px; opacity: 0.92;
 }
+.inline-edit {
+  width: 100%; height: 100%; font-size: 11px; padding: 2px 4px;
+  border: 1.5px solid var(--accent); border-radius: 4px;
+}
 
-/* catálogo */
-.catalog { padding: 18px; overflow: auto; flex: 1; }
-.catalog h2 { margin: 18px 0 8px; font-size: 15px; }
+/* catálogo / por-layer */
+.catalog { padding: 14px 18px; overflow: auto; flex: 1; }
+.catalog h2 { margin: 14px 0 8px; font-size: 15px; }
 .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+.layers-grid { display: grid; gap: 12px; }
 .combo-card {
   background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
   padding: 10px; display: flex; flex-direction: column; gap: 6px;
@@ -107,12 +124,41 @@ label { font-size: 12px; color: var(--muted); }
 }
 .slot-cell .tag { display: block; font-size: 9px; color: var(--muted); }
 .slot-cell.filled { border-style: solid; background: #f8f9fa; }
+.slot-cell.active { border-color: var(--accent); border-style: solid; background: var(--accent-soft); }
 .slot-cell.front { grid-column: 1 / -1; }
+.slot-editor {
+  border: 1px solid var(--accent-soft); background: #f6faff;
+  border-radius: 8px; padding: 6px 8px; margin: 6px 0;
+}
+
+.binding-row { border-bottom: 1px solid var(--line); padding: 3px 0; }
+.binding-row:last-child { border-bottom: 0; }
+.binding-row .notes { width: 100%; font-size: 11px; color: var(--muted); }
 
 .list-item {
   display: flex; align-items: center; gap: 6px; padding: 5px 4px;
   border-bottom: 1px solid var(--line); font-size: 12.5px;
 }
 .list-item:last-child { border-bottom: 0; }
+.list-item.editing { background: var(--accent-soft); border-radius: 6px; }
 .list-item .grow { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .keys-badge { font-size: 10.5px; color: var(--muted); white-space: nowrap; }
+
+.combo-editor {
+  border: 1px solid var(--accent-soft); background: #f6faff; border-radius: 8px;
+  padding: 8px; margin: 4px 0 8px; display: flex; flex-direction: column; gap: 5px;
+}
+
+.glyph-group { margin-bottom: 6px; }
+.glyph-row { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 2px; }
+.glyph { padding: 2px 7px; font-size: 14px; cursor: grab; }
+
+.modal-backdrop {
+  position: fixed; inset: 0; background: #00000055; z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+}
+.modal {
+  background: var(--panel); border-radius: var(--radius); padding: 16px;
+  width: min(680px, 92vw); display: flex; flex-direction: column; gap: 8px;
+}
+.modal textarea { font-family: Consolas, monospace; font-size: 11.5px; }

@@ -1,46 +1,46 @@
 <script setup lang="ts">
 /**
- * Barra superior: abas, espelhar, overlay de combos, undo/redo,
- * import/export (functional/visual/bundle) e permalink.
+ * Barra superior: seções, undo/redo, import/export do BUNDLE (arquivo e
+ * área de transferência), permalink e reset.
  */
 import { ref } from 'vue'
 import { useStore } from '../model/store'
-import { exportBundle, exportFunctional, exportVisual, importAny, ImportError } from '../model/serialization'
+import { exportBundle, importBundle, ImportError } from '../model/serialization'
 import { encodePermalink } from '../model/permalink'
 import { defaultBundle } from '../model/defaults'
+import ClipboardModal from './ClipboardModal.vue'
 
 const store = useStore()
-const props = defineProps<{ showCombos: boolean }>()
-const emit = defineEmits<{ (e: 'update:showCombos', v: boolean): void }>()
-
 const fileInput = ref<HTMLInputElement>()
-const exportOpen = ref(false)
 const linkCopied = ref(false)
+const clip = ref<'export' | 'import' | null>(null)
+const clipText = ref('')
 
-function download(name: string, text: string) {
+function download() {
   const a = document.createElement('a')
-  a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' }))
-  a.download = name
+  a.href = URL.createObjectURL(new Blob([exportBundle(store.currentBundle())], { type: 'application/json' }))
+  a.download = 'corne-layout.json'
   a.click()
   URL.revokeObjectURL(a.href)
-  exportOpen.value = false
 }
 
-async function onImport(ev: Event) {
+async function onImportFile(ev: Event) {
   const file = (ev.target as HTMLInputElement).files?.[0]
   if (!file) return
+  importText(await file.text())
+  if (fileInput.value) fileInput.value.value = ''
+}
+function importText(text: string) {
   try {
-    const r = importAny(await file.text())
-    const cur = store.currentBundle()
-    store.loadBundle({
-      functional: r.functional ?? cur.functional,
-      visual: r.visual ?? cur.visual,
-    })
+    store.loadBundle(importBundle(text))
+    clip.value = null
   } catch (e) {
     alert(e instanceof ImportError ? `Import falhou: ${e.message}` : `Erro: ${e}`)
-  } finally {
-    if (fileInput.value) fileInput.value.value = ''
   }
+}
+function openClipExport() {
+  clipText.value = exportBundle(store.currentBundle())
+  clip.value = 'export'
 }
 
 async function permalink() {
@@ -61,48 +61,37 @@ function reset() {
   <div class="toolbar">
     <h1>⌨️ Corne Layout Editor</h1>
     <div class="tabs">
-      <button :class="{ active: store.state.activeTab === 'editor' }" data-tab-editor
-        @click="store.state.activeTab = 'editor'">Editor</button>
-      <button :class="{ active: store.state.activeTab === 'combos' }" data-tab-combos
-        @click="store.state.activeTab = 'combos'">Catálogo de combos</button>
+      <button :class="{ active: store.state.activeTab === 'integrado' }" data-tab-integrado
+        title="Layout completo com todas as legendas e combos" @click="store.state.activeTab = 'integrado'">
+        Integrado
+      </button>
+      <button :class="{ active: store.state.activeTab === 'layers' }" data-tab-layers
+        title="Um board por layer, só com a ação central" @click="store.state.activeTab = 'layers'">
+        Por layer
+      </button>
+      <button :class="{ active: store.state.activeTab === 'catalogo' }" data-tab-catalogo
+        title="Mini-teclado por combo (colinha)" @click="store.state.activeTab = 'catalogo'">
+        Combos
+      </button>
     </div>
-
-    <button :disabled="!store.state.selection.length" title="Espelha a seleção para a outra metade"
-      @click="store.mirrorSelection()">⇋ Espelhar</button>
-    <label class="chip" :class="{ off: !props.showCombos }" style="cursor:pointer">
-      <input type="checkbox" :checked="props.showCombos"
-        style="margin:0" @change="emit('update:showCombos', ($event.target as HTMLInputElement).checked)" />
-      combos no board
-    </label>
 
     <span class="spacer" />
 
     <button title="Desfazer (Ctrl+Z)" :disabled="!store.state.undoStack.length" @click="store.undo()">↩</button>
     <button title="Refazer (Ctrl+Y)" :disabled="!store.state.redoStack.length" @click="store.redo()">↪</button>
 
-    <button data-import @click="fileInput?.click()">Importar…</button>
-    <input ref="fileInput" type="file" accept=".json,application/json" hidden @change="onImport" />
+    <button data-import title="Importar bundle de um arquivo .json" @click="fileInput?.click()">📂 Importar</button>
+    <input ref="fileInput" type="file" accept=".json,application/json" hidden @change="onImportFile" />
+    <button data-import-clip title="Importar colando o JSON" @click="clipText = ''; clip = 'import'">📋⤵</button>
 
-    <span style="position:relative">
-      <button data-export @click="exportOpen = !exportOpen">Exportar ▾</button>
-      <span v-if="exportOpen"
-        style="position:absolute; right:0; top:110%; background:var(--panel); border:1px solid var(--line); border-radius:8px; display:flex; flex-direction:column; z-index:30; min-width:190px">
-        <button style="border:0; text-align:left" data-export-functional
-          @click="download('functional.json', exportFunctional(store.currentBundle()))">
-          functional.json (p/ a IA)
-        </button>
-        <button style="border:0; text-align:left" data-export-visual
-          @click="download('visual.json', exportVisual(store.currentBundle()))">
-          visual.json (aparência)
-        </button>
-        <button style="border:0; text-align:left" data-export-bundle
-          @click="download('layout-bundle.json', exportBundle(store.currentBundle()))">
-          bundle completo
-        </button>
-      </span>
-    </span>
+    <button data-export title="Baixar o bundle completo (.json)" @click="download">💾 Exportar</button>
+    <button data-export-clip title="Exportar copiando o JSON" @click="openClipExport">📋⤴</button>
 
-    <button data-permalink @click="permalink">{{ linkCopied ? '✓ copiado!' : '🔗 Permalink' }}</button>
-    <button title="Voltar ao layout padrão" @click="reset">⟲</button>
+    <button data-permalink title="Comprime o estado na URL e copia o link"
+      @click="permalink">{{ linkCopied ? '✓ copiado!' : '🔗 Permalink' }}</button>
+    <button title="Voltar ao layout padrão do repo" @click="reset">⟲</button>
+
+    <ClipboardModal v-if="clip" :mode="clip" :text="clipText"
+      @close="clip = null" @import="importText" />
   </div>
 </template>

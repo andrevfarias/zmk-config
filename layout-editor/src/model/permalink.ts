@@ -4,7 +4,7 @@
  */
 import { gunzipSync, gzipSync, strFromU8, strToU8 } from 'fflate'
 import type { Bundle } from './types'
-import { validateFunctional, validateVisual } from './serialization'
+import { validateBundle } from './serialization'
 
 function toBase64Url(bytes: Uint8Array): string {
   let bin = ''
@@ -30,9 +30,5 @@ export function decodePermalink(hash: string): Bundle | null {
   const m = /#d=([A-Za-z0-9_-]+)/.exec(hash)
   if (!m) return null
   const json = strFromU8(gunzipSync(fromBase64Url(m[1])))
-  const raw = JSON.parse(json) as Bundle
-  return {
-    functional: validateFunctional(raw.functional),
-    visual: validateVisual(raw.visual),
-  }
+  return validateBundle(JSON.parse(json))
 }

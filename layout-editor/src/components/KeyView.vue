@@ -1,7 +1,10 @@
 <script setup lang="ts">
 /**
  * Uma tecla do board: corpo, faixa frontal e os 10 slots de legenda.
- * Cada slot tem uma área de hit transparente (drag/drop e clique).
+ * - cor do texto = cor da layer (ou override/tinta)
+ * - duplo clique no slot = edição inline (tratada pelo KeyboardView)
+ * - aceita drop de glifos da paleta
+ * - modo "números" mostra a posição física da tecla
  */
 import { computed } from 'vue'
 import type { KeyGeom } from '../model/geometry'
@@ -9,10 +12,12 @@ import type { Slot } from '../model/types'
 import { SLOTS } from '../model/types'
 import { useStore } from '../model/store'
 
-const props = defineProps<{ geom: KeyGeom }>()
+const props = defineProps<{ geom: KeyGeom; dimmed?: boolean; highlight?: string }>()
 const emit = defineEmits<{
   (e: 'key-down', pos: number, ev: PointerEvent): void
   (e: 'slot-down', pos: number, slot: Slot, text: string, ev: PointerEvent): void
+  (e: 'slot-dblclick', pos: number, slot: Slot): void
+  (e: 'glyph-drop', pos: number, slot: Slot, glyph: string): void
 }>()
 
 const store = useStore()
@@ -20,12 +25,12 @@ const pos = computed(() => props.geom.pos)
 const resolved = computed(() => store.resolveKey(pos.value))
 const selected = computed(() => store.state.selection.includes(pos.value))
 const picked = computed(() => store.state.pickedKeys.includes(pos.value))
-const fill = computed(() => store.state.v.keyColors[String(pos.value)])
-
-const FRONT_H = 0.14 // fração da altura reservada à "frente" da tecla
+const fill = computed(() =>
+  props.highlight ?? store.state.v.keyColors[String(pos.value)])
 
 /** posição relativa (0..1) de cada slot dentro da tecla */
-const SLOT_XY: Record<Slot, { x: number; y: number; anchor: string }> = {
+export interface SlotPos { x: number; y: number; anchor: string }
+const SLOT_XY: Record<Slot, SlotPos> = {
   TL: { x: 0.1, y: 0.2, anchor: 'start' },
   TC: { x: 0.5, y: 0.2, anchor: 'middle' },
   TR: { x: 0.9, y: 0.2, anchor: 'end' },
@@ -38,13 +43,11 @@ const SLOT_XY: Record<Slot, { x: number; y: number; anchor: string }> = {
   F: { x: 0.5, y: 0.95, anchor: 'middle' },
 }
 
+const FRONT_H = 0.14
+
 function fontSize(slot: Slot): number {
   const base = slot === 'C' ? 12 : slot === 'F' ? 7.5 : 8.5
   return base * (store.state.v.slotScale[slot] ?? 1)
-}
-function slotClass(slot: Slot): string {
-  const src = resolved.value[slot]?.source
-  return src === 'hold' || src === 'shift' || slot === 'F' ? 'slot-text muted' : 'slot-text'
 }
 const usableH = computed(() => props.geom.h * (1 - FRONT_H))
 function sx(slot: Slot): number {
@@ -58,26 +61,44 @@ const transform = computed(() => {
   const g = props.geom
   return `translate(${g.x} ${g.y}) rotate(${g.r} ${g.w / 2} ${g.h / 2})`
 })
+
+function onDrop(slot: Slot, ev: DragEvent) {
+  const glyph = ev.dataTransfer?.getData('text/plain')
+  if (glyph) emit('glyph-drop', pos.value, slot, glyph)
+}
 </script>
 
 <template>
-  <g class="key" :class="{ selected, picked }" :transform="transform"
-    :data-pos="pos" @pointerdown.self="emit('key-down', pos, $event)">
+  <g class="key" :class="{ selected, picked, dimmed }" :transform="transform" :data-pos="pos">
     <rect class="key-body" :style="fill ? `fill:${fill}` : ''"
       :width="geom.w" :height="geom.h" rx="7"
+      @pointerdown="emit('key-down', pos, $event)">
+      <title>tecla {{ pos }} — clique seleciona · Ctrl+clique multi-seleção</title>
+    </rect>
+    <rect class="key-front" :y="geom.h * (1 - FRONT_H)" :width="geom.w" :height="geom.h * FRONT_H" rx="4"
       @pointerdown="emit('key-down', pos, $event)" />
-    <rect class="key-front" :y="geom.h * (1 - 0.14)" :width="geom.w" :height="geom.h * 0.14" rx="4"
-      @pointerdown="emit('key-down', pos, $event)" />
-    <template v-for="slot in SLOTS" :key="slot">
-      <text v-if="resolved[slot]" :class="slotClass(slot)"
-        :x="sx(slot)" :y="sy(slot)" :font-size="fontSize(slot)"
-        :text-anchor="SLOT_XY[slot].anchor" dominant-baseline="middle">
-        {{ resolved[slot]!.text }}
-      </text>
-      <rect class="slot-hit droppable" :data-pos="pos" :data-slot="slot"
-        :x="sx(slot) - (SLOT_XY[slot].anchor === 'middle' ? geom.w * 0.18 : SLOT_XY[slot].anchor === 'end' ? geom.w * 0.3 : 0) - 2"
-        :y="sy(slot) - 7" :width="geom.w * 0.36" height="14" rx="3"
-        @pointerdown.stop="emit('slot-down', pos, slot, resolved[slot]?.text ?? '', $event)" />
+
+    <template v-if="store.state.showNumbers">
+      <text class="key-number" :x="geom.w / 2" :y="geom.h / 2" text-anchor="middle"
+        dominant-baseline="middle" font-size="16">{{ pos }}</text>
+    </template>
+    <template v-else>
+      <template v-for="slot in SLOTS" :key="slot">
+        <text v-if="resolved[slot]" class="slot-text"
+          :x="sx(slot)" :y="sy(slot)" :font-size="fontSize(slot)"
+          :fill="resolved[slot]!.color ?? (slot === 'F' ? '#868e96' : '#212529')"
+          :text-anchor="SLOT_XY[slot].anchor" dominant-baseline="middle">
+          {{ resolved[slot]!.text }}
+        </text>
+        <rect class="slot-hit droppable" :data-pos="pos" :data-slot="slot"
+          :x="sx(slot) - (SLOT_XY[slot].anchor === 'middle' ? geom.w * 0.18 : SLOT_XY[slot].anchor === 'end' ? geom.w * 0.3 : 0) - 2"
+          :y="sy(slot) - 7" :width="geom.w * 0.36" height="14" rx="3"
+          @pointerdown.stop="emit('slot-down', pos, slot, resolved[slot]?.text ?? '', $event)"
+          @dblclick.stop="emit('slot-dblclick', pos, slot)"
+          @dragover.prevent @drop.prevent="onDrop(slot, $event)">
+          <title>{{ slot }} — arraste p/ mover (Shift copia) · duplo clique edita</title>
+        </rect>
+      </template>
     </template>
   </g>
 </template>

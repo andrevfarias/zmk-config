@@ -1,26 +1,22 @@
 <script setup lang="ts">
 /**
- * Raiz do app: toolbar + (Editor | Catálogo). No Editor: board à esquerda,
- * painéis (tecla / layers / combos) à direita. Carrega permalink do hash.
+ * Raiz: toolbar + seções (Integrado / Por layer / Combos). No Integrado,
+ * painéis laterais colapsáveis (Tecla, Combos, Layers, Paleta de ícones).
  */
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted } from 'vue'
 import { useStore } from './model/store'
 import { decodePermalink } from './model/permalink'
 import Toolbar from './components/Toolbar.vue'
-import KeyboardView from './components/KeyboardView.vue'
+import BoardsSection from './components/BoardsSection.vue'
+import LayerSection from './components/LayerSection.vue'
+import ComboCatalog from './components/ComboCatalog.vue'
 import SidePanel from './components/SidePanel.vue'
 import LayerPanel from './components/LayerPanel.vue'
 import ComboPanel from './components/ComboPanel.vue'
-import ComboCatalog from './components/ComboCatalog.vue'
+import GlyphPalette from './components/GlyphPalette.vue'
+import CollapsibleSection from './components/CollapsibleSection.vue'
 
 const store = useStore()
-const showCombos = ref(false)
-
-const comboGroups = computed(() => {
-  const s = new Set<string>()
-  for (const c of store.state.f.combos) s.add(c.group ?? 'outros')
-  return s
-})
 
 function onKey(ev: KeyboardEvent) {
   const tag = (ev.target as HTMLElement).tagName
@@ -50,20 +46,27 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
 </script>
 
 <template>
-  <Toolbar v-model:show-combos="showCombos" />
-  <div v-if="store.state.activeTab === 'editor'" class="main">
+  <Toolbar />
+  <div v-if="store.state.activeTab === 'integrado'" class="main">
     <div class="board-area">
-      <KeyboardView :show-combos="showCombos" :combo-groups="comboGroups" />
-      <p class="hint" style="text-align:center; margin-top: 8px">
-        Clique = selecionar · Ctrl+clique = multi-seleção · arrastar legenda = mover ·
-        Shift+arrastar = copiar · pílula de combo = arrastável
-      </p>
+      <BoardsSection />
     </div>
     <aside class="side">
-      <SidePanel />
-      <ComboPanel />
-      <LayerPanel />
+      <CollapsibleSection title="Tecla" hint="Edição da tecla selecionada">
+        <SidePanel />
+      </CollapsibleSection>
+      <CollapsibleSection title="Combos" hint="Criação e edição de combos">
+        <ComboPanel />
+      </CollapsibleSection>
+      <CollapsibleSection title="Layers" hint="Layers e mapeamento de slots" :start-open="false">
+        <LayerPanel />
+      </CollapsibleSection>
+      <CollapsibleSection title="Paleta de ícones" hint="Clique insere · arraste p/ slots e etiquetas"
+        :start-open="false">
+        <GlyphPalette />
+      </CollapsibleSection>
     </aside>
   </div>
+  <LayerSection v-else-if="store.state.activeTab === 'layers'" />
   <ComboCatalog v-else />
 </template>

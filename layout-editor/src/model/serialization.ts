@@ -1,8 +1,6 @@
 /**
- * Import/export dos documentos. Dois arquivos:
- *   - functional.json — contrato p/ o agente de IA gerar o keymap ZMK
- *   - visual.json     — aparência da página/stickers
- * O import aceita qualquer um dos dois ou o bundle {functional, visual}.
+ * Import/export — sempre o BUNDLE completo {functional, visual}.
+ * O agente de IA lê o bloco "functional" e ignora o "visual".
  */
 import type { Bundle, FunctionalDoc, VisualDoc } from './types'
 import { SLOTS, emptyVisual } from './types'
@@ -17,7 +15,8 @@ function fail(msg: string): never {
 export function validateFunctional(f: unknown): FunctionalDoc {
   const d = f as FunctionalDoc
   if (!d || typeof d !== 'object') fail('functional: documento inválido')
-  if (d.version !== 1) fail(`functional: versão não suportada (${(d as { version?: unknown }).version})`)
+  if (d.version !== 2)
+    fail(`functional: versão não suportada (${(d as { version?: unknown }).version}) — esperado 2`)
   if (typeof d.keyboard !== 'string') fail('functional: campo "keyboard" ausente')
   if (!Array.isArray(d.layers)) fail('functional: "layers" deve ser uma lista')
   const ids = new Set<string>()
@@ -39,12 +38,12 @@ export function validateFunctional(f: unknown): FunctionalDoc {
   if (!Array.isArray(d.combos)) fail('functional: "combos" deve ser uma lista')
   const comboIds = new Set<string>()
   for (const c of d.combos) {
-    if (!c.id || !c.name || !c.action) fail(`functional: combo sem id/name/action`)
+    if (!c.id || !c.label || !c.action) fail('functional: combo sem id/label/action')
     if (comboIds.has(c.id)) fail(`functional: combo duplicado "${c.id}"`)
     comboIds.add(c.id)
-    if (!Array.isArray(c.keys) || c.keys.length < 2) fail(`functional: combo "${c.name}" precisa de 2+ teclas`)
+    if (!Array.isArray(c.keys) || c.keys.length < 2) fail(`functional: combo "${c.label}" precisa de 2+ teclas`)
     for (const k of c.keys)
-      if (!Number.isInteger(k) || k < 0 || k >= KEY_COUNT) fail(`functional: combo "${c.name}" tem tecla inválida ${k}`)
+      if (!Number.isInteger(k) || k < 0 || k >= KEY_COUNT) fail(`functional: combo "${c.label}" tem tecla inválida ${k}`)
   }
   return d
 }
@@ -52,52 +51,44 @@ export function validateFunctional(f: unknown): FunctionalDoc {
 export function validateVisual(v: unknown): VisualDoc {
   const d = v as VisualDoc
   if (!d || typeof d !== 'object') fail('visual: documento inválido')
-  if (d.version !== 1) fail('visual: versão não suportada')
+  if (d.version !== 2) fail('visual: versão não suportada — esperado 2')
   const out: VisualDoc = { ...emptyVisual(), ...d }
   const okSlot = (s: string) => (SLOTS as readonly string[]).includes(s)
-  if (!okSlot(out.holdSlot)) fail(`visual: holdSlot inválido "${out.holdSlot}"`)
-  if (!okSlot(out.shiftSlot)) fail(`visual: shiftSlot inválido "${out.shiftSlot}"`)
   for (const [layer, slot] of Object.entries(out.layerSlots))
     if (!okSlot(slot)) fail(`visual: slot inválido "${slot}" para layer "${layer}"`)
-  for (const [pos, slots] of Object.entries(out.keyOverrides)) {
+  for (const [pos, slots] of Object.entries(out.keySlots)) {
     const p = Number(pos)
     if (!Number.isInteger(p) || p < 0 || p >= KEY_COUNT) fail(`visual: override em posição inválida "${pos}"`)
     for (const slot of Object.keys(slots)) if (!okSlot(slot)) fail(`visual: slot inválido "${slot}" na tecla ${pos}`)
   }
+  for (const pos of Object.entries(out.comboLabels)) {
+    const a = pos[1].anchor
+    if (a && !['auto', 'left', 'right', 'top', 'bottom'].includes(a))
+      fail(`visual: anchor inválido "${a}"`)
+  }
   return out
 }
 
-export function exportFunctional(b: Bundle): string {
-  return JSON.stringify(b.functional, null, 2)
+export function validateBundle(data: unknown): Bundle {
+  const o = data as Record<string, unknown>
+  if (!o || typeof o !== 'object' || !o.functional || !o.visual)
+    fail('esperado o bundle completo: {"functional": …, "visual": …}')
+  return {
+    functional: validateFunctional(o.functional),
+    visual: validateVisual(o.visual),
+  }
 }
-export function exportVisual(b: Bundle): string {
-  return JSON.stringify(b.visual, null, 2)
-}
+
 export function exportBundle(b: Bundle): string {
   return JSON.stringify(b, null, 2)
 }
 
-export interface ImportResult {
-  functional?: FunctionalDoc
-  visual?: VisualDoc
-}
-
-/** Detecta e valida functional.json, visual.json ou bundle. */
-export function importAny(text: string): ImportResult {
+export function importBundle(text: string): Bundle {
   let data: unknown
   try {
     data = JSON.parse(text)
   } catch {
-    fail('arquivo não é JSON válido')
+    fail('o texto não é JSON válido')
   }
-  const o = data as Record<string, unknown>
-  if (o.functional || o.visual) {
-    const r: ImportResult = {}
-    if (o.functional) r.functional = validateFunctional(o.functional)
-    if (o.visual) r.visual = validateVisual(o.visual)
-    return r
-  }
-  if (o.layers && o.keys) return { functional: validateFunctional(o) }
-  if (o.layerSlots || o.keyOverrides || o.holdSlot) return { visual: validateVisual(o) }
-  fail('não reconheci o arquivo: esperado functional.json, visual.json ou bundle')
+  return validateBundle(data)
 }
